@@ -1,0 +1,14 @@
+:root {
+  font-family: var(--font-eukraine-head), -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}

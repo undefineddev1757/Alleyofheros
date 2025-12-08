@@ -1,0 +1,66 @@
+.header {
+  width: 1440px;
+  height: 68px;
+  background: #FFF;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-left: 120px;
+}
+
+.navLink {
+  color: #17120E;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 100%;
+  text-decoration: none;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-right: 120px;
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #17120E;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 100%;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.langButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #17120E;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 100%;
+  text-align: right;
+}
