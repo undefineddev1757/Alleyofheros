@@ -1,0 +1,193 @@
+@font-face {
+  font-family: 'e-Ukraine Head';
+  src: local('e-Ukraine Head'), local('e-Ukraine');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'e-Ukraine';
+  src: local('e-Ukraine');
+  font-weight: 300;
+  font-style: normal;
+}
+
+.soldier-gallery {
+  width: 100%;
+  height: 800px;
+  position: relative;
+  overflow: hidden;
+}
+
+.decorative-svg {
+  width: 540px;
+  height: 480px;
+  aspect-ratio: 9 / 8;
+  fill: #FFF;
+  position: absolute;
+  left: -70px;
+  top: 340px;
+}
+
+.gallery-content {
+  position: relative;
+}
+
+.gallery-header {
+  display: flex;
+  width: 481px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  position: absolute;
+  left: 120px;
+  top: 260px;
+}
+
+.gallery-title {
+  align-self: stretch;
+  color: #17120E;
+  font-family: 'e-Ukraine Head', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 52px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+  text-transform: uppercase;
+  
+  margin: 0;
+  margin-bottom: -5px;
+}
+
+.quote-icon {
+  width: 32px;
+  height: 24px;
+  aspect-ratio: 4 / 3;
+}
+
+.gallery-description {
+  align-self: stretch;
+  color: #17120E;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 120%;
+  margin: 0;
+}
+
+.gallery-grid {
+  width: 636px;
+  height: 1028px;
+  position: absolute;
+  left: 684px;
+  top: -120px;
+}
+
+.gallery-item {
+  position: absolute;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.gallery-item-top {
+  width: 524px;
+  height: 300px;
+  aspect-ratio: 131 / 75;
+  left: 56px;
+  top: 0;
+}
+
+.gallery-item-middle {
+  width: 636px;
+  height: 364px;
+  left: 0;
+  top: 332px;
+}
+
+.gallery-item-bottom {
+  width: 524px;
+  height: 300px;
+  aspect-ratio: 131 / 75;
+  left: 56px;
+  top: 728px;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-item-top .gallery-image {
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-item-middle .gallery-image {
+  width: 648px;
+  height: 364px;
+  aspect-ratio: 162 / 91;
+  position: absolute;
+  left: -6px;
+  top: 0;
+}
+
+.gallery-item-bottom .gallery-image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  object-fit: cover;
+}
+
+.image-overlay {
+  width: 100%;
+  height: 140px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+}
+
+.image-caption {
+  color: #F6F3E8;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 140%;
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  margin: 0;
+}
+
+.gallery-item-top .image-caption {
+  bottom: 12px;
+}
+
+.gallery-item-middle .image-caption {
+  bottom: 12px;
+}
+
+.gallery-item-bottom .image-caption {
+  bottom: 12px;
+}
+
+.expand-icon {
+  width: 14px;
+  height: 14px;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.gallery-item-middle .expand-icon {
+  right: 34px;
+}
+
+.gallery-item-bottom .expand-icon {
+  right: 34px;
+}

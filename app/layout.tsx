@@ -26,6 +26,11 @@ const eUkraineHead = localFont({
 export const metadata: Metadata = {
   title: "Alley of Heroes",
   description: "Discover and celebrate everyday heroes in your community.",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
