@@ -1,0 +1,233 @@
+@import url('https://fonts.cdnfonts.com/css/e-ukraine');
+@import url('https://fonts.cdnfonts.com/css/e-ukraine-head');
+
+:root {
+  --color-primary: #17120E;
+  --color-background: #F6F3E8;
+  --color-hover: #F2B202;
+  --color-primary-25: rgba(23, 18, 14, 0.25);
+}
+
+.heroes-section {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  width: 1440px;
+  margin-bottom: 50px;
+}
+
+.heroes-list {
+  display: flex;
+  width: 1440px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero-item {
+  display: flex;
+  height: 160px;
+  padding: 42px 0px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  background: var(--color-background);
+  position: relative;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.hero-item:hover {
+  background: var(--color-hover);
+}
+
+.hero-info {
+  display: flex;
+  width: 267px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-callsign {
+  align-self: stretch;
+  color: var(--color-primary);
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+
+.hero-name1 {
+  align-self: stretch;
+  color: var(--color-primary);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 100%;
+}
+
+.hero-icon {
+  width: 24px;
+  height: 24px;
+  aspect-ratio: 1/1;
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+.hero-icon-hover {
+  width: 24px;
+  height: 24px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  right: 120px;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-item:hover .hero-icon {
+  opacity: 0;
+}
+
+.hero-item:hover .hero-icon-hover {
+  opacity: 1;
+}
+
+.hero-decoration {
+  width: 360px;
+  height: 269px;
+  aspect-ratio: 360/269;
+  position: absolute;
+  right: 360px;
+  bottom: -63px;
+  fill: var(--color-background);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.hero-item:hover .hero-decoration {
+  opacity: 1;
+}
+
+.hero-separator {
+  width: 1440px;
+  height: 1px;
+  opacity: 0.25;
+  background: var(--color-primary);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 219px;
+  height: 15px;
+}
+
+.pagination-item {
+  color: var(--color-primary-25);
+  text-align: center;
+  font-family: 'e-Ukraine', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.pagination-item:hover {
+  color: var(--color-primary);
+}
+
+.pagination-item.active {
+  color: var(--color-primary);
+}
+
+.pagination-line {
+  width: 60px;
+  height: 1px;
+  background: var(--color-primary);
+  opacity: 0.25;
+}
+
+@media (max-width: 1440px) {
+  .heroes-section {
+    width: 100%;
+  }
+
+  .heroes-list {
+    width: 100%;
+  }
+
+  .hero-item {
+    padding: 42px 120px;
+  }
+
+  .hero-separator {
+    width: 100%;
+  }
+
+  .hero-icon-hover {
+    right: 125px;
+  }
+
+  .hero-decoration {
+    right: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-item {
+    padding: 32px 24px;
+    height: 120px;
+  }
+
+  .hero-callsign {
+    font-size: 32px;
+  }
+
+  .hero-name1 {
+    font-size: 16px;
+  }
+
+  .hero-info {
+    width: auto;
+    gap: 12px;
+  }
+
+  .hero-icon,
+  .hero-icon-hover {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hero-icon-hover {
+    right: 24px;
+  }
+
+  .hero-decoration {
+    display: none;
+  }
+
+  .pagination {
+    gap: 16px;
+  }
+
+  .pagination-item {
+    font-size: 18px;
+  }
+
+  .pagination-line {
+    width: 40px;
+  }
+}

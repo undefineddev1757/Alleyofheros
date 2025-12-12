@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import './HeroesSlider.css';
 
 interface Hero {
@@ -40,6 +43,28 @@ const HeroesSlider = (): JSX.Element => {
     }
   ];
 
+  // Дублюємо героїв для безкінечного ефекту
+  const infiniteHeroes = [...heroes, ...heroes, ...heroes];
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOffset((prev) => {
+        const cardWidth = 256; // 240px + 16px gap
+        const newOffset = prev - 1;
+        
+        // Коли досягнуто одного набору, скидаємо на початок
+        if (Math.abs(newOffset) >= cardWidth * heroes.length) {
+          return 0;
+        }
+        
+        return newOffset;
+      });
+    }, 30); // 30ms для плавної анімації
+
+    return () => clearInterval(interval);
+  }, [heroes.length]);
+
   const ArrowIcon = (): JSX.Element => (
     <svg className="arrow-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0)">
@@ -62,14 +87,19 @@ const HeroesSlider = (): JSX.Element => {
       </h2>
       
       <div className="heroes-grid">
-        {heroes.map((hero, index) => (
-          <div key={hero.id} className="hero-card">
-            <div className="hero-photo">
-              <img src={hero.image} alt={hero.alt} />
+        <div 
+          className="heroes-track"
+          style={{ transform: `translateX(${offset}px)` }}
+        >
+          {infiniteHeroes.map((hero, index) => (
+            <div key={`${hero.id}-${index}`} className="hero-card">
+              <div className="hero-photo">
+                <img src={hero.image} alt={hero.alt} />
+              </div>
+              {(index % heroes.length) < 5 && <ArrowIcon />}
             </div>
-            {index < 5 && <ArrowIcon />}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       
       <button className="view-all-button">
@@ -81,4 +111,7 @@ const HeroesSlider = (): JSX.Element => {
 };
 
 export default HeroesSlider;
+
+
+
 

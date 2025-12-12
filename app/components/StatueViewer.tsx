@@ -27,7 +27,7 @@ function Statue() {
   return (
     <group ref={groupRef}>
       {/* Оставляем оригинальное освещение и материалы */}
-      <primitive object={scene} scale={4.2} />
+      <primitive object={scene} scale={1.4} />
     </group>
   );
 }

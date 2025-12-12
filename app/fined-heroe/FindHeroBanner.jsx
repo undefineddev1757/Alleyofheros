@@ -1,0 +1,68 @@
+import React from 'react';
+import './FindHeroBanner.css';
+
+const FindHeroBanner = () => {
+  const heroNames = [
+    'мадяр', 'жрець', 'малиш', 'Грінка', 'мадяр', 'жрець', 'григорович', 'малиш', 
+    'жрець', 'малиш', 'жрець', 'малиш', 'Грінка', 'Грінка',
+    'фенікс', 'бтр', 'таксист', 'григорович', 'атлет', 'фенікс', 'бтр', 'таксист',
+    'атлет', 'Грінка', 'григорович', 'мадяр', 'жрець', 'малиш',
+    'карая', 'хват', 'жрець', 'сєвєр', 'сідней', 'да вінчі', 'карая', 'хват',
+    'сєвєр', 'сідней', 'да вінчі', 'бтр', 'таксист', 'григорович', 'атлет'
+  ];
+
+  return (
+    <div className="find-hero-banner">
+      <div className="background-names-container">
+        <div className="background-names">
+         
+        </div>
+      </div>
+
+      <div className="content-wrapper">
+        <div className="medal-section">
+          <div className="brace-left">{'{'}</div>
+          <img 
+            className="medal-image" 
+            src="https://api.builder.io/api/v1/image/assets/TEMP/12daba71a01ffc2fafdfaa3af92bdeb993584487?width=560" 
+            alt="Medal of Honor" 
+          />
+          <div className="brace-right">{'}'}</div>
+        </div>
+
+        <h1 className="title">Знайти героя</h1>
+
+        <div className="search-field">
+          <svg 
+            className="search-icon" 
+            width="16" 
+            height="16" 
+            viewBox="0 0 16 16" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clipPath="url(#clip0_93_4239)">
+              <path 
+                d="M9.43931 0C5.82175 0 2.87862 2.94313 2.87862 6.56069C2.87862 8.14497 3.44312 9.59984 4.3815 10.7349L0 15.1164L0.883625 16L5.26512 11.6185C6.40016 12.5569 7.85503 13.1214 9.43931 13.1214C13.0569 13.1214 16 10.1783 16 6.56069C16 2.94313 13.0569 0 9.43931 0ZM9.43931 11.8717C6.51081 11.8717 4.12828 9.48919 4.12828 6.56069C4.12828 3.63219 6.51081 1.24966 9.43931 1.24966C12.3678 1.24966 14.7503 3.63219 14.7503 6.56069C14.7503 9.48919 12.3678 11.8717 9.43931 11.8717Z" 
+                fill="#17120E"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_93_4239">
+                <rect width="16" height="16" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+          <input 
+            type="text" 
+            className="search-input" 
+            placeholder="Позивний/ПІБ" 
+            aria-label="Search hero by call sign or name"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FindHeroBanner;

@@ -1,8 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Logo from "./Logo";
 import styles from "./Header.module.css";
 
 const Header = () => {
+  const router = useRouter();
+
+  const handleFindClick = () => {
+    router.push("/fined-heroe");
+  };
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -33,7 +42,11 @@ const Header = () => {
           </svg>
         </button>
 
-        <button className={styles.actionButton} type="button">
+        <button 
+          className={styles.actionButton} 
+          type="button"
+          onClick={handleFindClick}
+        >
           <span>Знайти</span>
           <svg
             className={styles.icon}
@@ -67,5 +80,6 @@ const Header = () => {
 };
 
 export default Header;
+
 
 

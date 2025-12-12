@@ -1,6 +1,51 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import './SoldierGallery.css';
 
 export default function SoldierGallery(): JSX.Element {
+  const galleryItems = [
+    {
+      id: 1,
+      image: 'https://api.builder.io/api/v1/image/assets/TEMP/85957cfe330eb7640fd964f9d3b032ba7322773c?width=1296',
+      className: 'gallery-item-top'
+    },
+    {
+      id: 2,
+      image: 'https://api.builder.io/api/v1/image/assets/TEMP/3cf055097bd79aeca3d09a99546aff9f45901e2b?width=1296',
+      className: 'gallery-item-middle',
+      showIcon: true
+    },
+    {
+      id: 3,
+      image: 'https://api.builder.io/api/v1/image/assets/TEMP/c8035ea6e9c6cb7fe8454fa842d4da3897da5810?width=1296',
+      className: 'gallery-item-bottom',
+      showIcon: true
+    }
+  ];
+
+  const infiniteItems = [...galleryItems, ...galleryItems, ...galleryItems];
+  const [offset, setOffset] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = setInterval(() => {
+      setOffset((prev) => {
+        const itemHeight = 396; // 364px + 32px gap
+        const newOffset = prev - 1;
+        
+        if (Math.abs(newOffset) >= itemHeight * galleryItems.length) {
+          return 0;
+        }
+        
+        return newOffset;
+      });
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, [galleryItems.length, isPaused]);
   return (
     <div className="soldier-gallery">
       <svg className="decorative-svg" width="470" height="460" viewBox="0 0 470 460" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,47 +70,41 @@ export default function SoldierGallery(): JSX.Element {
           </p>
         </div>
 
-        <div className="gallery-grid">
-          <div className="gallery-item gallery-item-top">
-            <img src="https://api.builder.io/api/v1/image/assets/TEMP/85957cfe330eb7640fd964f9d3b032ba7322773c?width=1296" alt="" className="gallery-image" />
-            <div className="image-overlay"></div>
-            <p className="image-caption">Підпис<br />фотографії</p>
-          </div>
-
-          <div className="gallery-item gallery-item-middle">
-            <img src="https://api.builder.io/api/v1/image/assets/TEMP/3cf055097bd79aeca3d09a99546aff9f45901e2b?width=1296" alt="" className="gallery-image" />
-            <div className="image-overlay"></div>
-            <p className="image-caption">Підпис<br />фотографії</p>
-            <svg className="expand-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g opacity="0.25" clipPath="url(#clip0_77_8102)">
-                <path fillRule="evenodd" clipRule="evenodd" d="M13.3 11.9C11.5934 10.1934 11.5927 7.0833 13.3 5.37599L14 4.67599L12.6 3.27599L11.9 3.97599C10.6582 5.21779 10.038 6.92719 10.0373 8.6373L1.4 6.11955e-08L7.89182e-07 1.4L8.63729 10.0373C6.9272 10.038 5.2178 10.6582 3.976 11.9L3.276 12.6L4.676 14L5.376 13.3C7.08329 11.5927 10.1934 11.5934 11.9 13.3L12.6 14L14 12.6L13.3 11.9Z" fill="white"/>
-              </g>
-              <defs>
-                <clipPath id="clip0_77_8102">
-                  <rect width="14" height="14" fill="white" transform="translate(14) rotate(90)"/>
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-
-          <div className="gallery-item gallery-item-bottom">
-            <img src="https://api.builder.io/api/v1/image/assets/TEMP/c8035ea6e9c6cb7fe8454fa842d4da3897da5810?width=1296" alt="" className="gallery-image" />
-            <div className="image-overlay"></div>
-            <p className="image-caption">Підпис<br />фотографії</p>
-            <svg className="expand-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g opacity="0.25" clipPath="url(#clip0_77_8095)">
-                <path fillRule="evenodd" clipRule="evenodd" d="M13.3 11.9C11.5934 10.1934 11.5927 7.0833 13.3 5.37599L14 4.67599L12.6 3.27599L11.9 3.97599C10.6582 5.21779 10.038 6.92719 10.0373 8.6373L1.4 6.11955e-08L7.89182e-07 1.4L8.63729 10.0373C6.9272 10.038 5.2178 10.6582 3.976 11.9L3.276 12.6L4.676 14L5.376 13.3C7.08329 11.5927 10.1934 11.5934 11.9 13.3L12.6 14L14 12.6L13.3 11.9Z" fill="white"/>
-              </g>
-              <defs>
-                <clipPath id="clip0_77_8095">
-                  <rect width="14" height="14" fill="white" transform="translate(14) rotate(90)"/>
-                </clipPath>
-              </defs>
-            </svg>
+        <div 
+          className="gallery-grid"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div 
+            className="gallery-track"
+            style={{ transform: `translateY(${offset}px)` }}
+          >
+            {infiniteItems.map((item, index) => (
+              <div key={`${item.id}-${index}`} className="gallery-item">
+                <img src={item.image} alt="" className="gallery-image" />
+                <div className="image-overlay"></div>
+                <p className="image-caption">Підпис<br />фотографії</p>
+                {item.showIcon && (
+                  <svg className="expand-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g opacity="0.25" clipPath="url(#clip0_77_8102)">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M13.3 11.9C11.5934 10.1934 11.5927 7.0833 13.3 5.37599L14 4.67599L12.6 3.27599L11.9 3.97599C10.6582 5.21779 10.038 6.92719 10.0373 8.6373L1.4 6.11955e-08L7.89182e-07 1.4L8.63729 10.0373C6.9272 10.038 5.2178 10.6582 3.976 11.9L3.276 12.6L4.676 14L5.376 13.3C7.08329 11.5927 10.1934 11.5934 11.9 13.3L12.6 14L14 12.6L13.3 11.9Z" fill="white"/>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_77_8102">
+                        <rect width="14" height="14" fill="white" transform="translate(14) rotate(90)"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+
+
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Наші Герої - Heroes List</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'e-Ukraine', -apple-system, Roboto, Helvetica, sans-serif;
+      background-color: #F6F3E8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 0;
+    }
+
+    #root {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="module">
+    import React from 'https://esm.sh/react@18';
+    import ReactDOM from 'https://esm.sh/react-dom@18/client';
+    import HeroesList from './HeroesList.jsx';
+
+    const heroes = [
+      { id: 1, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
+      { id: 2, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
+      { id: 3, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
+      { id: 4, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
+      { id: 5, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
+      { id: 6, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
+      { id: 7, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
+      { id: 8, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
+      { id: 9, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
+      { id: 10, callsign: 'Позивний', name: 'Прізвище Ім\'я' }
+    ];
+
+    const App = () => {
+      const [currentPage, setCurrentPage] = React.useState(1);
+
+      return React.createElement(HeroesList, {
+        heroes: heroes,
+        currentPage: currentPage,
+        totalPages: 5,
+        onPageChange: setCurrentPage
+      });
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(App));
+  </script>
+</body>
+</html>

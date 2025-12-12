@@ -44,12 +44,18 @@
 }
 
 .heroes-grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
   width: 100%;
   margin-bottom: 60px;
+  overflow: hidden;
+  position: relative;
+}
+
+.heroes-track {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: max-content;
+  will-change: transform;
 }
 
 .hero-card {
