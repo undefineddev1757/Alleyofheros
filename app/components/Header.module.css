@@ -7,6 +7,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 20px;
+}
+
+.menuButton {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 3;
+
 }
 
 .nav {
@@ -47,9 +58,14 @@
   line-height: 100%;
 }
 
+.actionText {
+  display: inline;
+}
+
 .icon {
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
 }
 
 .langButton {
@@ -63,4 +79,119 @@
   font-weight: 300;
   line-height: 100%;
   text-align: right;
+}
+
+/* Планшет (768px - 1024px) */
+@media (max-width: 1024px) {
+  .header {
+    padding: 0 40px;
+  }
+
+  .nav {
+    margin-left: 60px;
+    gap: 40px;
+  }
+
+  .actions {
+    margin-right: 60px;
+    gap: 40px;
+  }
+}
+
+/* Мобільний телефон (до 768px) */
+@media (max-width: 768px) {
+  .header {
+    height: 60px;
+    padding: 0 37px;
+    justify-content: space-between;
+  }
+
+  .menuButton {
+    display: block;
+    position: relative;
+    z-index: 3;
+    order: 1;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #FFF;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 100px 20px 20px;
+    margin-left: 0;
+    gap: 30px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 2;
+    order: 2;
+  }
+
+  .navOpen {
+    transform: translateX(0);
+  }
+
+  .navLink {
+    font-size: 18px;
+    width: 100%;
+    padding: 12px 0;
+  }
+
+  .actions {
+    margin-right: 0;
+    gap: 32px;
+    order: 3;
+    margin-bottom: 7px;
+    margin-left: 1px;
+  }
+
+  .actionButton {
+    gap: 0;
+  }
+
+  .actionText {
+    display: none;
+  }
+
+  .icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .langButton {
+    font-size: 16px;
+    font-weight: 300;
+  }
+}
+
+/* Малий мобільний (до 480px) */
+@media (max-width: 480px) {
+  .header {
+    height: 60px;
+    padding: 0 16px;
+  }
+
+  .menuButton {
+    width: 20px;
+    height: 20px;
+  }
+
+  .actions {
+    gap: 24px;
+  }
+
+  .icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .langButton {
+    font-size: 14px;
+    font-weight: 300;
+  }
 }

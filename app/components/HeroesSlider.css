@@ -63,6 +63,12 @@
   height: 320px;
   flex-shrink: 0;
   position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-card:hover {
+  transform: translateY(-10px);
 }
 
 .hero-photo {
@@ -76,6 +82,9 @@
   overflow: hidden;
   position: relative;
 }
+.hero-photo:hover {
+  transform: translateY(-10px);
+}
 
 .hero-photo img {
   width: 100%;
@@ -87,13 +96,38 @@
   object-position: center top;
 }
 
-.hero-card .arrow-icon {
+.hero-overlay {
   position: absolute;
-  right: 20px;
-  bottom: 20px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #F6F3E8;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-card:hover .hero-overlay {
+  opacity: 1;
+}
+
+.hero-callsign {
+  color: #17120E;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 100%;
+}
+
+.hero-overlay .arrow-icon {
   width: 14px;
   height: 14px;
-  color: #FFFFFF;
+  color: #17120E;
 }
 
 .view-all-button {
@@ -107,11 +141,11 @@
   background: #FFFFFF;
   border: none;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .view-all-button:hover {
-  opacity: 0.9;
+  background: #F2B202;
 }
 
 .view-all-button .button-text {
@@ -126,4 +160,110 @@
   width: 14px;
   height: 14px;
   color: #17120E;
+  transition: transform 1s ease-in-out;
+}
+
+.view-all-button:hover .arrow-icon {
+  transform: rotate(-75deg);
+}
+
+/* Мобільний телефон (до 768px) */
+@media (max-width: 768px) {
+  .heroes-slider-section {
+    padding: 80px 0 90px;
+    padding-top: 247px;
+    padding-bottom: 250px;
+  }
+
+  .heroes-title {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 100%;
+    margin: 0 0 60px;
+    padding: 0 16px;
+    margin-bottom: 90px
+  }
+
+  .heroes-grid {
+    margin-bottom: 70px;
+  }
+
+  .hero-card {
+    width: 240px;
+    height: 320px;
+  }
+
+  .hero-photo {
+    width: 240px;
+    height: 320px;
+  }
+
+  .view-all-button {
+    height: 60px;
+    padding: 0 25px;
+    gap: 10px;
+  }
+
+  .view-all-button .button-text {
+    font-size: 23px;
+    font-weight: 300;
+  }
+
+  .view-all-button .arrow-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Малий мобільний (до 480px) */
+@media (max-width: 480px) {
+  .heroes-slider-section {
+    padding: 60px 0 70px;
+  }
+
+  .heroes-title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 100%;
+    margin: 0 0 50px;
+    padding: 0 16px;
+  }
+
+  .heroes-grid {
+    margin-bottom: 60px;
+  }
+
+  .hero-card {
+    width: 180px;
+    height: 240px;
+  }
+
+  .hero-photo {
+    width: 180px;
+    height: 240px;
+    border-radius: 8px;
+  }
+
+  .hero-card .arrow-icon {
+    right: 16px;
+    bottom: 16px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .view-all-button {
+    height: 50px;
+    padding: 0 20px;
+    gap: 8px;
+  }
+
+  .view-all-button .button-text {
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .view-all-button .arrow-icon {
+    width: 12px;
+    height: 12px;
+  }
 }

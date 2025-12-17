@@ -96,7 +96,10 @@ const HeroesSlider = (): JSX.Element => {
               <div className="hero-photo">
                 <img src={hero.image} alt={hero.alt} />
               </div>
-              {(index % heroes.length) < 5 && <ArrowIcon />}
+              <div className="hero-overlay">
+                <span className="hero-callsign">Позивний</span>
+                <ArrowIcon />
+              </div>
             </div>
           ))}
         </div>

@@ -77,15 +77,15 @@
   background: #FFF;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 .form-button:hover {
-  transform: scale(1.02);
+  background: #F2B202;
 }
 
 .form-button:active {
-  transform: scale(0.98);
+  background: #E0A602;
 }
 
 .button-text {
@@ -100,4 +100,201 @@
 .button-icon {
   width: 14px;
   height: 14px;
+  transition: transform 1s ease-in-out;
+}
+
+.form-button:hover .button-icon {
+  transform: rotate(-75deg);
+}
+
+/* Планшет (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .stone-block {
+    height: 650px;
+  }
+
+  .decorative-pattern {
+    width: 320px;
+    height: 240px;
+    left: 500px;
+    top: 180px;
+  }
+
+  .stone-image {
+    width: 420px;
+    height: 440px;
+    left: 420px;
+    top: 120px;
+  }
+
+  .content-wrapper {
+    width: 350px;
+    left: 50px;
+    top: 200px;
+    gap: 20px;
+  }
+
+  .quote-icon-stone {
+    width: 28px;
+    height: 21px;
+    top: -90px;
+  }
+
+  .hero-title {
+    font-size: 36px;
+    line-height: 105%;
+  }
+
+  .hero-subtitle1 {
+    font-size: 15px;
+  }
+
+  .form-button {
+    height: 52px;
+    padding: 0 20px;
+  }
+
+  .button-text {
+    font-size: 18px;
+  }
+}
+
+/* Мобільний телефон (до 768px) */
+@media (max-width: 768px) {
+  .stone-block {
+    height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .decorative-pattern {
+    width: 440px;
+    height: 358px;
+    opacity: 0.5;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .stone-image {
+    width: 100%;
+    max-width: 650px;
+    height: 670px;
+    left: 50%;
+    top: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
+  .content-wrapper {
+    width: calc(100% - 32px);
+    max-width: 468px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    gap: 30px;
+    z-index: 2;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .quote-icon-stone {
+    width: 32px;
+    height: 24px;
+    top: -124px;
+    left: 0;
+    transform: none;
+  }
+
+  .hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 100%;
+    text-transform: uppercase;
+  }
+
+  .hero-subtitle1 {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 100%;
+  }
+
+  .form-button {
+    height: 60px;
+    padding: 0 25px;
+    gap: 10px;
+  }
+
+  .button-text {
+    font-size: 22px;
+    font-weight: 300;
+  }
+
+  .button-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Малий мобільний (до 480px) */
+@media (max-width: 480px) {
+  .stone-block {
+    height: 590px;
+  }
+
+  .decorative-pattern {
+    width: 300px;
+    height: 244px;
+    opacity: 0.5;
+  }
+
+  .stone-image {
+    max-width: 400px;
+    height: 413px;
+    opacity: 1;
+  }
+
+  .content-wrapper {
+    width: calc(100% - 32px);
+    max-width: 320px;
+    gap: 24px;
+  }
+
+  .quote-icon-stone {
+    width: 24px;
+    height: 18px;
+    top: -90px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 100%;
+    text-transform: uppercase;
+  }
+
+  .hero-subtitle1 {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 100%;
+  }
+
+  .form-button {
+    height: 50px;
+    padding: 0 20px;
+    gap: 8px;
+    border-radius: 8px;
+  }
+
+  .button-text {
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .button-icon {
+    width: 12px;
+    height: 12px;
+  }
 }

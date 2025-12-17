@@ -14,9 +14,7 @@ const ThirdBlock = (): JSX.Element => {
           <p className="section-label">Про алею</p>
           <h2 className="main-heading">
             Тут — історії людей,
-            <br />
             які переписали
-            <br />
             історію країни
           </h2>
           <svg className="quote-icon-bottom" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">

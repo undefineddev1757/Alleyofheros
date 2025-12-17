@@ -1,10 +1,3 @@
-@font-face {
-  font-family: 'e-Ukraine';
-  font-weight: 300;
-  font-style: normal;
-  src: local('e-Ukraine'), local('eUkraine');
-}
-
 .footer {
   width: 100%;
   height: 142px;
@@ -102,4 +95,200 @@
 .social-icon svg {
   width: 20px;
   height: 20px;
+}
+
+/* Планшет (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .footer {
+    padding: 0 60px;
+    height: 130px;
+  }
+
+  .address-section {
+    width: 180px;
+    gap: 16px;
+  }
+
+  .section-label-footer {
+    font-size: 9px;
+  }
+
+  .address-text {
+    font-size: 15px;
+  }
+
+  .footer-logo {
+    width: 42px;
+    height: 31px;
+  }
+
+  .copyright-text {
+    font-size: 7px;
+  }
+
+  .social-section {
+    width: 110px;
+    gap: 16px;
+  }
+
+  .social-icons {
+    gap: 10px;
+  }
+
+  .social-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .social-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Мобільний телефон (до 768px) */
+@media (max-width: 768px) {
+  .footer {
+    height: 142px;
+    min-height: 142px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+    padding: 0 16px;
+  }
+
+  .address-section {
+    width: auto;
+    max-width: 197px;
+    align-items: flex-start;
+    text-align: left;
+    gap: 20px;
+    order: 1;
+  }
+
+  .section-label-footer {
+    font-size: 10px;
+    font-weight: 300;
+  }
+
+  .address-text {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 110%;
+  }
+
+  .logo-section {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    order: 2;
+    gap: 10px;
+  }
+
+  .footer-logo {
+    width: 46px;
+    height: 34px;
+  }
+
+  .copyright-text {
+    font-size: 8px;
+    font-weight: 300;
+  }
+
+  .social-section {
+    width: auto;
+    max-width: 116px;
+    align-items: flex-start;
+    gap: 20px;
+    order: 3;
+  }
+
+  .social-icons {
+    gap: 12px;
+  }
+
+  .social-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .social-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Малий мобільний (до 480px) */
+@media (max-width: 480px) {
+  .footer {
+    height: 142px;
+    min-height: 142px;
+    padding: 0 16px;
+    gap: 0;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .address-section {
+    width: auto;
+    max-width: 158px;
+    gap: 16px;
+    align-items: flex-start;
+    text-align: left;
+    order: 1;
+  }
+
+  .section-label-footer {
+    font-size: 8px;
+    font-weight: 300;
+    line-height: 100%;
+  }
+
+  .address-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 110%;
+  }
+
+  .logo-section {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 8px;
+    order: 2;
+  }
+
+  .footer-logo {
+    width: 37px;
+    height: 27px;
+  }
+
+  .copyright-text {
+    font-size: 6px;
+    font-weight: 300;
+    line-height: 100%;
+  }
+
+  .social-section {
+    width: auto;
+    max-width: 116px;
+    gap: 16px;
+    align-items: flex-start;
+    order: 3;
+  }
+
+  .social-icons {
+    gap: 10px;
+  }
+
+  .social-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .social-icon svg {
+    width: 16px;
+    height: 16px;
+  }
 }

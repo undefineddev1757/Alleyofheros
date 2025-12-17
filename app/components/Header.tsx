@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Logo from "./Logo";
 import styles from "./Header.module.css";
 
 const Header = () => {
   const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleAddClick = () => {
     router.push("/add-heroe");
@@ -16,13 +18,47 @@ const Header = () => {
     router.push("/fined-heroe");
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header className={styles.header}>
-      <nav className={styles.nav}>
-        <Link className={styles.navLink} href="#stories">
+      <button 
+        className={styles.menuButton}
+        type="button"
+        onClick={toggleMenu}
+        aria-label="Меню"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M3 12H21M3 6H21M3 18H21"
+            stroke="#17120E"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>
+      </button>
+
+      <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
+        <Link 
+          className={styles.navLink} 
+          href="#stories"
+          onClick={() => setIsMenuOpen(false)}
+        >
           Наші Герої
         </Link>
-        <Link className={styles.navLink} href="/your-stories">
+        <Link 
+          className={styles.navLink} 
+          href="/your-stories"
+          onClick={() => setIsMenuOpen(false)}
+        >
           Ваші історії
         </Link>
       </nav>
@@ -34,8 +70,9 @@ const Header = () => {
           className={styles.actionButton} 
           type="button"
           onClick={handleAddClick}
+          aria-label="Додати"
         >
-          <span>Додати</span>
+          <span className={styles.actionText}>Додати</span>
           <svg
             className={styles.icon}
             width="16"
@@ -54,8 +91,9 @@ const Header = () => {
           className={styles.actionButton} 
           type="button"
           onClick={handleFindClick}
+          aria-label="Знайти"
         >
-          <span>Знайти</span>
+          <span className={styles.actionText}>Знайти</span>
           <svg
             className={styles.icon}
             width="16"

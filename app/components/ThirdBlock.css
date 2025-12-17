@@ -1,18 +1,5 @@
-@font-face {
-  font-family: 'e-Ukraine';
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'e-Ukraine Head';
-  font-weight: 700;
-  font-style: normal;
-}
-
 .third-block {
   background-color: #F6F3E8;
-  background-image: url('/words.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -20,6 +7,7 @@
   min-height: 800px;
   padding: 100px 20px;
   position: relative;
+  background-image: url('../public/words.svg');
 }
 
 .statue-container {
@@ -124,39 +112,34 @@
   width: 100%;
 }
 
-@media (max-width: 1200px) {
+/* Планшет (768px - 1024px) */
+@media (max-width: 1024px) {
+  .third-block {
+    padding: 80px 40px;
+    min-height: 700px;
+  }
+
+  .statue-container {
+    width: 600px;
+    height: 600px;
+  }
+
   .third-block-container {
-    flex-direction: column;
-    gap: 60px;
-    align-items: center;
+    gap: 80px;
   }
 
   .left-content {
-    width: 100%;
-    max-width: 460px;
-    padding-left: 0;
+    padding-left: 60px;
   }
 
   .right-content {
-    width: 100%;
-    max-width: 570px;
-    padding-right: 0;
-    gap: 60px;
-  }
-
-  .logo {
-    margin-top: 60px;
-  }
-}
-
-@media (max-width: 768px) {
-  .third-block {
-    min-height: auto;
-    padding: 60px 20px;
+    width: 550px;
+    padding-right: 60px;
+    gap: 250px;
   }
 
   .main-heading {
-    font-size: 28px;
+    font-size: 32px;
   }
 
   .section-label,
@@ -165,16 +148,153 @@
     font-size: 16px;
   }
 
-  .left-content,
-  .right-content {
+  .logo {
+    margin-top: 200px;
+    width: 130px;
+    height: 43px;
+  }
+}
+
+@media (max-width: 768px) {
+  .third-block {
+    min-height: auto;
+    padding: 80px 41px 80px;
+    background-size: cover;
+  }
+  .third-block-container .logo{
+    display: none;
+  }
+
+  .statue-container {
+    width: 400px;
+    height: 400px;
+    opacity: 0.3;
+  }
+
+  .third-block-container {
+    flex-direction: column;
+    gap: 28px;
+    align-items: flex-start;
+    z-index: 2;
     max-width: 100%;
   }
 
+  .left-content {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    gap: 28px;
+  }
+
   .right-content {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0;
+    gap: 400px;
+  }
+
+  .section-label {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 100%;
+  }
+
+  .main-heading {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 100%;
+    text-transform: uppercase;
+  }
+
+  .description-text {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 140%;
+    margin-top: 0;
+  }
+
+  .quote-text {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 140%;
+  }
+
+  .quote-icon-top,
+  .quote-icon-bottom {
+    width: 32px;
+    height: 24px;
+  }
+
+  .logo {
+    margin-top: 50px;
+    width: 145px;
+    height: 48px;
+  }
+
+  .quote-section {
+    gap: 20px;
+  }
+}
+
+/* Малий мобільний (до 480px) */
+@media (max-width: 480px) {
+  .third-block {
+    padding: 60px 16px 60px;
+    min-height: auto;
+  }
+
+  .statue-container {
+    width: 300px;
+    height: 300px;
+    opacity: 0.3;
+  }
+
+  .third-block-container {
     gap: 40px;
+  }
+
+  .left-content {
+    gap: 16px;
+  }
+
+  .main-heading {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 100%;
+    text-transform: uppercase;
+  }
+
+  .section-label {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 100%;
+  }
+
+  .description-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 140%;
+  }
+
+  .quote-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 140%;
+  }
+
+  .quote-icon-top,
+  .quote-icon-bottom {
+    width: 24px;
+    height: 18px;
   }
 
   .logo {
     margin-top: 40px;
+    width: 100px;
+    height: 33px;
+  }
+
+  .right-content {
+    gap: 40px;
   }
 }
