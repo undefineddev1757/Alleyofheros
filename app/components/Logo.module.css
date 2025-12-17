@@ -5,6 +5,12 @@
   left: 50%;
   top: 10px;
   transform: translateX(-50%);
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.logo:hover {
+  opacity: 0.8;
 }
 
 .logo svg {

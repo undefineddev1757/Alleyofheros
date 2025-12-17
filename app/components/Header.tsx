@@ -8,6 +8,10 @@ import styles from "./Header.module.css";
 const Header = () => {
   const router = useRouter();
 
+  const handleAddClick = () => {
+    router.push("/add-heroe");
+  };
+
   const handleFindClick = () => {
     router.push("/fined-heroe");
   };
@@ -18,7 +22,7 @@ const Header = () => {
         <Link className={styles.navLink} href="#stories">
           Наші Герої
         </Link>
-        <Link className={styles.navLink} href="#stories">
+        <Link className={styles.navLink} href="/your-stories">
           Ваші історії
         </Link>
       </nav>
@@ -26,7 +30,11 @@ const Header = () => {
       <Logo />
 
       <div className={styles.actions}>
-        <button className={styles.actionButton} type="button">
+        <button 
+          className={styles.actionButton} 
+          type="button"
+          onClick={handleAddClick}
+        >
           <span>Додати</span>
           <svg
             className={styles.icon}

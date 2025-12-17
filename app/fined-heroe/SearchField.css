@@ -36,7 +36,7 @@
   outline: none;
   background: transparent;
   color: #17120E;
-  font-family: 'e-Ukraine', -apple-system, Roboto, Helvetica, sans-serif;
+  
   font-size: 14px;
   font-style: normal;
   font-weight: 300;
@@ -79,7 +79,7 @@
 
 .suggestion-text {
   color: rgba(23, 18, 14, 0.25);
-  font-family: 'e-Ukraine', -apple-system, Roboto, Helvetica, sans-serif;
+  
   font-size: 12px;
   font-style: normal;
   font-weight: 300;

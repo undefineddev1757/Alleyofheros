@@ -1,0 +1,198 @@
+.form-story-block {
+  width: 100%;
+  max-width: 1440px;
+  height: 800px;
+  position: relative;
+  background: #EDE8E0;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.background-pattern {
+  width: 480px;
+  height: 426px;
+  position: absolute;
+  left: 650px;
+  top: 130px;
+  fill: #17120E;
+}
+
+.medal-container {
+  display: flex;
+  width: 560px;
+  height: 603px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 790px;
+  top: 90px;
+}
+
+.medal-image {
+  width: 560px;
+  height: 603px;
+  transform: rotate(-14deg);
+  flex-shrink: 0;
+  position: absolute;
+  left: -65px;
+  top: -59px;
+}
+
+.content-container {
+  display: flex;
+  width: 468px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  position: absolute;
+  left: 120px;
+  top: 244px;
+  height: 277px;
+}
+
+.quote-icon {
+  width: 32px;
+  height: 24px;
+  position: absolute;
+  left: 0;
+  top: -124px;
+}
+
+.main-heading {
+  align-self: stretch;
+  color: #17120E;
+  font-family: 'e-Ukraine Head', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.subheading {
+  align-self: stretch;
+  color: #17120E;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 100%;
+  margin: 0;
+}
+
+.form-button {
+  display: flex;
+  height: 60px;
+  padding: 0 25px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: #FFF;
+  border: none;
+  cursor: pointer;
+}
+
+.button-text {
+  color: #17120E;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 100%;
+}
+
+.button-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Responsive styles */
+@media (max-width: 1440px) {
+  .form-story-block {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .form-story-block {
+    height: auto;
+    min-height: 600px;
+    padding: 60px 40px;
+  }
+
+  .background-pattern {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100px;
+    opacity: 0.05;
+  }
+
+  .medal-container {
+    display: none;
+  }
+
+  .content-container {
+    position: static;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    height: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .quote-icon {
+    position: static;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-story-block {
+    padding: 40px 20px;
+    min-height: 500px;
+  }
+
+  .content-container {
+    max-width: 100%;
+    gap: 25px;
+  }
+
+  .main-heading {
+    font-size: 36px;
+  }
+
+  .subheading {
+    font-size: 16px;
+  }
+
+  .form-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-story-block {
+    padding: 30px 20px;
+    min-height: 400px;
+  }
+
+  .main-heading {
+    font-size: 28px;
+  }
+
+  .subheading {
+    font-size: 14px;
+  }
+
+  .content-container {
+    gap: 20px;
+  }
+
+  .quote-icon {
+    width: 24px;
+    height: 18px;
+  }
+}
