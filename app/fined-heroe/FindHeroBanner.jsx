@@ -23,7 +23,7 @@ const FindHeroBanner = () => {
         <div className="medal-section">
           <div className="brace-left">{'{'}</div>
           <img 
-            className="medal-image" 
+            className="medal-image1" 
             src="https://api.builder.io/api/v1/image/assets/TEMP/12daba71a01ffc2fafdfaa3af92bdeb993584487?width=560" 
             alt="Medal of Honor" 
           />

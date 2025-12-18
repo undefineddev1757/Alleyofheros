@@ -25,7 +25,7 @@ const eUkraineHead = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Alley of Heroes",
+  title: "Алея Друзів",
   description: "Discover and celebrate everyday heroes in your community.",
   icons: {
     icon: '/favicon.ico',

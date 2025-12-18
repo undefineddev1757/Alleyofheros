@@ -50,7 +50,7 @@
   z-index: 2;
 }
 
-.hero-callsign {
+.hero-callsign2 {
   align-self: stretch;
   color: var(--color-primary);
   font-size: 40px;
@@ -190,7 +190,7 @@
     height: 120px;
   }
 
-  .hero-callsign {
+  .hero-callsign2 {
     font-size: 32px;
   }
 

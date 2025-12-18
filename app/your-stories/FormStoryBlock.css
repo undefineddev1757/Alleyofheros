@@ -4,6 +4,9 @@
   height: 800px;
   position: relative;
   background: #EDE8E0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   margin: 0 auto;
   overflow: hidden;
 }

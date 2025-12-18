@@ -113,19 +113,25 @@ export default function HeroesSlider(): JSX.Element {
         >
           {infiniteHeroes.map((hero, index) => (
             <div key={`${hero.id}-${index}`} className="hero-card">
-               <span className="hero-photo-arrow" aria-hidden="true">
-                  <ArrowIcon />
-                </span>
               <div className="hero-photo">
                 <img src={hero.image} alt={hero.alt} />
-               
               </div>
               <div className="hero-footer">
-                <span className="hero-callsign">Позивний</span>
+                <span className="hero-callsign1">Позивний</span>
+                <span className="hero-footer-arrow" aria-hidden="true">
+                  <ArrowIcon />
+                </span>
               </div>
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="heroes-cta">
+        <button className="heroes-button" type="button">
+          <span className="heroes-button-text">Перейти до всіх героїв</span>
+          <ArrowIcon />
+        </button>
       </div>
     </div>
   );

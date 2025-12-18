@@ -1,8 +1,13 @@
 .find-hero-banner {
-  width: 100%;
-  height: 752px;
-  position: relative;
   background: #EDE8E0;
+  background-image: url(../public/search-bg.svg);
+  background-size: 60% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 720px;
+  position: relative;
+
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -14,7 +19,6 @@
   height: 400px;
   position: absolute;
   left: 50%;
-  top: 120px;
   transform: translateX(-50%);
   overflow: hidden;
 }
@@ -57,6 +61,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 24px;
 }
 
 .medal-section {
@@ -66,10 +72,10 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
-  position: absolute;
-  left: 50%;
-  top: 89px;
-  transform: translateX(-50%);
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
 }
 
 .brace-left,
@@ -85,7 +91,7 @@
   text-align: right;
 }
 
-.medal-image {
+.medal-image1 {
   width: 320px;
   height: 352px;
   transform: rotate(0deg);
@@ -101,11 +107,8 @@
   font-weight: 700;
   line-height: 100%;
   text-transform: uppercase;
-  position: absolute;
-  left: 50%;
-  top: 447px;
-  transform: translateX(-50%);
-  width: 419px;
+  position: relative;
+  width: auto;
   text-align: center;
   margin: 0;
 }
@@ -118,12 +121,13 @@
   gap: 20px;
   border-radius: 100px;
   background: #FFF;
-  position: absolute;
-  left: 50%;
-  top: 526px;
-  transform: translateX(-50%);
+  position: relative;
+  left: auto;
+  bottom: auto;
+  transform: none;
   height: 56px;
   box-sizing: border-box;
+  margin: 0 auto;
 }
 
 .search-icon {
@@ -170,7 +174,8 @@
   .medal-section {
     width: 350px;
     height: 280px;
-    top: 80px;
+    top: 50%;
+    transform: translate(-50%, -50%);
     gap: 16px;
   }
 
@@ -179,20 +184,17 @@
     font-size: 52px;
   }
 
-  .medal-image {
+  .medal-image1 {
     width: 260px;
     height: 286px;
   }
 
   .title {
     font-size: 40px;
-    top: 380px;
-    width: 350px;
   }
 
   .search-field {
     width: 340px;
-    top: 450px;
   }
 }
 
@@ -220,7 +222,6 @@
   .medal-section {
     width: 300px;
     height: 240px;
-    top: 60px;
     gap: 12px;
   }
 
@@ -229,19 +230,16 @@
     font-size: 42px;
   }
 
-  .medal-image {
+  .medal-image1 {
     width: 220px;
     height: 242px;
   }
 
   .title {
     font-size: 32px;
-    top: 320px;
-    width: 280px;
   }
 
   .search-field {
-    top: 390px;
     width: calc(100% - 40px);
     max-width: 360px;
     height: 52px;
@@ -277,7 +275,6 @@
   .medal-section {
     width: 260px;
     height: 200px;
-    top: 50px;
     gap: 10px;
   }
 
@@ -286,19 +283,16 @@
     font-size: 36px;
   }
 
-  .medal-image {
+  .medal-image1 {
     width: 180px;
     height: 198px;
   }
 
   .title {
     font-size: 28px;
-    top: 270px;
-    width: 240px;
   }
 
   .search-field {
-    top: 340px;
     width: calc(100% - 32px);
     max-width: 320px;
     height: 48px;

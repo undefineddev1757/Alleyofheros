@@ -45,7 +45,7 @@ const Header = () => {
 
       {/* Desktop Navigation */}
       <nav className={styles.desktopNav}>
-        <Link className={styles.navLink} href="#stories">
+        <Link className={styles.navLink} href="/fined-heroe">
           Наші Герої
         </Link>
         <Link className={styles.navLink} href="/your-stories">

@@ -13,7 +13,6 @@
   top: 220px;
   fill: #F6F3E8;
   opacity: 0.5;
-  display: none;
 
 }
 
@@ -26,7 +25,7 @@
   object-fit: cover;
 }
 
-.content-wrapper {
+.content-wrapper1 {
   display: flex;
   width: 468px;
   flex-direction: column;
@@ -79,7 +78,8 @@
   background: #FFF;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: #17120E;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 
@@ -100,7 +100,28 @@
 .button-icon {
   width: 14px;
   height: 14px;
-  transition: transform 1s ease-in-out;
+  transition: transform 0.3s ease, color 0.3s ease, fill 0.3s ease;
+}
+
+.button-icon path {
+  fill: currentColor;
+  transition: fill 0.3s ease;
+}
+
+.form-button:hover {
+  background:#17120E;
+  color: #fff;
+}
+.form-button:hover span{
+  color: #fff;
+}
+.form-button:hover .button-icon {
+  transform: rotate(-75deg);
+  color: #fff;
+}
+
+.form-button:hover .button-icon path {
+  fill: #fff;
 }
 
 
@@ -123,7 +144,7 @@
     margin-left: -5px;
   }
 
-  .content-wrapper {
+  .content-wrapper1 {
     left: 50%;
     margin-left: -520px;
   }
@@ -149,7 +170,7 @@
     top: 100px;
   }
 
-  .content-wrapper {
+  .content-wrapper1 {
     width: 360px;
     left: 60px;
     top: 220px;
@@ -220,7 +241,7 @@
     margin: 0 auto;
   }
 
-  .content-wrapper {
+  .content-wrapper1 {
     width: 100%;
     max-width: 500px;
     position: relative;
@@ -285,7 +306,8 @@
   .decorative-pattern {
     max-width: 320px;
     height: 240px;
-    opacity: 0.25;
+
+    display: none;
   }
 
   .stone-image {
@@ -294,7 +316,7 @@
     height: auto;
   }
 
-  .content-wrapper {
+  .content-wrapper1 {
     max-width: 100%;
     gap: 24px;
     padding: 0 16px;

@@ -26,7 +26,7 @@ const HeroesList = ({ heroes = [], currentPage = 1, totalPages = 5, onPageChange
           <React.Fragment key={hero.id || index}>
             <div className="hero-item">
               <div className="hero-info">
-                <div className="hero-callsign">{hero.callsign}</div>
+                <div className="hero-callsign2">{hero.callsign}</div>
                 <div className="hero-name1">{hero.name}</div>
               </div>
               <svg className="hero-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

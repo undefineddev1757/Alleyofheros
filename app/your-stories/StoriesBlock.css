@@ -4,6 +4,10 @@
   margin: 0 auto;
   padding: 80px 40px;
   background: #EDE8E0;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   border-top: 2px solid #BEBBB1;
   border-bottom: 2px solid #BEBBB1;
   overflow: hidden;

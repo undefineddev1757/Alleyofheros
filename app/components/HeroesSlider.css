@@ -105,9 +105,9 @@
   height: 60px;
   background: #F6F3E8;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
-  padding: 0 20px 14px;
+  padding: 14px 20px 0;
   box-sizing: border-box;
   opacity: 0;
   transform: translateY(60px);
@@ -119,7 +119,7 @@
   transform: translateY(0);
 }
 
-.hero-callsign {
+.hero-callsign1 {
   color: #17120E;
   font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
   font-size: 18px;
@@ -127,28 +127,80 @@
   line-height: 100%;
 }
 
-.hero-photo-arrow {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+.hero-footer-arrow {
+  display: inline-flex;
+  align-items: center;
   color: #fff;
-  z-index: 999;
-  /* transform: rotate(0deg) translateY(0); */
-  /* transition: color 0.3s ease, transform 0.3s ease; */
+  opacity: 0;
+  transform: rotate(0deg);
+  transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
 }
 
-.hero-photo-arrow .arrow-icon {
+.hero-footer-arrow .arrow-icon {
   width: 14px;
   height: 14px;
-  bottom: 30px;
-  right: 10px;
-  position: absolute;
   color: currentColor;
+  transition: inherit;
 }
 
-.hero-card:hover .hero-photo-arrow {
+.hero-card:hover .hero-footer-arrow {
   color: #17120E;
   transform: rotate(-75deg);
+  opacity: 1;
+}
+
+.heroes-cta {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.heroes-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 60px;
+  padding: 0 25px;
+  border-radius: 10px;
+  border: none;
+  background: #fff;
+  color: #17120E;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  transform: translateY(0);
+}
+
+.heroes-button .arrow-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+  transform: rotate(0deg);
+  transform-origin: center;
+  will-change: transform;
+  transition: transform 0.3s ease, color 0.3s ease, fill 0.3s ease;
+}
+
+.heroes-button .arrow-icon path {
+  fill: currentColor;
+  transition: fill 0.3s ease;
+}
+
+.heroes-button:hover {
+  background:#17120E;
+  color: #fff;
+}
+
+.heroes-button:hover .arrow-icon {
+  transform: rotate(-75deg);
+  color: #fff;
+}
+
+.heroes-button:hover .arrow-icon path {
+  fill: #fff;
 }
 
 /* Мобільний телефон (до 768px) */
