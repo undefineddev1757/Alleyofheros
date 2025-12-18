@@ -1,7 +1,7 @@
 .stone-block {
   height: 800px;
   position: relative;
-  background: #F0C419;
+  background: #F2B202;
   overflow: hidden;
 }
 
@@ -13,6 +13,8 @@
   top: 220px;
   fill: #F6F3E8;
   opacity: 0.5;
+  display: none;
+
 }
 
 .stone-image {
@@ -80,9 +82,7 @@
   transition: background-color 0.3s ease;
 }
 
-.form-button:hover {
-  background: #F2B202;
-}
+
 
 .form-button:active {
   background: #E0A602;
@@ -103,75 +103,108 @@
   transition: transform 1s ease-in-out;
 }
 
-.form-button:hover .button-icon {
-  transform: rotate(-75deg);
+
+
+/* Великі екрани (від 1024px до 2560px) */
+@media (min-width: 1024px) and (max-width: 2560px) {
+  .stone-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .decorative-pattern {
+    left: 50%;
+    margin-left: 340px;
+  }
+
+  .stone-image {
+    left: 50%;
+    margin-left: -5px;
+  }
+
+  .content-wrapper {
+    left: 50%;
+    margin-left: -520px;
+  }
 }
 
 /* Планшет (768px - 1024px) */
 @media (max-width: 1024px) and (min-width: 769px) {
   .stone-block {
-    height: 650px;
+    height: 700px;
   }
 
   .decorative-pattern {
-    width: 320px;
-    height: 240px;
-    left: 500px;
-    top: 180px;
+    width: 380px;
+    height: 285px;
+    left: 450px;
+    top: 200px;
   }
 
   .stone-image {
-    width: 420px;
-    height: 440px;
-    left: 420px;
-    top: 120px;
+    width: 480px;
+    height: 500px;
+    left: 400px;
+    top: 100px;
   }
 
   .content-wrapper {
-    width: 350px;
-    left: 50px;
-    top: 200px;
-    gap: 20px;
+    width: 360px;
+    left: 60px;
+    top: 220px;
+    gap: 24px;
   }
 
   .quote-icon-stone {
     width: 28px;
     height: 21px;
-    top: -90px;
+    top: -100px;
   }
 
   .hero-title {
-    font-size: 36px;
-    line-height: 105%;
+    font-size: 42px;
+    line-height: 100%;
   }
 
   .hero-subtitle1 {
-    font-size: 15px;
+    font-size: 16px;
+    line-height: 120%;
   }
 
   .form-button {
-    height: 52px;
-    padding: 0 20px;
+    height: 54px;
+    padding: 0 22px;
   }
 
   .button-text {
-    font-size: 18px;
+    font-size: 19px;
+  }
+
+  .button-icon {
+    width: 13px;
+    height: 13px;
   }
 }
 
 /* Мобільний телефон (до 768px) */
 @media (max-width: 768px) {
   .stone-block {
-    height: 800px;
+    height: auto;
+    min-height: 900px;
+    padding: 80px 16px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column-reverse;
+    padding-bottom: 0px;
+    gap: 20px;
   }
 
   .decorative-pattern {
-    width: 440px;
+    width: 100%;
+    max-width: 480px;
     height: 358px;
-    opacity: 0.5;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -180,32 +213,34 @@
   .stone-image {
     width: 100%;
     max-width: 650px;
-    height: 670px;
-    left: 50%;
-    top: 50%;
+    height: auto;
     position: relative;
-    transform: translate(-50%, -50%);
-    opacity: 1;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto;
   }
 
   .content-wrapper {
-    width: calc(100% - 32px);
-    max-width: 468px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    margin-right: auto;
+    left: 0;
+    top: 0;
+    transform: none;
     gap: 30px;
     z-index: 2;
     align-items: flex-start;
-    text-align: left;
+    padding: 0 20px;
   }
 
   .quote-icon-stone {
     width: 32px;
     height: 24px;
-    top: -124px;
+    position: relative;
+    top: 0;
     left: 0;
-    transform: none;
+    margin-bottom: 24px;
   }
 
   .hero-title {
@@ -218,7 +253,7 @@
   .hero-subtitle1 {
     font-size: 18px;
     font-weight: 300;
-    line-height: 100%;
+    line-height: 120%;
   }
 
   .form-button {
@@ -228,7 +263,7 @@
   }
 
   .button-text {
-    font-size: 22px;
+    font-size: 23px;
     font-weight: 300;
   }
 
@@ -238,58 +273,61 @@
   }
 }
 
+
+
 /* Малий мобільний (до 480px) */
-@media (max-width: 480px) {
+@media (max-width: 683px) {
   .stone-block {
-    height: 590px;
+    min-height: 600px;
+    padding: 60px 16px 20px;
   }
 
   .decorative-pattern {
-    width: 300px;
-    height: 244px;
-    opacity: 0.5;
+    max-width: 320px;
+    height: 240px;
+    opacity: 0.25;
   }
 
   .stone-image {
-    max-width: 400px;
-    height: 413px;
-    opacity: 1;
+    top: 20px;
+    max-width: 100%;
+    height: auto;
   }
 
   .content-wrapper {
-    width: calc(100% - 32px);
-    max-width: 320px;
+    max-width: 100%;
     gap: 24px;
+    padding: 0 16px;
   }
 
   .quote-icon-stone {
     width: 24px;
     height: 18px;
-    top: -90px;
+    margin-bottom: 20px;
   }
 
   .hero-title {
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 700;
     line-height: 100%;
     text-transform: uppercase;
   }
 
   .hero-subtitle1 {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 300;
-    line-height: 100%;
+    line-height: 120%;
   }
 
   .form-button {
-    height: 50px;
-    padding: 0 20px;
+    height: 54px;
+    padding: 0 22px;
     gap: 8px;
     border-radius: 8px;
   }
 
   .button-text {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 300;
   }
 

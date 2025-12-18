@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+.hero-slider-section {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 110px 0 182px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 128px;
+}
+
+.hero-slider-title {
+  color: #17120E;
+  font-family: 'e-Ukraine Head', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.bracket-accent {
+  color: #F2B202;
+}
+
+.hero-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.hero-card {
+  width: 240px;
+  height: 320px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.hero-photo-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 240px;
+  height: 320px;
+  overflow: hidden;
+}
+
+.hero-photo {
+  width: 320px;
+  height: 549px;
+  aspect-ratio: 320/549;
+  position: absolute;
+  left: -20px;
+  top: -40px;
+  object-fit: cover;
+}
+
+.hero-icon {
+  width: 14px;
+  height: 14px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.view-all-heroes-btn {
+  display: inline-flex;
+  height: 60px;
+  padding: 0 25px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: #FFF;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-all-heroes-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-text {
+  color: #17120E;
+  font-family: 'e-Ukraine', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 100%;
+}
+
+.btn-icon {
+  width: 14px;
+  height: 14px;
+  aspect-ratio: 1/1;
+}

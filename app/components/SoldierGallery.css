@@ -133,6 +133,24 @@
   right: 20px;
 }
 
+/* Великі екрани (від 1024px до 2560px) */
+@media (min-width: 1024px) and (max-width: 2560px) {
+  .decorative-svg {
+    left: 50%;
+    margin-left: -710px;
+  }
+
+  .gallery-header {
+    left: 50%;
+    margin-left: -520px;
+  }
+
+  .gallery-grid {
+    left: 50%;
+    margin-left: 44px;
+  }
+}
+
 /* Планшет (768px - 1024px) */
 @media (max-width: 1024px) and (min-width: 769px) {
   .soldier-gallery {

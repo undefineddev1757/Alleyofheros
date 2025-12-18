@@ -78,11 +78,49 @@
   height: 50px;
 }
 
+/* Великі екрани (від 1024px до 2560px) */
+@media (min-width: 1024px) and (max-width: 2560px) {
+  .hero-content {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Планшет (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-banner {
+    height: 600px;
+  }
+
+  .hero-background {
+    height: 600px;
+  }
+
+  .hero-content {
+    width: 90%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hero-title-first {
+    font-size: 72px;
+  }
+
+  .hero-title-second {
+    font-size: 72px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+  }
+}
+
 /* Мобільний телефон (до 768px) */
 @media (max-width: 768px) {
   .hero-banner {
     height: 100%;
-    min-height: 1013px
+    min-height: 1013px;
   }
 
   .hero-background {
@@ -149,7 +187,7 @@
   }
 
   .hero-background {
-   min-height: unset
+    min-height: unset;
   }
 
   .hero-content {
@@ -174,5 +212,64 @@
     max-width: 310px;
     margin-top: 24px;
     padding: 0;
+  }
+}
+
+/* Video cursor (desktop only) */
+@media (min-width: 1025px) {
+  .video-cursor {
+    width: 140px;
+    height: 140px;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.15s ease;
+  }
+
+  .video-cursor-circle {
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    stroke-width: 1px;
+  }
+
+  .video-cursor-content {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: absolute;
+    left: 30px;
+    top: 30px;
+  }
+
+  .cursor-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .video-cursor-text {
+    align-self: stretch;
+    color: #fff;
+    font-family: e-Ukraine, -apple-system, Roboto, Helvetica, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    text-align: left;
+  }
+
+  .video-cursor-dot {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 94px;
+    top: 124px;
   }
 }

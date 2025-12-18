@@ -12,3 +12,31 @@
 body {
   margin: 0;
 }
+
+/* Custom cursor for desktop */
+@media (min-width: 1025px) {
+  * {
+    cursor: none !important;
+  }
+
+  body.video-cursor-active .custom-cursor {
+    display: none;
+  }
+
+  .custom-cursor {
+    width: 16px;
+    height: 16px;
+    background-color: #F2B202;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease;
+  }
+
+  .custom-cursor.hover {
+    width: 32px;
+    height: 32px;
+  }
+}

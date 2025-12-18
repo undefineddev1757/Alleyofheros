@@ -15,9 +15,9 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 800px;
-  height: 800px;
-  z-index: 1;
+  width: clamp(300px, 50vw, 800px);
+  height: clamp(300px, 50vw, 800px);
+  z-index: 999;
   pointer-events: auto;
 }
 
@@ -112,6 +112,19 @@
   width: 100%;
 }
 
+/* Великі екрани (від 1024px до 2560px) */
+@media (min-width: 1024px) and (max-width: 2560px) {
+  .third-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .third-block-container {
+    margin: 0 auto;
+  }
+}
+
 /* Планшет (768px - 1024px) */
 @media (max-width: 1024px) {
   .third-block {
@@ -120,8 +133,8 @@
   }
 
   .statue-container {
-    width: 600px;
-    height: 600px;
+    width: clamp(400px, 60vw, 600px);
+    height: clamp(400px, 60vw, 600px);
   }
 
   .third-block-container {
@@ -157,18 +170,18 @@
 
 @media (max-width: 768px) {
   .third-block {
+    background-size: contain;
     min-height: auto;
     padding: 80px 41px 80px;
-    background-size: cover;
+    background-size: contain;
   }
   .third-block-container .logo{
     display: none;
   }
 
   .statue-container {
-    width: 400px;
-    height: 400px;
-    opacity: 0.3;
+    width: clamp(300px, 70vw, 500px);
+    height: clamp(300px, 70vw, 500px);
   }
 
   .third-block-container {
@@ -244,9 +257,8 @@
   }
 
   .statue-container {
-    width: 300px;
-    height: 300px;
-    opacity: 0.3;
+    width: clamp(250px, 80vw, 400px);
+    height: clamp(250px, 80vw, 400px);
   }
 
   .third-block-container {
@@ -294,7 +306,5 @@
     height: 33px;
   }
 
-  .right-content {
-    gap: 40px;
-  }
+
 }

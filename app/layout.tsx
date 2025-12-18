@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import CustomCursor from "./components/CustomCursor";
 
 const eUkraineHead = localFont({
   src: [
@@ -41,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${eUkraineHead.variable} ${eUkraineHead.className}`}>
+        <CustomCursor />
         {children}
       </body>
     </html>
