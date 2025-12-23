@@ -1,9 +1,26 @@
+'use client';
+
 import './ThirdBlock.css';
 import dynamic from 'next/dynamic';
 
 const StatueViewer = dynamic(() => import('./StatueViewer'), { ssr: false });
 
-const ThirdBlock = (): JSX.Element => {
+interface PageSection {
+  title?: string | null;
+  subtitle?: string | null;
+  content?: string | null;
+}
+
+interface ThirdBlockProps {
+  section?: PageSection;
+}
+
+const ThirdBlock = ({ section }: ThirdBlockProps): JSX.Element => {
+  // Split content into two paragraphs if it exists
+  const contentParts = section?.content?.split('\n\n') || [];
+  const firstParagraph = contentParts[0] || "Ми хочемо, щоб про них пам'ятали та знали, що це були не просто хоробрі воїни, а ті, хто допомагав усім, хто потребував, хто був щирим, добрим, жив на повну і ніколи не втрачав віру — у себе й у свою країну.";
+  const secondParagraph = contentParts[1] || "Вони своїми вчинками переписали історію України, яку згодом вивчатимуть нові покоління. І ми зробимо все, щоб пам'ять про них — як про людей — залишалася в кожному.";
+
   return (
     <section className="third-block">
       <div className="statue-container">
@@ -11,11 +28,9 @@ const ThirdBlock = (): JSX.Element => {
       </div>
       <div className="third-block-container">
         <div className="left-content">
-          <p className="section-label">Про алею</p>
+          <p className="section-label">{section?.subtitle || "Про алею"}</p>
           <h2 className="main-heading">
-            Тут — історії людей,
-            які переписали
-            історію країни
+            {section?.title || "Тут — історії людей, які переписали історію країни"}
           </h2>
           <svg className="quote-icon-bottom" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_quote_bottom)">
@@ -44,10 +59,7 @@ const ThirdBlock = (): JSX.Element => {
 
         <div className="right-content">
           <p className="description-text">
-            Ми хочемо, щоб про них памʼятали та знали, що це були
-            не просто хоробрі воїни, а ті, хто допомагав усім,
-            хто потребував, хто був щирим, добрим, жив на повну
-            і ніколи не втрачав віру — у себе й у свою країну.
+            {firstParagraph}
           </p>
 
           <div className="quote-section">
@@ -62,8 +74,7 @@ const ThirdBlock = (): JSX.Element => {
               </defs>
             </svg>
             <p className="quote-text">
-              Вони своїми вчинками переписали історію України,
-              яку згодом вивчатимуть нові покоління. І ми зробимо все, щоб памʼять про них — як про людей — залишалася в кожному.
+              {secondParagraph}
             </p>
           </div>
         </div>

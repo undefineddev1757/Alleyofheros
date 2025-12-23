@@ -3,9 +3,20 @@
 import { useEffect, useMemo, useState } from "react";
 import "./HeroBanner.css";
 
-const VIDEO_SRC = "/6034431_Aerialiew_1920x1080.mp4";
+interface PageSection {
+  title?: string | null;
+  subtitle?: string | null;
+  content?: string | null;
+  videoUrl?: string | null;
+}
 
-export default function HeroBanner(): JSX.Element {
+interface HeroBannerProps {
+  section?: PageSection;
+}
+
+const DEFAULT_VIDEO = "/6034431_Aerialiew_1920x1080.mp4";
+
+export default function HeroBanner({ section }: HeroBannerProps): JSX.Element {
   const [isDesktop, setIsDesktop] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -44,7 +55,7 @@ export default function HeroBanner(): JSX.Element {
     >
       <video
         className="hero-background"
-        src={VIDEO_SRC}
+        src={section?.videoUrl || DEFAULT_VIDEO}
         autoPlay
         muted
         loop
@@ -53,16 +64,14 @@ export default function HeroBanner(): JSX.Element {
       <div className="hero-content">
         <div className="hero-title-first">
           <span className="bracket-accent">{"{"}</span>
-          <span className="title-text"> Алея</span>
+          <span className="title-text"> {section?.title || "Алея"}</span>
         </div>
         <div className="hero-title-second">
-          <span className="title-text">Друзів </span>
+          <span className="title-text">{section?.subtitle || "Друзів"} </span>
           <span className="bracket-accent">{"}"}</span>
         </div>
         <div className="hero-subtitle">
-          Тут ми пам&apos;ятаємо не лише подвиги,
-          <br />
-          а й людину за ними
+          {section?.content || "Тут ми пам'ятаємо не лише подвиги, а й людину за ними"}
         </div>
       </div>
 

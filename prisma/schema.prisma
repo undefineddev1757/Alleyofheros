@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Hero {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Story {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  authorName  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PageSection {
+  id          String   @id @default(cuid())
+  sectionKey  String   @unique // hero, about, heroes, etc.
+  title       String?
+  subtitle    String?
+  content     String?  @db.Text
+  imageUrl    String?
+  videoUrl    String?
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Page {
+  id          String   @id @default(cuid())
+  slug        String   @unique // home, your-stories, find-hero
+  title       String
+  description String?
+  metaTitle   String?
+  metaDescription String?
+  isActive    Boolean  @default(true)
+  sections    PageContent[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PageContent {
+  id          String   @id @default(cuid())
+  pageId      String
+  page        Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  sectionKey  String   // banner, form, list, etc.
+  title       String?
+  subtitle    String?
+  content     String?  @db.Text
+  imageUrl    String?
+  videoUrl    String?
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Submission {
+  id          String   @id @default(cuid())
+  type        String   // hero-submission, story-submission, contact
+  name        String
+  email       String?
+  phone       String?
+  heroName    String?
+  heroStory   String?  @db.Text
+  message     String?  @db.Text
+  imageUrl    String?
+  status      String   @default("pending") // pending, approved, rejected
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

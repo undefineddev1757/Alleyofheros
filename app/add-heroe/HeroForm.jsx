@@ -1,7 +1,89 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import './HeroForm.css';
 
 const HeroForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    heroName: '',
+    location: '',
+    birthDate: '',
+    deathDate: '',
+    telegram: '',
+    phone: '',
+    heroStory: '',
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    // Validation
+    if (!formData.heroName || !formData.phone || !formData.heroStory) {
+      setError('Будь ласка, заповніть всі обов\'язкові поля');
+      setLoading(false);
+      return;
+    }
+
+    if (formData.heroStory.length < 350 || formData.heroStory.length > 1500) {
+      setError('Історія повинна містити від 350 до 1500 символів');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'hero-submission',
+          name: formData.heroName,
+          phone: formData.phone,
+          email: formData.telegram,
+          heroName: formData.heroName,
+          heroStory: `Місце проживання: ${formData.location}
+Дата народження: ${formData.birthDate}
+Дата смерті: ${formData.deathDate}
+
+${formData.heroStory}`,
+        }),
+      });
+
+      if (response.ok) {
+        setSuccess(true);
+        setFormData({
+          heroName: '',
+          location: '',
+          birthDate: '',
+          deathDate: '',
+          telegram: '',
+          phone: '',
+          heroStory: '',
+        });
+        setTimeout(() => setSuccess(false), 5000);
+      } else {
+        setError('Помилка при відправці. Спробуйте ще раз.');
+      }
+    } catch (err) {
+      setError('Помилка при відправці. Спробуйте ще раз.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="hero-form-container">
       <svg className="background-pattern" width="520" height="604" viewBox="0 0 520 604" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,22 +113,87 @@ const HeroForm = () => {
         </div>
       </div>
 
-      <form className="hero-form">
-        <input type="text" className="form-input" placeholder="Прізвище, ім'я, по батькові*" />
-        <input type="text" className="form-input" placeholder="Місце проживання*" />
-        <input type="text" className="form-input" placeholder="Дата народження*" />
-        <input type="text" className="form-input" placeholder="Дата смерті*" />
-        <input type="text" className="form-input" placeholder="Ваш Telegram username" />
-        <input type="text" className="form-input" placeholder="Ваш мобільний телефон*" />
+      {success && (
+        <div style={{ padding: '16px', marginBottom: '20px', backgroundColor: '#10b981', color: 'white', borderRadius: '8px', textAlign: 'center' }}>
+          ✅ Заявка успішно відправлена на модерацію!
+        </div>
+      )}
+
+      {error && (
+        <div style={{ padding: '16px', marginBottom: '20px', backgroundColor: '#ef4444', color: 'white', borderRadius: '8px', textAlign: 'center' }}>
+          ❌ {error}
+        </div>
+      )}
+
+      <form className="hero-form" onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          name="heroName"
+          className="form-input" 
+          placeholder="Прізвище, ім'я, по батькові*" 
+          value={formData.heroName}
+          onChange={handleChange}
+          required
+        />
+        <input 
+          type="text" 
+          name="location"
+          className="form-input" 
+          placeholder="Місце проживання*" 
+          value={formData.location}
+          onChange={handleChange}
+        />
+        <input 
+          type="text" 
+          name="birthDate"
+          className="form-input" 
+          placeholder="Дата народження*" 
+          value={formData.birthDate}
+          onChange={handleChange}
+        />
+        <input 
+          type="text" 
+          name="deathDate"
+          className="form-input" 
+          placeholder="Дата смерті*" 
+          value={formData.deathDate}
+          onChange={handleChange}
+        />
+        <input 
+          type="text" 
+          name="telegram"
+          className="form-input" 
+          placeholder="Ваш Telegram username" 
+          value={formData.telegram}
+          onChange={handleChange}
+        />
+        <input 
+          type="tel" 
+          name="phone"
+          className="form-input" 
+          placeholder="Ваш мобільний телефон*" 
+          value={formData.phone}
+          onChange={handleChange}
+          required
+        />
         
         <div className="textarea-wrapper">
           <label className="textarea-label">Історія про Героя*</label>
-          <textarea className="form-textarea" placeholder="Історія про Героя*"></textarea>
-          <div className="textarea-hint">від 350 до 1500 символів</div>
+          <textarea 
+            name="heroStory"
+            className="form-textarea" 
+            placeholder="Історія про Героя*"
+            value={formData.heroStory}
+            onChange={handleChange}
+            required
+          ></textarea>
+          <div className="textarea-hint">
+            від 350 до 1500 символів ({formData.heroStory.length}/1500)
+          </div>
         </div>
 
-        <button type="submit" className="submit-button">
-          <span>Відправити на модерацію</span>
+        <button type="submit" className="submit-button" disabled={loading}>
+          <span>{loading ? 'Відправка...' : 'Відправити на модерацію'}</span>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_101_4540)">
               <path fillRule="evenodd" clipRule="evenodd" d="M13.3 11.9C11.5934 10.1934 11.5927 7.0833 13.3 5.37599L14 4.67599L12.6 3.27599L11.9 3.97599C10.6582 5.21779 10.038 6.92719 10.0373 8.6373L1.4 6.11955e-08L7.89182e-07 1.4L8.63729 10.0373C6.9272 10.038 5.2178 10.6582 3.976 11.9L3.276 12.6L4.676 14L5.376 13.3C7.08329 11.5927 10.1934 11.5934 11.9 13.3L12.6 14L14 12.6L13.3 11.9Z" fill="#17120E"/>
