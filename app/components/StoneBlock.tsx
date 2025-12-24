@@ -2,6 +2,7 @@
 
 import './StoneBlock.css';
 import { useLanguage } from '../context/LanguageContext';
+import Link from 'next/link';
 
 interface HomeSettings {
   stoneTitle_ua?: string | null;
@@ -51,7 +52,7 @@ const StoneBlock = ({ settings }: StoneBlockProps): JSX.Element => {
 
         <p className="hero-subtitle1" suppressHydrationWarning>{quote}</p>
 
-        <button className="form-button">
+        <Link href="/add-heroe" className="form-button">
           <span className="button-text">Заповнити форму</span>
           <svg className="button-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_4_5549)">
@@ -63,7 +64,7 @@ const StoneBlock = ({ settings }: StoneBlockProps): JSX.Element => {
               </clipPath>
             </defs>
           </svg>
-        </button>
+        </Link>
       </div>
     </div>
   );

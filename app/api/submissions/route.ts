@@ -31,7 +31,6 @@ export async function POST(request: NextRequest) {
 НОВА ЗАЯВКА!
 
 Тип: ${body.type === 'hero-submission' ? 'Додати героя' : 'Інше'}
-Від: ${body.name}
 ${body.heroName ? `Герой: ${body.heroName}` : ''}
 ${body.phone ? `Телефон: ${body.phone}` : ''}
 ${body.telegramUsername ? `Telegram: ${body.telegramUsername}` : ''}

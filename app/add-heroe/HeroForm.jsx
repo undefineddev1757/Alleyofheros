@@ -176,7 +176,7 @@ const HeroForm = () => {
         });
 
         try {
-          const uploadResponse = await fetch('/api/media/upload', {
+          const uploadResponse = await fetch('/api/submissions/upload', {
             method: 'POST',
             body: formDataFiles,
           });
@@ -184,6 +184,8 @@ const HeroForm = () => {
           if (uploadResponse.ok) {
             const uploadData = await uploadResponse.json();
             mediaUrls = uploadData.uploadedFiles.map(file => file.url);
+          } else {
+            console.error('Upload failed:', await uploadResponse.text());
           }
         } catch (uploadError) {
           console.error('Error uploading files:', uploadError);
@@ -211,15 +213,26 @@ const HeroForm = () => {
 
       if (response.ok) {
         setSuccess(true);
+        // Полностью очищаем форму
         setFormData({
           heroName: '',
           location: '',
           birthDate: '',
           deathDate: '',
           telegram: '',
-          phone: '',
+          phone: '+380 ',
           heroStory: '',
         });
+        setUploadedFiles([]);
+        setErrors({});
+        setError('');
+        
+        // Очищаем input для файлов
+        const fileInput = document.querySelector('input[type="file"]');
+        if (fileInput) {
+          fileInput.value = '';
+        }
+        
         setTimeout(() => setSuccess(false), 5000);
       } else {
         setError('Помилка при відправці. Спробуйте ще раз.');

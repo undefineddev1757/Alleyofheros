@@ -55,7 +55,15 @@ export function useToast() {
   if (!context) {
     throw new Error("useToast must be used within ToastProvider")
   }
-  return context
+  
+  const showToast = React.useCallback(
+    (variant: "success" | "error" | "warning" | "default", message: string, title?: string) => {
+      context.addToast({ variant, description: message, title })
+    },
+    [context]
+  )
+  
+  return { ...context, showToast }
 }
 
 interface ToastComponentProps extends ToastProps {
