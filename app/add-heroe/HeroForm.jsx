@@ -1,48 +1,195 @@
 'use client';
 
 import React, { useState } from 'react';
+import CustomDatePicker from './CustomDatePicker';
 import './HeroForm.css';
 
 const HeroForm = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const [formData, setFormData] = useState({
     heroName: '',
     location: '',
     birthDate: '',
     deathDate: '',
     telegram: '',
-    phone: '',
+    phone: '+380 ',
     heroStory: '',
   });
+  const [errors, setErrors] = useState({});
+
+  const formatPhoneNumber = (value) => {
+    // Удаляем все кроме цифр
+    const numbers = value.replace(/\D/g, '');
+    
+    // Если начинается с 380, оставляем
+    // Если начинается с 0, заменяем на 380
+    // Иначе добавляем 380
+    let formatted = numbers;
+    if (numbers.startsWith('380')) {
+      formatted = numbers;
+    } else if (numbers.startsWith('0')) {
+      formatted = '380' + numbers.slice(1);
+    } else if (numbers.length > 0) {
+      formatted = '380' + numbers;
+    }
+    
+    // Обрезаем до 12 цифр (380 + 9 цифр)
+    formatted = formatted.slice(0, 12);
+    
+    // Форматируем: +380 XX XXX XX XX
+    if (formatted.length > 0) {
+      let result = '+380';
+      if (formatted.length > 3) {
+        result += ' ' + formatted.slice(3, 5);
+      }
+      if (formatted.length > 5) {
+        result += ' ' + formatted.slice(5, 8);
+      }
+      if (formatted.length > 8) {
+        result += ' ' + formatted.slice(8, 10);
+      }
+      if (formatted.length > 10) {
+        result += ' ' + formatted.slice(10, 12);
+      }
+      return result;
+    }
+    return '+380 ';
+  };
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    if (name === 'phone') {
+      const formatted = formatPhoneNumber(value);
+      setFormData({
+        ...formData,
+        [name]: formatted,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+    
+    // Clear error for this field
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: '' });
+    }
+  };
+
+  const handleDateChange = (name, value) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: '' });
+    }
+  };
+
+  const handleFileUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    
+    if (uploadedFiles.length + files.length > 10) {
+      setError('Максимум 10 фото');
+      return;
+    }
+
+    const validFiles = files.filter(file => {
+      if (file.size > 3 * 1024 * 1024) {
+        setError(`Файл ${file.name} перевищує 3 МБ`);
+        return false;
+      }
+      if (!file.type.startsWith('image/')) {
+        setError(`Файл ${file.name} не є зображенням`);
+        return false;
+      }
+      return true;
+    });
+
+    setUploadedFiles([...uploadedFiles, ...validFiles]);
+  };
+
+  const removeFile = (index) => {
+    setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.heroName.trim()) {
+      newErrors.heroName = 'Обов\'язкове поле';
+    }
+
+    if (!formData.location.trim()) {
+      newErrors.location = 'Обов\'язкове поле';
+    }
+
+    if (!formData.birthDate) {
+      newErrors.birthDate = 'Обов\'язкове поле';
+    }
+
+    if (!formData.deathDate) {
+      newErrors.deathDate = 'Обов\'язкове поле';
+    }
+
+    if (!formData.phone.trim() || formData.phone === '+380 ') {
+      newErrors.phone = 'Обов\'язкове поле';
+    } else if (formData.phone.replace(/\D/g, '').length !== 12) {
+      newErrors.phone = 'Некоректний номер телефону';
+    }
+
+    if (!formData.heroStory.trim()) {
+      newErrors.heroStory = 'Обов\'язкове поле';
+    } else if (formData.heroStory.length < 350) {
+      newErrors.heroStory = 'Мінімум 350 символів';
+    } else if (formData.heroStory.length > 1500) {
+      newErrors.heroStory = 'Максимум 1500 символів';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
 
-    // Validation
-    if (!formData.heroName || !formData.phone || !formData.heroStory) {
-      setError('Будь ласка, заповніть всі обов\'язкові поля');
-      setLoading(false);
+    if (!validateForm()) {
+      setError('Будь ласка, виправте помилки у формі');
       return;
     }
 
-    if (formData.heroStory.length < 350 || formData.heroStory.length > 1500) {
-      setError('Історія повинна містити від 350 до 1500 символів');
-      setLoading(false);
-      return;
-    }
+    setLoading(true);
 
     try {
+      // Upload media files first
+      let mediaUrls = [];
+      if (uploadedFiles.length > 0) {
+        const formDataFiles = new FormData();
+        uploadedFiles.forEach(file => {
+          formDataFiles.append('files', file);
+        });
+
+        try {
+          const uploadResponse = await fetch('/api/media/upload', {
+            method: 'POST',
+            body: formDataFiles,
+          });
+
+          if (uploadResponse.ok) {
+            const uploadData = await uploadResponse.json();
+            mediaUrls = uploadData.uploadedFiles.map(file => file.url);
+          }
+        } catch (uploadError) {
+          console.error('Error uploading files:', uploadError);
+        }
+      }
+
       const response = await fetch('/api/submissions', {
         method: 'POST',
         headers: {
@@ -52,13 +199,13 @@ const HeroForm = () => {
           type: 'hero-submission',
           name: formData.heroName,
           phone: formData.phone,
-          email: formData.telegram,
+          telegramUsername: formData.telegram,
           heroName: formData.heroName,
-          heroStory: `Місце проживання: ${formData.location}
-Дата народження: ${formData.birthDate}
-Дата смерті: ${formData.deathDate}
-
-${formData.heroStory}`,
+          residence: formData.location,
+          birthDate: formData.birthDate,
+          deathDate: formData.deathDate,
+          heroStory: formData.heroStory,
+          mediaFiles: mediaUrls,
         }),
       });
 
@@ -95,7 +242,14 @@ ${formData.heroStory}`,
         <p className="page-subtitle">Ми зберігаємо пам'ять не про втрату, а про життя</p>
       </div>
 
-      <div className="photo-upload-section">
+      <label className="photo-upload-section">
+        <input 
+          type="file" 
+          accept="image/*" 
+          multiple 
+          onChange={handleFileUpload}
+          style={{ display: 'none' }}
+        />
         <svg className="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clipPath="url(#clip0_101_4562)">
             <path d="M1.5625 12.2129V17.6426C1.56276 18.0731 1.91313 18.4238 2.34375 18.4238H17.6562C18.0869 18.4238 18.4372 18.0731 18.4375 17.6426V12.2129H20V17.6426C19.9997 18.9347 18.9484 19.9863 17.6562 19.9863H2.34375C1.05157 19.9863 0.000264793 18.9347 0 17.6426V12.2129H1.5625Z" fill="#17120E"/>
@@ -109,9 +263,29 @@ ${formData.heroStory}`,
         </svg>
         <div className="upload-text">
           <div className="upload-label">Додайте фото</div>
-          <div className="upload-hint">Ви можете додати до 10 фото, максимальна вага фото 3 мб</div>
+          <div className="upload-hint">Ви можете додати до 10 фото, максимальна вага фото 3 мб ({uploadedFiles.length}/10)</div>
         </div>
-      </div>
+      </label>
+
+      {uploadedFiles.length > 0 && (
+        <div style={{ marginBottom: '30px' }}>
+          <div className="files-header">
+            <div className="files-title">Завантажені фото</div>
+            <div className="files-count">{uploadedFiles.length}/10</div>
+          </div>
+          <div className="uploaded-files">
+            {uploadedFiles.map((file, index) => (
+              <div key={index} className="uploaded-file">
+                <img src={URL.createObjectURL(file)} alt={file.name} />
+                <div className="file-count">#{index + 1}</div>
+                <button type="button" onClick={() => removeFile(index)} className="remove-file" title="Видалити">
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {success && (
         <div style={{ padding: '16px', marginBottom: '20px', backgroundColor: '#10b981', color: 'white', borderRadius: '8px', textAlign: 'center' }}>
@@ -126,85 +300,99 @@ ${formData.heroStory}`,
       )}
 
       <form className="hero-form" onSubmit={handleSubmit}>
-        <input 
-          type="text" 
-          name="heroName"
-          className="form-input" 
-          placeholder="Прізвище, ім'я, по батькові*" 
-          value={formData.heroName}
-          onChange={handleChange}
-          required
-        />
-        <input 
-          type="text" 
-          name="location"
-          className="form-input" 
-          placeholder="Місце проживання*" 
-          value={formData.location}
-          onChange={handleChange}
-        />
-        <input 
-          type="text" 
-          name="birthDate"
-          className="form-input" 
-          placeholder="Дата народження*" 
-          value={formData.birthDate}
-          onChange={handleChange}
-        />
-        <input 
-          type="text" 
-          name="deathDate"
-          className="form-input" 
-          placeholder="Дата смерті*" 
-          value={formData.deathDate}
-          onChange={handleChange}
-        />
-        <input 
-          type="text" 
-          name="telegram"
-          className="form-input" 
-          placeholder="Ваш Telegram username" 
-          value={formData.telegram}
-          onChange={handleChange}
-        />
-        <input 
-          type="tel" 
-          name="phone"
-          className="form-input" 
-          placeholder="Ваш мобільний телефон*" 
-          value={formData.phone}
-          onChange={handleChange}
-          required
-        />
+        <div className="form-field">
+          <input 
+            type="text" 
+            name="heroName"
+            className={`form-input ${errors.heroName ? 'error' : ''}`}
+            placeholder="Прізвище, ім'я, по батькові*" 
+            value={formData.heroName}
+            onChange={handleChange}
+          />
+          {errors.heroName && <div className="error-message">{errors.heroName}</div>}
+        </div>
+
+        <div className="form-field">
+          <input 
+            type="text" 
+            name="location"
+            className={`form-input ${errors.location ? 'error' : ''}`}
+            placeholder="Місце проживання*" 
+            value={formData.location}
+            onChange={handleChange}
+          />
+          {errors.location && <div className="error-message">{errors.location}</div>}
+        </div>
+
+        <div className="form-field">
+          <CustomDatePicker
+            value={formData.birthDate}
+            onChange={(value) => handleDateChange('birthDate', value)}
+            placeholder="Дата народження*"
+          />
+          {errors.birthDate && <div className="error-message">{errors.birthDate}</div>}
+        </div>
+
+        <div className="form-field">
+          <CustomDatePicker
+            value={formData.deathDate}
+            onChange={(value) => handleDateChange('deathDate', value)}
+            placeholder="Дата смерті*"
+          />
+          {errors.deathDate && <div className="error-message">{errors.deathDate}</div>}
+        </div>
+        <div className="form-field">
+          <input 
+            type="text" 
+            name="telegram"
+            className="form-input" 
+            placeholder="Ваш Telegram username" 
+            value={formData.telegram}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-field">
+          <input 
+            type="tel" 
+            name="phone"
+            className={`form-input ${errors.phone ? 'error' : ''}`}
+            placeholder="+380 XX XXX XX XX*" 
+            value={formData.phone}
+            onChange={handleChange}
+          />
+          {errors.phone && <div className="error-message">{errors.phone}</div>}
+        </div>
         
-        <div className="textarea-wrapper">
+        <div className="form-field textarea-wrapper">
           <label className="textarea-label">Історія про Героя*</label>
           <textarea 
             name="heroStory"
-            className="form-textarea" 
+            className={`form-textarea ${errors.heroStory ? 'error' : ''}`}
             placeholder="Історія про Героя*"
             value={formData.heroStory}
             onChange={handleChange}
-            required
           ></textarea>
-          <div className="textarea-hint">
-            від 350 до 1500 символів ({formData.heroStory.length}/1500)
+          <div className={`textarea-hint ${errors.heroStory ? 'error' : ''}`}>
+            {errors.heroStory ? errors.heroStory : `від 350 до 1500 символів (${formData.heroStory.length}/1500)`}
           </div>
         </div>
 
-        <button type="submit" className="submit-button" disabled={loading}>
-          <span>{loading ? 'Відправка...' : 'Відправити на модерацію'}</span>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clipPath="url(#clip0_101_4540)">
-              <path fillRule="evenodd" clipRule="evenodd" d="M13.3 11.9C11.5934 10.1934 11.5927 7.0833 13.3 5.37599L14 4.67599L12.6 3.27599L11.9 3.97599C10.6582 5.21779 10.038 6.92719 10.0373 8.6373L1.4 6.11955e-08L7.89182e-07 1.4L8.63729 10.0373C6.9272 10.038 5.2178 10.6582 3.976 11.9L3.276 12.6L4.676 14L5.376 13.3C7.08329 11.5927 10.1934 11.5934 11.9 13.3L12.6 14L14 12.6L13.3 11.9Z" fill="#17120E"/>
-            </g>
-            <defs>
-              <clipPath id="clip0_101_4540">
-                <rect width="14" height="14" fill="white" transform="translate(14) rotate(90)"/>
-              </clipPath>
-            </defs>
-          </svg>
-        </button>
+        <div style={{ marginTop: '40px' }}>
+          <button type="submit" className="submit-button" disabled={loading}>
+            <span>{loading ? 'Відправка...' : 'Відправити на модерацію'}</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_101_4540)">
+                <path fillRule="evenodd" clipRule="evenodd" d="M13.3 11.9C11.5934 10.1934 11.5927 7.0833 13.3 5.37599L14 4.67599L12.6 3.27599L11.9 3.97599C10.6582 5.21779 10.038 6.92719 10.0373 8.6373L1.4 6.11955e-08L7.89182e-07 1.4L8.63729 10.0373C6.9272 10.038 5.2178 10.6582 3.976 11.9L3.276 12.6L4.676 14L5.376 13.3C7.08329 11.5927 10.1934 11.5934 11.9 13.3L12.6 14L14 12.6L13.3 11.9Z" fill="#17120E"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_101_4540">
+                  <rect width="14" height="14" fill="white" transform="translate(14) rotate(90)"/>
+                </clipPath>
+              </defs>
+            </svg>
+          </button>
+        </div>
       </form>
     </div>
   );

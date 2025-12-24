@@ -2,13 +2,43 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Logo from "./Logo";
 import styles from "./Header.module.css";
+import { useLanguage } from "../context/LanguageContext";
 
 const Header = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const langMenuRef = useRef<HTMLDivElement>(null);
+  const { language, setLanguage, isReady } = useLanguage();
+
+  const languages = [
+    { code: 'ua' as const, label: 'UA' },
+    { code: 'en' as const, label: 'EN' }
+  ];
+
+  const t = {
+    ourHeroes: language === 'ua' ? 'Наші Герої' : 'Our Heroes',
+    yourStories: language === 'ua' ? 'Ваші історії' : 'Your Stories',
+    addHero: language === 'ua' ? 'Додати Героя' : 'Add Hero',
+    findHero: language === 'ua' ? 'Знайти Героя' : 'Find Hero',
+    add: language === 'ua' ? 'Додати' : 'Add',
+    find: language === 'ua' ? 'Знайти' : 'Find',
+    address: language === 'ua' ? 'Дніпровська Набережна,\nм. Київ, Україна' : 'Dniprovska Embankment,\nKyiv, Ukraine',
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
+        setIsLangMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleAddClick = () => {
     router.push("/add-heroe");
@@ -24,8 +54,17 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleLangMenu = () => {
+    setIsLangMenuOpen(!isLangMenuOpen);
+  };
+
+  const changeLang = (lang: 'ua' | 'en') => {
+    setLanguage(lang);
+    setIsLangMenuOpen(false);
+  };
+
   return (
-    <header className={styles.header}>
+    <header className={styles.header} style={{ opacity: isReady ? 1 : 0, transition: 'opacity 0.3s' }}>
       <button 
         className={styles.menuButton}
         type="button"
@@ -45,11 +84,11 @@ const Header = () => {
 
       {/* Desktop Navigation */}
       <nav className={styles.desktopNav}>
-        <Link className={styles.navLink} href="/fined-heroe">
-          Наші Герої
+        <Link className={styles.navLink} href="/fined-heroe" suppressHydrationWarning>
+          {t.ourHeroes}
         </Link>
-        <Link className={styles.navLink} href="/your-stories">
-          Ваші історії
+        <Link className={styles.navLink} href="/your-stories" suppressHydrationWarning>
+          {t.yourStories}
         </Link>
       </nav>
 
@@ -57,8 +96,8 @@ const Header = () => {
       <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
         <div className={styles.menuContent}>
           <div className={styles.menuSection}>
-            <h3 className={styles.sectionTitle}>
-              Наші Герої
+            <h3 className={styles.sectionTitle} suppressHydrationWarning>
+              {t.ourHeroes}
               <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
                 <path d="M1 1L6 6L11 1" stroke="#17120E" strokeWidth="2" strokeLinecap="round"/>
               </svg>
@@ -66,23 +105,23 @@ const Header = () => {
           </div>
 
           <div className={styles.menuSection}>
-            <h3 className={styles.sectionTitle}>
-              Ваші історії
+            <h3 className={styles.sectionTitle} suppressHydrationWarning>
+              {t.yourStories}
               <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
                 <path d="M1 1L6 6L11 1" stroke="#17120E" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </h3>
           </div>
 
-          <button className={styles.menuAction} onClick={handleAddClick} type="button">
+          <button className={styles.menuAction} onClick={handleAddClick} type="button" suppressHydrationWarning>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <circle cx="10" cy="10" r="9.5" stroke="#17120E"/>
               <path d="M10 6V14M6 10H14" stroke="#17120E" strokeWidth="1.5"/>
             </svg>
-            Додати Героя
+            {t.addHero}
           </button>
 
-          <button className={styles.menuAction} onClick={handleFindClick} type="button">
+          <button className={styles.menuAction} onClick={handleFindClick} type="button" suppressHydrationWarning>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <g clipPath="url(#clip0)">
                 <path d="M9.43931 0C5.82175 0 2.87862 2.94313 2.87862 6.56069C2.87862 8.14497 3.44312 9.59984 4.3815 10.7349L0 15.1164L0.883625 16L5.26512 11.6185C6.40016 12.5569 7.85503 13.1214 9.43931 13.1214C13.0569 13.1214 16 10.1783 16 6.56069C16 2.94313 13.0569 0 9.43931 0ZM9.43931 11.8717C6.51081 11.8717 4.12828 9.48919 4.12828 6.56069C4.12828 3.63219 6.51081 1.24966 9.43931 1.24966C12.3678 1.24966 14.7503 3.63219 14.7503 6.56069C14.7503 9.48919 12.3678 11.8717 9.43931 11.8717Z" fill="#17120E"/>
@@ -91,15 +130,16 @@ const Header = () => {
                 <clipPath id="clip0"><rect width="16" height="16" fill="white"/></clipPath>
               </defs>
             </svg>
-            Знайти Героя
+            {t.findHero}
           </button>
         </div>
 
         <div className={styles.menuFooter}>
           <Logo />
-          <p className={styles.address}>
-            Дніпровська Набережна,<br/>
-            м. Київ, Україна
+          <p className={styles.address} suppressHydrationWarning>
+            {t.address.split('\n').map((line, i) => (
+              <span key={i}>{line}{i === 0 && <br/>}</span>
+            ))}
           </p>
           <div className={styles.socialLinks}>
             <a href="#" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" stroke="#17120E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></a>
@@ -117,9 +157,9 @@ const Header = () => {
           className={styles.actionButton} 
           type="button"
           onClick={handleAddClick}
-          aria-label="Додати"
+          aria-label={t.add}
         >
-          <span className={styles.actionText}>Додати</span>
+          <span className={styles.actionText} suppressHydrationWarning>{t.add}</span>
           <svg
             className={styles.icon}
             width="16"
@@ -138,9 +178,9 @@ const Header = () => {
           className={styles.actionButton} 
           type="button"
           onClick={handleFindClick}
-          aria-label="Знайти"
+          aria-label={t.find}
         >
-          <span className={styles.actionText}>Знайти</span>
+          <span className={styles.actionText} suppressHydrationWarning>{t.find}</span>
           <svg
             className={styles.icon}
             width="16"
@@ -164,9 +204,40 @@ const Header = () => {
           </svg>
         </button>
 
-        <button className={styles.langButton} type="button">
-          En
-        </button>
+        <div className={styles.langSelector} ref={langMenuRef}>
+          <button 
+            className={styles.langButton} 
+            type="button"
+            onClick={toggleLangMenu}
+            aria-label="Вибрати мову"
+          >
+            {language.toUpperCase()}
+            <svg 
+              width="12" 
+              height="8" 
+              viewBox="0 0 12 8" 
+              fill="none"
+              className={`${styles.langArrow} ${isLangMenuOpen ? styles.langArrowOpen : ''}`}
+            >
+              <path d="M1 1L6 6L11 1" stroke="#17120E" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
+          
+          {isLangMenuOpen && (
+            <div className={styles.langDropdown}>
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  className={`${styles.langOption} ${language === lang.code ? styles.langOptionActive : ''}`}
+                  onClick={() => changeLang(lang.code)}
+                  type="button"
+                >
+                  {lang.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

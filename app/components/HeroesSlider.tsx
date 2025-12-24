@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import './HeroesSlider.css';
+import { useLanguage } from '../context/LanguageContext';
 
 interface Hero {
   id: number;
@@ -9,7 +10,23 @@ interface Hero {
   alt: string;
 }
 
-export default function HeroesSlider(): JSX.Element {
+interface HomeSettings {
+  heroesTitle_ua?: string | null;
+  heroesTitle_en?: string | null;
+  heroesSubtitle_ua?: string | null;
+  heroesSubtitle_en?: string | null;
+}
+
+interface HeroesSliderProps {
+  settings?: HomeSettings | null;
+}
+
+export default function HeroesSlider({ settings }: HeroesSliderProps): JSX.Element {
+  const { language, isReady } = useLanguage();
+  
+  const title = settings?.[`heroesTitle_${language}` as keyof HomeSettings] || 
+    (language === 'ua' ? 'Герої Алеї' : 'Heroes of the Alley');
+  
   const heroes: Hero[] = [
     {
       id: 1,
@@ -100,9 +117,9 @@ export default function HeroesSlider(): JSX.Element {
 
   return (
     <div className="heroes-slider-section">
-      <h2 className="heroes-title">
+      <h2 className="heroes-title" style={{ opacity: isReady ? 1 : 0, transition: 'opacity 0.3s' }}>
         <span className="bracket">{'{'}</span>
-        <span className="title-text"> Герої Алеї </span>
+        <span className="title-text" suppressHydrationWarning> {title} </span>
         <span className="bracket">{'}'}</span>
       </h2>
 

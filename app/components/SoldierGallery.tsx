@@ -2,8 +2,26 @@
 
 import { useEffect, useState } from 'react';
 import './SoldierGallery.css';
+import { useLanguage } from '../context/LanguageContext';
 
-export default function SoldierGallery(): JSX.Element {
+interface HomeSettings {
+  galleryTitle_ua?: string | null;
+  galleryTitle_en?: string | null;
+  gallerySubtitle_ua?: string | null;
+  gallerySubtitle_en?: string | null;
+}
+
+interface SoldierGalleryProps {
+  settings?: HomeSettings | null;
+}
+
+export default function SoldierGallery({ settings }: SoldierGalleryProps): JSX.Element {
+  const { language, isReady } = useLanguage();
+  
+  const title = settings?.[`galleryTitle_${language}` as keyof HomeSettings] || 
+    (language === 'ua' ? 'Галерея алеї' : 'Alley Gallery');
+  const subtitle = settings?.[`gallerySubtitle_${language}` as keyof HomeSettings] || 
+    (language === 'ua' ? 'Тут можна побачити фото Алеї Друзів — місця наших спогадів і можливості поділитися ними з людьми, які проходять повз та мають змогу дізнатися про наших героїв більше — не лише як про воїнів, а як про звичайних людей.' : 'Here you can see photos of the Alley of Friends — a place of our memories and an opportunity to share them with people who pass by and have the chance to learn more about our heroes — not just as warriors, but as ordinary people.');
   const galleryItems = [
     {
       id: 1,
@@ -53,8 +71,8 @@ export default function SoldierGallery(): JSX.Element {
       </svg>
 
       <div className="gallery-content">
-        <div className="gallery-header">
-          <h2 className="gallery-title">Галерея алеї</h2>
+        <div className="gallery-header" style={{ opacity: isReady ? 1 : 0, transition: 'opacity 0.3s' }}>
+          <h2 className="gallery-title" suppressHydrationWarning>{title}</h2>
           <svg className="quote-icon" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_77_8113)">
               <path d="M13.2 5.92928H11.9363C8.56616 5.92928 7.16172 7.34116 6.88084 10.7293H13.2V24H0V13.2707C-7.89888e-07 4.23544 4.4936 2.40508e-05 11.234 0H13.2V5.92928ZM32 5.92928H30.7363C27.3662 5.92928 25.9617 7.34116 25.6808 10.7293H32V24H18.8V13.2707C18.8 4.23544 23.2936 2.40508e-05 30.034 0H32V5.92928Z" fill="#F2B202"/>
@@ -65,8 +83,8 @@ export default function SoldierGallery(): JSX.Element {
               </clipPath>
             </defs>
           </svg>
-          <p className="gallery-description">
-            Тут можна побачити фото Алеї Друзів — місця наших спогадів і можливості поділитися ними з людьми, які проходять повз та мають змогу дізнатися про наших героїв більше — не лише як про воїнів, а як про звичайних людей.
+          <p className="gallery-description" suppressHydrationWarning>
+            {subtitle}
           </p>
         </div>
 

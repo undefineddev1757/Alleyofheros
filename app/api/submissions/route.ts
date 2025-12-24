@@ -11,10 +11,15 @@ export async function POST(request: NextRequest) {
         name: body.name,
         email: body.email,
         phone: body.phone,
+        telegramUsername: body.telegramUsername,
         heroName: body.heroName,
+        residence: body.residence,
+        birthDate: body.birthDate,
+        deathDate: body.deathDate,
         heroStory: body.heroStory,
         message: body.message,
         imageUrl: body.imageUrl,
+        mediaFiles: body.mediaFiles || [],
         status: "pending",
       },
     })
@@ -26,10 +31,12 @@ export async function POST(request: NextRequest) {
 НОВА ЗАЯВКА!
 
 Тип: ${body.type === 'hero-submission' ? 'Додати героя' : 'Інше'}
-Ім'я: ${body.name}
+Від: ${body.name}
 ${body.heroName ? `Герой: ${body.heroName}` : ''}
 ${body.phone ? `Телефон: ${body.phone}` : ''}
-${body.email ? `Email: ${body.email}` : ''}
+${body.telegramUsername ? `Telegram: ${body.telegramUsername}` : ''}
+${body.residence ? `Місце: ${body.residence}` : ''}
+${body.mediaFiles && body.mediaFiles.length > 0 ? `Фото: ${body.mediaFiles.length} шт.` : ''}
 
 Переглянути: ${process.env.NEXTAUTH_URL}/admin/submissions/${submission.id}
         `.trim()
@@ -62,16 +69,26 @@ ${body.email ? `Email: ${body.email}` : ''}
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const count = await prisma.submission.count({
-      where: { status: "pending" }
+    const { searchParams } = new URL(request.url)
+    const countOnly = searchParams.get('countOnly')
+    
+    if (countOnly === 'true') {
+      const count = await prisma.submission.count({
+        where: { status: "pending" }
+      })
+      return NextResponse.json({ count })
+    }
+    
+    const submissions = await prisma.submission.findMany({
+      orderBy: { createdAt: "desc" },
     })
     
-    return NextResponse.json({ count })
+    return NextResponse.json(submissions)
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch submissions count" },
+      { error: "Failed to fetch submissions" },
       { status: 500 }
     )
   }

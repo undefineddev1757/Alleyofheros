@@ -1,34 +1,75 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './HeroesList.css';
 
-const HeroesList = ({ heroes = [], currentPage = 1, totalPages = 5, onPageChange }) => {
+const HeroesList = () => {
+  const [heroes, setHeroes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchHeroes(currentPage);
+  }, [currentPage]);
+
+  const fetchHeroes = async (page) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/heroes?page=${page}&limit=10`);
+      if (response.ok) {
+        const data = await response.json();
+        setHeroes(data.heroes);
+        setTotalPages(data.pagination.totalPages);
+      }
+    } catch (error) {
+      console.error('Error fetching heroes:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const defaultHeroes = [
-    { id: 1, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
-    { id: 2, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
-    { id: 3, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
-    { id: 4, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
-    { id: 5, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
-    { id: 6, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
-    { id: 7, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
-    { id: 8, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
-    { id: 9, callsign: 'Позивний', name: 'Прізвище Ім\'я' },
-    { id: 10, callsign: 'Позивний', name: 'Прізвище Ім\'я' }
+    { id: 1, callSign: 'Сокіл', name: 'Іванов Олександр' },
+    { id: 2, callSign: 'Вовк', name: 'Петренко Андрій' },
+    { id: 3, callSign: 'Орел', name: 'Сидоренко Максим' },
+    { id: 4, callSign: 'Лев', name: 'Коваленко Дмитро' },
+    { id: 5, callSign: 'Тигр', name: 'Мельник Сергій' },
+    { id: 6, callSign: 'Беркут', name: 'Бондаренко Віталій' },
+    { id: 7, callSign: 'Ворон', name: 'Ткаченко Ігор' },
+    { id: 8, callSign: 'Пантера', name: 'Шевченко Олег' },
+    { id: 9, callSign: 'Кобра', name: 'Кравченко Роман' },
+    { id: 10, callSign: 'Яструб', name: 'Кравчук Артем' },
+  
   ];
 
-  const heroList = heroes.length > 0 ? heroes : defaultHeroes;
+  const heroList = heroes.length > 0 ? heroes : (!loading ? defaultHeroes : []);
+
+  if (loading && heroes.length === 0) {
+    return (
+      <div className="heroes-section">
+        <div className="heroes-list" style={{ textAlign: 'center', padding: '40px' }}>
+          <div>Завантаження...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="heroes-section">
       <div className="heroes-list">
         {heroList.map((hero, index) => (
-          <React.Fragment key={hero.id || index}>
-            <div className="hero-item">
-              <div className="hero-info">
-                <div className="hero-callsign2">{hero.callsign}</div>
-                <div className="hero-name1">{hero.name}</div>
-              </div>
+            <React.Fragment key={hero.id || index}>
+              <div className="hero-item">
+                <div className="hero-info">
+                  <div className="hero-callsign2">{hero.callSign}</div>
+                  <div className="hero-name1">{hero.name}</div>
+                </div>
               <svg className="hero-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0)">
                   <path fillRule="evenodd" clipRule="evenodd" d="M22.8 20.4C19.8744 17.4744 19.8732 12.1428 22.8 9.21599L24 8.01599L21.6 5.61599L20.4 6.81599C18.2712 8.94479 17.208 11.8752 17.2068 14.8068L2.4 1.04907e-07L-9.50498e-09 2.4L14.8068 17.2068C11.8752 17.208 8.9448 18.2712 6.816 20.4L5.616 21.6L8.016 24L9.216 22.8C12.1428 19.8732 17.4744 19.8744 20.4 22.8L21.6 24L24 21.6L22.8 20.4Z" fill="#17120E" fillOpacity="0.25"/>
@@ -58,22 +99,25 @@ const HeroesList = ({ heroes = [], currentPage = 1, totalPages = 5, onPageChange
         ))}
       </div>
 
-      <div className="pagination">
-        {[...Array(totalPages)].map((_, i) => {
-          const pageNum = i + 1;
-          return (
-            <React.Fragment key={pageNum}>
-              <button
-                className={`pagination-item ${pageNum === currentPage ? 'active' : ''}`}
-                onClick={() => onPageChange && onPageChange(pageNum)}
-              >
-                {pageNum}
-              </button>
-              {pageNum === 1 && <div className="pagination-line"></div>}
-            </React.Fragment>
-          );
-        })}
-      </div>
+      {(totalPages > 1 || (heroes.length === 0 && !loading)) && (
+        <div className="pagination">
+          {[...Array(heroes.length > 0 ? totalPages : 1)].map((_, i) => {
+            const pageNum = i + 1;
+            return (
+              <React.Fragment key={pageNum}>
+                <button
+                  className={`pagination-item ${pageNum === currentPage ? 'active' : ''}`}
+                  onClick={() => handlePageChange(pageNum)}
+                  disabled={loading || heroes.length === 0}
+                >
+                  {pageNum}
+                </button>
+                {pageNum === 1 && <div className="pagination-line"></div>}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

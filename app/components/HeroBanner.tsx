@@ -2,11 +2,15 @@
 
 import { useEffect, useMemo, useState } from "react";
 import "./HeroBanner.css";
+import { useLanguage } from "../context/LanguageContext";
 
 interface HomeSettings {
-  heroTitle?: string | null;
-  heroSubtitle?: string | null;
-  heroDescription?: string | null;
+  heroTitle_ua?: string | null;
+  heroTitle_en?: string | null;
+  heroSubtitle_ua?: string | null;
+  heroSubtitle_en?: string | null;
+  heroDescription_ua?: string | null;
+  heroDescription_en?: string | null;
   heroVideoUrl?: string | null;
 }
 
@@ -17,9 +21,11 @@ interface HeroBannerProps {
 const DEFAULT_VIDEO = "/6034431_Aerialiew_1920x1080.mp4";
 
 export default function HeroBanner({ settings }: HeroBannerProps): JSX.Element {
+  const { language, isReady } = useLanguage();
   const [isDesktop, setIsDesktop] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
+
 
   useEffect(() => {
     const update = () => setIsDesktop(window.innerWidth >= 1025);
@@ -61,17 +67,17 @@ export default function HeroBanner({ settings }: HeroBannerProps): JSX.Element {
         loop
         playsInline
       />
-      <div className="hero-content">
+      <div className="hero-content" style={{ opacity: isReady ? 1 : 0, transition: 'opacity 0.3s' }}>
         <div className="hero-title-first">
           <span className="bracket-accent">{"{"}</span>
-          <span className="title-text"> {settings?.heroTitle || "Алея"}</span>
+          <span className="title-text" suppressHydrationWarning> {settings?.[`heroTitle_${language}` as keyof HomeSettings] || (language === 'ua' ? 'Алея' : 'Alley')}</span>
         </div>
         <div className="hero-title-second">
-          <span className="title-text">{settings?.heroSubtitle || "Друзів"} </span>
+          <span className="title-text" suppressHydrationWarning>{settings?.[`heroSubtitle_${language}` as keyof HomeSettings] || (language === 'ua' ? 'Друзів' : 'Of Friends')} </span>
           <span className="bracket-accent">{"}"}</span>
         </div>
-        <div className="hero-subtitle">
-          {settings?.heroDescription || "Тут ми пам'ятаємо не лише подвиги, а й людину за ними"}
+        <div className="hero-subtitle" suppressHydrationWarning>
+          {settings?.[`heroDescription_${language}` as keyof HomeSettings] || (language === 'ua' ? "Тут ми пам'ятаємо не лише подвиги, а й людину за ними" : "Here we remember not only the feats, but also the person behind them")}
         </div>
       </div>
 
@@ -112,10 +118,10 @@ export default function HeroBanner({ settings }: HeroBannerProps): JSX.Element {
               </defs>
             </svg>
 
-            <div className="video-cursor-text">
-              Дивитися
+            <div className="video-cursor-text" suppressHydrationWarning>
+              {language === 'ua' ? 'Дивитися' : 'Watch'}
               <br />
-              відео
+              {language === 'ua' ? 'відео' : 'video'}
             </div>
           </div>
 

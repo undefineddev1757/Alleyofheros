@@ -1,6 +1,28 @@
-import './StoneBlock.css';
+'use client';
 
-const StoneBlock = (): JSX.Element => {
+import './StoneBlock.css';
+import { useLanguage } from '../context/LanguageContext';
+
+interface HomeSettings {
+  stoneTitle_ua?: string | null;
+  stoneTitle_en?: string | null;
+  stoneQuote_ua?: string | null;
+  stoneQuote_en?: string | null;
+  stoneImageUrl?: string | null;
+}
+
+interface StoneBlockProps {
+  settings?: HomeSettings | null;
+}
+
+const StoneBlock = ({ settings }: StoneBlockProps): JSX.Element => {
+  const { language, isReady } = useLanguage();
+  
+  const title = settings?.[`stoneTitle_${language}` as keyof HomeSettings] || 
+    (language === 'ua' ? "Кожен герой — не лише ім'я" : "Every hero is not just a name");
+  const quote = settings?.[`stoneQuote_${language}` as keyof HomeSettings] || 
+    (language === 'ua' ? "Поділись історією свого героя" : "Share your hero's story");
+  const imageUrl = settings?.stoneImageUrl || "https://api.builder.io/api/v1/image/assets/TEMP/9a8b7208bbde8d603926141c3ee80cbf2aba50e6?width=1360";
   return (
     <div className="stone-block">
       <svg className="decorative-pattern" width="440" height="358" viewBox="0 0 440 358" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,11 +31,11 @@ const StoneBlock = (): JSX.Element => {
 
       <img 
         className="stone-image" 
-        src="https://api.builder.io/api/v1/image/assets/TEMP/9a8b7208bbde8d603926141c3ee80cbf2aba50e6?width=1360" 
+        src={imageUrl} 
         alt="" 
       />
 
-      <div className="content-wrapper1">
+      <div className="content-wrapper1" style={{ opacity: isReady ? 1 : 0, transition: 'opacity 0.3s' }}>
         <svg className="quote-icon-stone" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clipPath="url(#clip0_4_4085)">
             <path d="M13.2 5.92928H11.9363C8.56616 5.92928 7.16172 7.34116 6.88084 10.7293H13.2V24H0V13.2707C-7.89888e-07 4.23544 4.4936 2.40508e-05 11.234 0H13.2V5.92928ZM32 5.92928H30.7363C27.3662 5.92928 25.9617 7.34116 25.6808 10.7293H32V24H18.8V13.2707C18.8 4.23544 23.2936 2.40508e-05 30.034 0H32V5.92928Z" fill="#F6F3E8"/>
@@ -25,9 +47,9 @@ const StoneBlock = (): JSX.Element => {
           </defs>
         </svg>
 
-        <h1 className="hero-title">Кожен герой — не лише ім'я</h1>
+        <h1 className="hero-title" suppressHydrationWarning>{title}</h1>
 
-        <p className="hero-subtitle1">Поділись історією свого героя</p>
+        <p className="hero-subtitle1" suppressHydrationWarning>{quote}</p>
 
         <button className="form-button">
           <span className="button-text">Заповнити форму</span>

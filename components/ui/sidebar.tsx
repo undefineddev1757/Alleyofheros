@@ -87,7 +87,7 @@ export function Sidebar() {
   React.useEffect(() => {
     const fetchPendingCount = async () => {
       try {
-        const response = await fetch('/api/submissions')
+        const response = await fetch('/api/submissions?countOnly=true')
         if (response.ok) {
           const data = await response.json()
           setPendingCount(data.count)

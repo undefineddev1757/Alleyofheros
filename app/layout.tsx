@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import CustomCursor from "./components/CustomCursor";
+import { LanguageProvider } from "./context/LanguageContext";
+import TitleUpdater from "./components/TitleUpdater";
 
 const eUkraineHead = localFont({
   src: [
@@ -26,7 +28,7 @@ const eUkraineHead = localFont({
 
 export const metadata: Metadata = {
   title: "Алея Друзів",
-  description: "Discover and celebrate everyday heroes in your community.",
+  description: "Тут ми пам'ятаємо не лише подвиги, а й людину за ними",
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
@@ -42,8 +44,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${eUkraineHead.variable} ${eUkraineHead.className}`}>
-        <CustomCursor />
-        {children}
+        <LanguageProvider>
+          <TitleUpdater />
+          <CustomCursor />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Save, Eye, EyeOff, Plus, Edit, Trash2, MoveUp, MoveDown } from "lucide-react"
+import { LanguageToggle, Language } from "@/components/admin/LanguageToggle"
 
 interface HeroSlide {
   id: string
@@ -29,35 +30,56 @@ export default function HomePageEdit() {
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
   const [success, setSuccess] = useState(false)
+  const [currentLang, setCurrentLang] = useState<Language>('ua')
   const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([])
   const [gallerySlides, setGallerySlides] = useState<GallerySlide[]>([])
   const [formData, setFormData] = useState({
-    // Hero Banner
-    heroTitle: '',
-    heroSubtitle: '',
-    heroDescription: '',
+    // Hero Banner - UA
+    heroTitle_ua: '',
+    heroSubtitle_ua: '',
+    heroDescription_ua: '',
+    // Hero Banner - EN
+    heroTitle_en: '',
+    heroSubtitle_en: '',
+    heroDescription_en: '',
+    // Video URL (shared)
     heroVideoUrl: '',
     
-    // About Section
-    aboutLabel: '',
-    aboutTitle: '',
-    aboutText1: '',
-    aboutText2: '',
+    // About Section - UA
+    aboutLabel_ua: '',
+    aboutTitle_ua: '',
+    aboutText1_ua: '',
+    aboutText2_ua: '',
+    // About Section - EN
+    aboutLabel_en: '',
+    aboutTitle_en: '',
+    aboutText1_en: '',
+    aboutText2_en: '',
     
-    // Heroes Slider
-    heroesTitle: '',
-    heroesSubtitle: '',
+    // Heroes Slider - UA
+    heroesTitle_ua: '',
+    heroesSubtitle_ua: '',
+    // Heroes Slider - EN
+    heroesTitle_en: '',
+    heroesSubtitle_en: '',
     showHeroesSlider: true,
     
-    // Stone Block
-    stoneTitle: '',
-    stoneQuote: '',
+    // Stone Block - UA
+    stoneTitle_ua: '',
+    stoneQuote_ua: '',
+    // Stone Block - EN
+    stoneTitle_en: '',
+    stoneQuote_en: '',
+    // Stone Image (shared)
     stoneImageUrl: '',
     showStoneBlock: true,
     
-    // Gallery
-    galleryTitle: '',
-    gallerySubtitle: '',
+    // Gallery - UA
+    galleryTitle_ua: '',
+    gallerySubtitle_ua: '',
+    // Gallery - EN
+    galleryTitle_en: '',
+    gallerySubtitle_en: '',
     showGallery: true,
   })
 
@@ -69,23 +91,40 @@ export default function HomePageEdit() {
         if (settingsRes.ok) {
           const data = await settingsRes.json()
           setFormData({
-            heroTitle: data.heroTitle || '',
-            heroSubtitle: data.heroSubtitle || '',
-            heroDescription: data.heroDescription || '',
+            heroTitle_ua: data.heroTitle_ua || '',
+            heroSubtitle_ua: data.heroSubtitle_ua || '',
+            heroDescription_ua: data.heroDescription_ua || '',
+            heroTitle_en: data.heroTitle_en || '',
+            heroSubtitle_en: data.heroSubtitle_en || '',
+            heroDescription_en: data.heroDescription_en || '',
             heroVideoUrl: data.heroVideoUrl || '',
-            aboutLabel: data.aboutLabel || '',
-            aboutTitle: data.aboutTitle || '',
-            aboutText1: data.aboutText1 || '',
-            aboutText2: data.aboutText2 || '',
-            heroesTitle: data.heroesTitle || '',
-            heroesSubtitle: data.heroesSubtitle || '',
+            
+            aboutLabel_ua: data.aboutLabel_ua || '',
+            aboutTitle_ua: data.aboutTitle_ua || '',
+            aboutText1_ua: data.aboutText1_ua || '',
+            aboutText2_ua: data.aboutText2_ua || '',
+            aboutLabel_en: data.aboutLabel_en || '',
+            aboutTitle_en: data.aboutTitle_en || '',
+            aboutText1_en: data.aboutText1_en || '',
+            aboutText2_en: data.aboutText2_en || '',
+            
+            heroesTitle_ua: data.heroesTitle_ua || '',
+            heroesSubtitle_ua: data.heroesSubtitle_ua || '',
+            heroesTitle_en: data.heroesTitle_en || '',
+            heroesSubtitle_en: data.heroesSubtitle_en || '',
             showHeroesSlider: data.showHeroesSlider ?? true,
-            stoneTitle: data.stoneTitle || '',
-            stoneQuote: data.stoneQuote || '',
+            
+            stoneTitle_ua: data.stoneTitle_ua || '',
+            stoneQuote_ua: data.stoneQuote_ua || '',
+            stoneTitle_en: data.stoneTitle_en || '',
+            stoneQuote_en: data.stoneQuote_en || '',
             stoneImageUrl: data.stoneImageUrl || '',
             showStoneBlock: data.showStoneBlock ?? true,
-            galleryTitle: data.galleryTitle || '',
-            gallerySubtitle: data.gallerySubtitle || '',
+            
+            galleryTitle_ua: data.galleryTitle_ua || '',
+            gallerySubtitle_ua: data.gallerySubtitle_ua || '',
+            galleryTitle_en: data.galleryTitle_en || '',
+            gallerySubtitle_en: data.gallerySubtitle_en || '',
             showGallery: data.showGallery ?? true,
           })
         }
@@ -307,6 +346,15 @@ export default function HomePageEdit() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Language Toggle */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold">Редактирование главной страницы</h2>
+            <p className="text-muted-foreground">Выберите язык для редактирования</p>
+          </div>
+          <LanguageToggle currentLang={currentLang} onChange={setCurrentLang} />
+        </div>
+
         {/* Hero Banner Section */}
         <Card>
           <CardHeader>
@@ -316,35 +364,35 @@ export default function HomePageEdit() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="heroTitle">Заголовок</Label>
+                <Label htmlFor="heroTitle">Заголовок ({currentLang.toUpperCase()})</Label>
                 <Input
                   id="heroTitle"
-                  value={formData.heroTitle}
-                  onChange={(e) => setFormData({ ...formData, heroTitle: e.target.value })}
-                  placeholder="Алея"
+                  value={formData[`heroTitle_${currentLang}` as keyof typeof formData] as string}
+                  onChange={(e) => setFormData({ ...formData, [`heroTitle_${currentLang}`]: e.target.value })}
+                  placeholder={currentLang === 'ua' ? 'Алея' : 'Alley'}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="heroSubtitle">Подзаголовок</Label>
+                <Label htmlFor="heroSubtitle">Подзаголовок ({currentLang.toUpperCase()})</Label>
                 <Input
                   id="heroSubtitle"
-                  value={formData.heroSubtitle}
-                  onChange={(e) => setFormData({ ...formData, heroSubtitle: e.target.value })}
-                  placeholder="Друзів"
+                  value={formData[`heroSubtitle_${currentLang}` as keyof typeof formData] as string}
+                  onChange={(e) => setFormData({ ...formData, [`heroSubtitle_${currentLang}`]: e.target.value })}
+                  placeholder={currentLang === 'ua' ? 'Друзів' : 'Of Friends'}
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="heroDescription">Описание</Label>
+              <Label htmlFor="heroDescription">Описание ({currentLang.toUpperCase()})</Label>
               <Input
                 id="heroDescription"
-                value={formData.heroDescription}
-                onChange={(e) => setFormData({ ...formData, heroDescription: e.target.value })}
-                placeholder="Тут ми пам'ятаємо не лише подвиги..."
+                value={formData[`heroDescription_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`heroDescription_${currentLang}`]: e.target.value })}
+                placeholder={currentLang === 'ua' ? "Тут ми пам'ятаємо не лише подвиги..." : "Here we remember not only the feats..."}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="heroVideoUrl">URL видео</Label>
+              <Label htmlFor="heroVideoUrl">URL видео (общее)</Label>
               <Input
                 id="heroVideoUrl"
                 value={formData.heroVideoUrl}
@@ -363,42 +411,42 @@ export default function HomePageEdit() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="aboutLabel">Метка раздела</Label>
+              <Label htmlFor="aboutLabel">Метка раздела ({currentLang.toUpperCase()})</Label>
               <Input
                 id="aboutLabel"
-                value={formData.aboutLabel}
-                onChange={(e) => setFormData({ ...formData, aboutLabel: e.target.value })}
-                placeholder="Про алею"
+                value={formData[`aboutLabel_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`aboutLabel_${currentLang}`]: e.target.value })}
+                placeholder={currentLang === 'ua' ? 'Про алею' : 'About'}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="aboutTitle">Заголовок</Label>
+              <Label htmlFor="aboutTitle">Заголовок ({currentLang.toUpperCase()})</Label>
               <Textarea
                 id="aboutTitle"
-                value={formData.aboutTitle}
-                onChange={(e) => setFormData({ ...formData, aboutTitle: e.target.value })}
+                value={formData[`aboutTitle_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`aboutTitle_${currentLang}`]: e.target.value })}
                 rows={2}
-                placeholder="Тут — історії людей, які переписали історію країни"
+                placeholder={currentLang === 'ua' ? "Тут — історії людей, які переписали історію країни" : "Here are the stories of people who rewrote history"}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="aboutText1">Первый параграф</Label>
+              <Label htmlFor="aboutText1">Первый параграф ({currentLang.toUpperCase()})</Label>
               <Textarea
                 id="aboutText1"
-                value={formData.aboutText1}
-                onChange={(e) => setFormData({ ...formData, aboutText1: e.target.value })}
+                value={formData[`aboutText1_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`aboutText1_${currentLang}`]: e.target.value })}
                 rows={4}
-                placeholder="Ми хочемо, щоб про них пам'ятали..."
+                placeholder={currentLang === 'ua' ? "Ми хочемо, щоб про них пам'ятали..." : "We want them to be remembered..."}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="aboutText2">Второй параграф (в цитате)</Label>
+              <Label htmlFor="aboutText2">Второй параграф (в цитате) ({currentLang.toUpperCase()})</Label>
               <Textarea
                 id="aboutText2"
-                value={formData.aboutText2}
-                onChange={(e) => setFormData({ ...formData, aboutText2: e.target.value })}
+                value={formData[`aboutText2_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`aboutText2_${currentLang}`]: e.target.value })}
                 rows={4}
-                placeholder="Вони своїми вчинками переписали історію..."
+                placeholder={currentLang === 'ua' ? "Вони своїми вчинками переписали історію..." : "Through their actions, they rewrote history..."}
               />
             </div>
           </CardContent>
@@ -432,21 +480,21 @@ export default function HomePageEdit() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="heroesTitle">Заголовок</Label>
+                <Label htmlFor="heroesTitle">Заголовок ({currentLang.toUpperCase()})</Label>
                 <Input
                   id="heroesTitle"
-                  value={formData.heroesTitle}
-                  onChange={(e) => setFormData({ ...formData, heroesTitle: e.target.value })}
-                  placeholder="Наші герої"
+                  value={formData[`heroesTitle_${currentLang}` as keyof typeof formData] as string}
+                  onChange={(e) => setFormData({ ...formData, [`heroesTitle_${currentLang}`]: e.target.value })}
+                  placeholder={currentLang === 'ua' ? 'Наші герої' : 'Our Heroes'}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="heroesSubtitle">Подзаголовок</Label>
+                <Label htmlFor="heroesSubtitle">Подзаголовок ({currentLang.toUpperCase()})</Label>
                 <Input
                   id="heroesSubtitle"
-                  value={formData.heroesSubtitle}
-                  onChange={(e) => setFormData({ ...formData, heroesSubtitle: e.target.value })}
-                  placeholder="Пам'ятаємо кожного"
+                  value={formData[`heroesSubtitle_${currentLang}` as keyof typeof formData] as string}
+                  onChange={(e) => setFormData({ ...formData, [`heroesSubtitle_${currentLang}`]: e.target.value })}
+                  placeholder={currentLang === 'ua' ? "Пам'ятаємо кожного" : 'We remember everyone'}
                 />
               </div>
             </div>
@@ -480,25 +528,27 @@ export default function HomePageEdit() {
               </button>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="stoneTitle">Заголовок</Label>
+              <Label htmlFor="stoneTitle">Заголовок ({currentLang.toUpperCase()})</Label>
               <Textarea
                 id="stoneTitle"
-                value={formData.stoneTitle}
-                onChange={(e) => setFormData({ ...formData, stoneTitle: e.target.value })}
+                value={formData[`stoneTitle_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`stoneTitle_${currentLang}`]: e.target.value })}
                 rows={2}
+                placeholder={currentLang === 'ua' ? 'Заголовок' : 'Title'}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="stoneQuote">Цитата</Label>
+              <Label htmlFor="stoneQuote">Цитата ({currentLang.toUpperCase()})</Label>
               <Textarea
                 id="stoneQuote"
-                value={formData.stoneQuote}
-                onChange={(e) => setFormData({ ...formData, stoneQuote: e.target.value })}
+                value={formData[`stoneQuote_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`stoneQuote_${currentLang}`]: e.target.value })}
                 rows={3}
+                placeholder={currentLang === 'ua' ? 'Цитата' : 'Quote'}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="stoneImageUrl">URL изображения фона</Label>
+              <Label htmlFor="stoneImageUrl">URL изображения фона (общее)</Label>
               <Input
                 id="stoneImageUrl"
                 value={formData.stoneImageUrl}
@@ -537,21 +587,21 @@ export default function HomePageEdit() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="galleryTitle">Заголовок</Label>
+                <Label htmlFor="galleryTitle">Заголовок ({currentLang.toUpperCase()})</Label>
                 <Input
                   id="galleryTitle"
-                  value={formData.galleryTitle}
-                  onChange={(e) => setFormData({ ...formData, galleryTitle: e.target.value })}
-                  placeholder="Галерея"
+                  value={formData[`galleryTitle_${currentLang}` as keyof typeof formData] as string}
+                  onChange={(e) => setFormData({ ...formData, [`galleryTitle_${currentLang}`]: e.target.value })}
+                  placeholder={currentLang === 'ua' ? 'Галерея' : 'Gallery'}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="gallerySubtitle">Подзаголовок</Label>
+                <Label htmlFor="gallerySubtitle">Подзаголовок ({currentLang.toUpperCase()})</Label>
                 <Input
                   id="gallerySubtitle"
-                  value={formData.gallerySubtitle}
-                  onChange={(e) => setFormData({ ...formData, gallerySubtitle: e.target.value })}
-                  placeholder="Фото з заходів"
+                  value={formData[`gallerySubtitle_${currentLang}` as keyof typeof formData] as string}
+                  onChange={(e) => setFormData({ ...formData, [`gallerySubtitle_${currentLang}`]: e.target.value })}
+                  placeholder={currentLang === 'ua' ? 'Фото з заходів' : 'Event photos'}
                 />
               </div>
             </div>

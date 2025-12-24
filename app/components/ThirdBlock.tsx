@@ -2,14 +2,19 @@
 
 import './ThirdBlock.css';
 import dynamic from 'next/dynamic';
+import { useLanguage } from '../context/LanguageContext';
 
 const StatueViewer = dynamic(() => import('./StatueViewer'), { ssr: false });
 
 interface HomeSettings {
-  aboutLabel?: string | null;
-  aboutTitle?: string | null;
-  aboutText1?: string | null;
-  aboutText2?: string | null;
+  aboutLabel_ua?: string | null;
+  aboutLabel_en?: string | null;
+  aboutTitle_ua?: string | null;
+  aboutTitle_en?: string | null;
+  aboutText1_ua?: string | null;
+  aboutText1_en?: string | null;
+  aboutText2_ua?: string | null;
+  aboutText2_en?: string | null;
 }
 
 interface ThirdBlockProps {
@@ -17,20 +22,27 @@ interface ThirdBlockProps {
 }
 
 const ThirdBlock = ({ settings }: ThirdBlockProps): JSX.Element => {
-  const firstParagraph = settings?.aboutText1 || "Ми хочемо, щоб про них пам'ятали та знали, що це були не просто хоробрі воїни, а ті, хто допомагав усім, хто потребував, хто був щирим, добрим, жив на повну і ніколи не втрачав віру — у себе й у свою країну.";
-  const secondParagraph = settings?.aboutText2 || "Вони своїми вчинками переписали історію України, яку згодом вивчатимуть нові покоління. І ми зробимо все, щоб пам'ять про них — як про людей — залишалася в кожному.";
+  const { language, isReady } = useLanguage();
+  
+  const getFieldValue = (fieldName: string, defaultUa: string, defaultEn: string) => {
+    const value = settings?.[`${fieldName}_${language}` as keyof HomeSettings];
+    return value || (language === 'ua' ? defaultUa : defaultEn);
+  };
+
+  const label = getFieldValue('aboutLabel', 'Про алею', 'About');
+  const title = getFieldValue('aboutTitle', 'Тут — історії людей, які переписали історію країни', 'Here are stories of people who rewrote history');
+  const firstParagraph = getFieldValue('aboutText1', "Ми хочемо, щоб про них пам'ятали та знали, що це були не просто хоробрі воїни, а ті, хто допомагав усім, хто потребував, хто був щирим, добрим, жив на повну і ніколи не втрачав віру — у себе й у свою країну.", "We want them to be remembered and known not just as brave warriors, but as those who helped everyone in need, who were sincere, kind, lived life to the fullest and never lost faith — in themselves and in their country.");
+  const secondParagraph = getFieldValue('aboutText2', "Вони своїми вчинками переписали історію України, яку згодом вивчатимуть нові покоління. І ми зробимо все, щоб пам'ять про них — як про людей — залишалася в кожному.", "Through their actions, they rewrote the history of Ukraine, which future generations will study. And we will do everything to ensure that the memory of them — as people — remains in everyone.");
 
   return (
     <section className="third-block">
       <div className="statue-container">
         <StatueViewer />
       </div>
-      <div className="third-block-container">
+      <div className="third-block-container" style={{ opacity: isReady ? 1 : 0, transition: 'opacity 0.3s' }}>
         <div className="left-content">
-          <p className="section-label">{settings?.aboutLabel || "Про алею"}</p>
-          <h2 className="main-heading">
-            {settings?.aboutTitle || "Тут — історії людей, які переписали історію країни"}
-          </h2>
+          <p className="section-label" suppressHydrationWarning>{label}</p>
+          <h2 className="main-heading" suppressHydrationWarning>{title}</h2>
           <svg className="quote-icon-bottom" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_quote_bottom)">
               <path d="M18.8 18.0707H20.0637C23.4338 18.0707 24.8383 16.6588 25.1192 13.2707L18.8 13.2707L18.8 -3.57628e-07H32L32 10.7293C32 19.7646 27.5064 24 20.766 24H18.8V18.0707ZM-4.76837e-07 18.0707H1.26368C4.63384 18.0707 6.03828 16.6588 6.31916 13.2707H-4.76837e-07V-3.57628e-07H13.2L13.2 10.7293C13.2 19.7646 8.7064 24 1.966 24H-4.76837e-07V18.0707Z" fill="#F2B202"/>
@@ -57,7 +69,7 @@ const ThirdBlock = ({ settings }: ThirdBlockProps): JSX.Element => {
         </div>
 
         <div className="right-content">
-          <p className="description-text">
+          <p className="description-text" suppressHydrationWarning>
             {firstParagraph}
           </p>
 
@@ -72,7 +84,7 @@ const ThirdBlock = ({ settings }: ThirdBlockProps): JSX.Element => {
                 </clipPath>
               </defs>
             </svg>
-            <p className="quote-text">
+            <p className="quote-text" suppressHydrationWarning>
               {secondParagraph}
             </p>
           </div>

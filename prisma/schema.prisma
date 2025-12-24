@@ -25,9 +25,11 @@ model Admin {
 
 model Hero {
   id          String   @id @default(cuid())
-  name        String
-  description String?
+  callSign    String   // Позывний
+  name        String   // Прізвище Ім'я
+  description String?  @db.Text
   imageUrl    String?
+  isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -58,38 +60,61 @@ model PageSection {
 model HomePageSettings {
   id                  String   @id @default(cuid())
   
-  // Hero Banner Section
-  heroTitle           String?
-  heroSubtitle        String?
-  heroDescription     String?
-  heroVideoUrl        String?
+  // Hero Banner Section - UA
+  heroTitle_ua          String?
+  heroSubtitle_ua       String?
+  heroDescription_ua    String?
+  heroVideoUrl          String?
   
-  // About Section (Third Block)
-  aboutLabel          String?  // "Про алею"
-  aboutTitle          String?  @db.Text
-  aboutText1          String?  @db.Text
-  aboutText2          String?  @db.Text
+  // Hero Banner Section - EN
+  heroTitle_en          String?
+  heroSubtitle_en       String?
+  heroDescription_en    String?
   
-  // Heroes Slider Section
-  heroesTitle         String?
-  heroesSubtitle      String?
-  showHeroesSlider    Boolean  @default(true)
+  // About Section (Third Block) - UA
+  aboutLabel_ua         String?
+  aboutTitle_ua         String?  @db.Text
+  aboutText1_ua         String?  @db.Text
+  aboutText2_ua         String?  @db.Text
   
-  // Stone/Quote Block
-  stoneTitle          String?  @db.Text
-  stoneQuote          String?  @db.Text
-  stoneImageUrl       String?
-  showStoneBlock      Boolean  @default(true)
+  // About Section - EN
+  aboutLabel_en         String?
+  aboutTitle_en         String?  @db.Text
+  aboutText1_en         String?  @db.Text
+  aboutText2_en         String?  @db.Text
   
-  // Gallery Section
-  galleryTitle        String?
-  gallerySubtitle     String?
-  showGallery         Boolean  @default(true)
+  // Heroes Slider Section - UA
+  heroesTitle_ua        String?
+  heroesSubtitle_ua     String?
+  showHeroesSlider      Boolean  @default(true)
+  
+  // Heroes Slider Section - EN
+  heroesTitle_en        String?
+  heroesSubtitle_en     String?
+  
+  // Stone/Quote Block - UA
+  stoneTitle_ua         String?  @db.Text
+  stoneQuote_ua         String?  @db.Text
+  stoneImageUrl         String?
+  showStoneBlock        Boolean  @default(true)
+  
+  // Stone/Quote Block - EN
+  stoneTitle_en         String?  @db.Text
+  stoneQuote_en         String?  @db.Text
+  
+  // Gallery Section - UA
+  galleryTitle_ua       String?
+  gallerySubtitle_ua    String?
+  showGallery           Boolean  @default(true)
+  
+  // Gallery Section - EN
+  galleryTitle_en       String?
+  gallerySubtitle_en    String?
   
   // General Settings
-  isActive            Boolean  @default(true)
-  updatedAt           DateTime @updatedAt
-  createdAt           DateTime @default(now())
+  isActive              Boolean  @default(true)
+  updatedAt             DateTime @updatedAt
+  createdAt             DateTime @default(now())
   
   @@map("home_page_settings")
 }
@@ -235,16 +260,21 @@ model PageContent {
 }
 
 model Submission {
-  id          String   @id @default(cuid())
-  type        String   // hero-submission, story-submission, contact
-  name        String
-  email       String?
-  phone       String?
-  heroName    String?
-  heroStory   String?  @db.Text
-  message     String?  @db.Text
-  imageUrl    String?
-  status      String   @default("pending") // pending, approved, rejected
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                String   @id @default(cuid())
+  type              String   // hero-submission, story-submission, contact
+  name              String
+  email             String?
+  phone             String?
+  telegramUsername  String?
+  heroName          String?
+  residence         String?
+  birthDate         String?
+  deathDate         String?
+  heroStory         String?  @db.Text
+  message           String?  @db.Text
+  imageUrl          String?
+  mediaFiles        String[] // Array of uploaded file URLs
+  status            String   @default("pending") // pending, approved, rejected
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }

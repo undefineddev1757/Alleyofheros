@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import './FormStoryBlock.css';
 
 const FormStoryBlock = ({ title = 'у кожного — свій захисник, своя історія', subtitle = 'Поділись історією свого героя', buttonText = 'Заповнити форму' }) => {
@@ -30,7 +31,7 @@ const FormStoryBlock = ({ title = 'у кожного — свій захисни
 
         <p className="subheading">{subtitle}</p>
 
-        <button className="form-button">
+        <Link href="/add-heroe" className="form-button">
           <span className="button-text">{buttonText}</span>
           <svg className="button-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_168_3433)">
@@ -42,7 +43,7 @@ const FormStoryBlock = ({ title = 'у кожного — свій захисни
               </clipPath>
             </defs>
           </svg>
-        </button>
+        </Link>
       </div>
     </div>
   );
