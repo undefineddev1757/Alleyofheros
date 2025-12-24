@@ -15,7 +15,9 @@ import {
   ChevronDown,
   ChevronUp,
   FileStack,
-  Inbox
+  Inbox,
+  Shield,
+  Image
 } from "lucide-react"
 import { signOut } from "next-auth/react"
 import { Button } from "./button"
@@ -32,15 +34,20 @@ const menuItems = [
     submenu: [
       {
         title: "Главная",
-        href: "/admin/home-page",
+        href: "/admin/home-page-edit",
       },
+     
       {
         title: "Ваши истории",
-        href: "/admin/pages",
+        href: "/admin/your-stories",
       },
       {
         title: "Найти героя",
-        href: "/admin/pages",
+        href: "/admin/find-hero",
+      },
+      {
+        title: "Подвал (Footer)",
+        href: "/admin/footer",
       },
     ],
   },
@@ -58,6 +65,16 @@ const menuItems = [
     title: "Заявки",
     href: "/admin/submissions",
     icon: Inbox,
+  },
+  {
+    title: "Медиафайлы",
+    href: "/admin/media",
+    icon: Image,
+  },
+  {
+    title: "Пользователи",
+    href: "/admin/users",
+    icon: Shield,
   },
 ]
 
@@ -139,7 +156,7 @@ export function Sidebar() {
                         <ChevronDown className="h-4 w-4" />
                       )}
                     </button>
-                    {isExpanded && (
+                    {isExpanded && item.submenu && (
                       <div className="ml-4 mt-1 space-y-1">
                         {item.submenu.map((subitem) => {
                           const isSubActive = pathname === subitem.href

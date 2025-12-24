@@ -11,12 +11,16 @@ datasource db {
 }
 
 model Admin {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(cuid())
+  email           String   @unique
+  password        String
+  name            String?
+  role            String   @default("writer") // admin, writer
+  twoFactorSecret String?  // Secret for 2FA
+  twoFactorEnabled Boolean @default(false)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Hero {
@@ -49,6 +53,156 @@ model PageSection {
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model HomePageSettings {
+  id                  String   @id @default(cuid())
+  
+  // Hero Banner Section
+  heroTitle           String?
+  heroSubtitle        String?
+  heroDescription     String?
+  heroVideoUrl        String?
+  
+  // About Section (Third Block)
+  aboutLabel          String?  // "Про алею"
+  aboutTitle          String?  @db.Text
+  aboutText1          String?  @db.Text
+  aboutText2          String?  @db.Text
+  
+  // Heroes Slider Section
+  heroesTitle         String?
+  heroesSubtitle      String?
+  showHeroesSlider    Boolean  @default(true)
+  
+  // Stone/Quote Block
+  stoneTitle          String?  @db.Text
+  stoneQuote          String?  @db.Text
+  stoneImageUrl       String?
+  showStoneBlock      Boolean  @default(true)
+  
+  // Gallery Section
+  galleryTitle        String?
+  gallerySubtitle     String?
+  showGallery         Boolean  @default(true)
+  
+  // General Settings
+  isActive            Boolean  @default(true)
+  updatedAt           DateTime @updatedAt
+  createdAt           DateTime @default(now())
+  
+  @@map("home_page_settings")
+}
+
+// Slider 1: Heroes with call signs
+model HeroSlide {
+  id          String   @id @default(cuid())
+  imageUrl    String
+  callSign    String   // Позывной
+  link        String?  // Optional link
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("hero_slides")
+}
+
+// Slider 2: Gallery with captions
+model GallerySlide {
+  id          String   @id @default(cuid())
+  imageUrl    String
+  caption     String   // Подпись
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("gallery_slides")
+}
+
+// Footer Settings
+model FooterSettings {
+  id                String   @id @default(cuid())
+  
+  // Footer Text
+  aboutText         String?  @db.Text
+  copyrightText     String?
+  
+  // Contact Info
+  email             String?
+  phone             String?
+  address           String?
+  
+  // Social Media Links
+  facebookUrl       String?
+  instagramUrl      String?
+  twitterUrl        String?
+  youtubeUrl        String?
+  telegramUrl       String?
+  linkedinUrl       String?
+  
+  // Additional Links
+  privacyPolicyUrl  String?
+  termsOfServiceUrl String?
+  
+  isActive          Boolean  @default(true)
+  updatedAt         DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  
+  @@map("footer_settings")
+}
+
+// Your Stories Page Settings
+model YourStoriesPageSettings {
+  id                    String   @id @default(cuid())
+  
+  // Banner Section
+  bannerTitle           String?
+  bannerSubtitle        String?  @db.Text
+  searchPlaceholder     String?
+  
+  // Form Block
+  formTitle             String?  @db.Text
+  formSubtitle          String?
+  formButtonText        String?
+  
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  @@map("your_stories_page_settings")
+}
+
+// Find Hero Page Settings
+model FindHeroPageSettings {
+  id                    String   @id @default(cuid())
+  
+  // Banner Section
+  bannerTitle           String?
+  searchPlaceholder     String?
+  medalImageUrl         String?
+  
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  @@map("find_hero_page_settings")
+}
+
+// Media Files
+model MediaFile {
+  id          String   @id @default(cuid())
+  filename    String
+  originalName String
+  mimeType    String
+  size        Int      // in bytes
+  url         String
+  createdBy   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("media_files")
 }
 
 model Page {

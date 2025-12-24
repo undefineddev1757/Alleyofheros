@@ -3,7 +3,7 @@
 import React from 'react';
 import './FormStoryBlock.css';
 
-const FormStoryBlock = () => {
+const FormStoryBlock = ({ title = 'у кожного — свій захисник, своя історія', subtitle = 'Поділись історією свого героя', buttonText = 'Заповнити форму' }) => {
   return (
     <div className="form-story-block">
       <svg className="background-pattern" width="480" height="426" viewBox="0 0 480 426" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,12 +26,12 @@ const FormStoryBlock = () => {
           </defs>
         </svg>
 
-        <h1 className="main-heading">у кожного — свій захисник, своя історія</h1>
+        <h1 className="main-heading">{title}</h1>
 
-        <p className="subheading">Поділись історією свого героя</p>
+        <p className="subheading">{subtitle}</p>
 
         <button className="form-button">
-          <span className="button-text">Заповнити форму</span>
+          <span className="button-text">{buttonText}</span>
           <svg className="button-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_168_3433)">
               <path fillRule="evenodd" clipRule="evenodd" d="M13.3 11.9C11.5934 10.1934 11.5927 7.0833 13.3 5.37599L14 4.67599L12.6 3.27599L11.9 3.97599C10.6582 5.21779 10.038 6.92719 10.0373 8.6373L1.4 6.11955e-08L5.50763e-07 1.4L8.63729 10.0373C6.9272 10.038 5.2178 10.6582 3.976 11.9L3.276 12.6L4.676 14L5.376 13.3C7.08329 11.5927 10.1934 11.5934 11.9 13.3L12.6 14L14 12.6L13.3 11.9Z" fill="#17120E"/>

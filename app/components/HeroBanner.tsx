@@ -3,20 +3,20 @@
 import { useEffect, useMemo, useState } from "react";
 import "./HeroBanner.css";
 
-interface PageSection {
-  title?: string | null;
-  subtitle?: string | null;
-  content?: string | null;
-  videoUrl?: string | null;
+interface HomeSettings {
+  heroTitle?: string | null;
+  heroSubtitle?: string | null;
+  heroDescription?: string | null;
+  heroVideoUrl?: string | null;
 }
 
 interface HeroBannerProps {
-  section?: PageSection;
+  settings?: HomeSettings | null;
 }
 
 const DEFAULT_VIDEO = "/6034431_Aerialiew_1920x1080.mp4";
 
-export default function HeroBanner({ section }: HeroBannerProps): JSX.Element {
+export default function HeroBanner({ settings }: HeroBannerProps): JSX.Element {
   const [isDesktop, setIsDesktop] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -55,7 +55,7 @@ export default function HeroBanner({ section }: HeroBannerProps): JSX.Element {
     >
       <video
         className="hero-background"
-        src={section?.videoUrl || DEFAULT_VIDEO}
+        src={settings?.heroVideoUrl || DEFAULT_VIDEO}
         autoPlay
         muted
         loop
@@ -64,14 +64,14 @@ export default function HeroBanner({ section }: HeroBannerProps): JSX.Element {
       <div className="hero-content">
         <div className="hero-title-first">
           <span className="bracket-accent">{"{"}</span>
-          <span className="title-text"> {section?.title || "Алея"}</span>
+          <span className="title-text"> {settings?.heroTitle || "Алея"}</span>
         </div>
         <div className="hero-title-second">
-          <span className="title-text">{section?.subtitle || "Друзів"} </span>
+          <span className="title-text">{settings?.heroSubtitle || "Друзів"} </span>
           <span className="bracket-accent">{"}"}</span>
         </div>
         <div className="hero-subtitle">
-          {section?.content || "Тут ми пам'ятаємо не лише подвиги, а й людину за ними"}
+          {settings?.heroDescription || "Тут ми пам'ятаємо не лише подвиги, а й людину за ними"}
         </div>
       </div>
 

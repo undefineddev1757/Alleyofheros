@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/ui/sidebar"
+import { ToastProvider } from "@/components/ui/toast"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../../api/auth/[...nextauth]/route"
 import { redirect } from "next/navigation"
@@ -15,12 +16,14 @@ export default async function ProtectedAdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
-      <main className="lg:ml-64 p-8">
-        {children}
-      </main>
-    </div>
+    <ToastProvider>
+      <div className="min-h-screen bg-background">
+        <Sidebar />
+        <main className="lg:ml-64 p-8">
+          {children}
+        </main>
+      </div>
+    </ToastProvider>
   )
 }
 

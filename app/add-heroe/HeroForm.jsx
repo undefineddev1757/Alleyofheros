@@ -115,13 +115,13 @@ ${formData.heroStory}`,
 
       {success && (
         <div style={{ padding: '16px', marginBottom: '20px', backgroundColor: '#10b981', color: 'white', borderRadius: '8px', textAlign: 'center' }}>
-          ✅ Заявка успішно відправлена на модерацію!
+          Заявка успішно відправлена на модерацію!
         </div>
       )}
 
       {error && (
         <div style={{ padding: '16px', marginBottom: '20px', backgroundColor: '#ef4444', color: 'white', borderRadius: '8px', textAlign: 'center' }}>
-          ❌ {error}
+          {error}
         </div>
       )}
 

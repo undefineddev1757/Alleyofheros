@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
       try {
         const telegramMessage = `
-🔔 Нова заявка!
+НОВА ЗАЯВКА!
 
 Тип: ${body.type === 'hero-submission' ? 'Додати героя' : 'Інше'}
 Ім'я: ${body.name}

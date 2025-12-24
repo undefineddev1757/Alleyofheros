@@ -5,21 +5,20 @@ import dynamic from 'next/dynamic';
 
 const StatueViewer = dynamic(() => import('./StatueViewer'), { ssr: false });
 
-interface PageSection {
-  title?: string | null;
-  subtitle?: string | null;
-  content?: string | null;
+interface HomeSettings {
+  aboutLabel?: string | null;
+  aboutTitle?: string | null;
+  aboutText1?: string | null;
+  aboutText2?: string | null;
 }
 
 interface ThirdBlockProps {
-  section?: PageSection;
+  settings?: HomeSettings | null;
 }
 
-const ThirdBlock = ({ section }: ThirdBlockProps): JSX.Element => {
-  // Split content into two paragraphs if it exists
-  const contentParts = section?.content?.split('\n\n') || [];
-  const firstParagraph = contentParts[0] || "Ми хочемо, щоб про них пам'ятали та знали, що це були не просто хоробрі воїни, а ті, хто допомагав усім, хто потребував, хто був щирим, добрим, жив на повну і ніколи не втрачав віру — у себе й у свою країну.";
-  const secondParagraph = contentParts[1] || "Вони своїми вчинками переписали історію України, яку згодом вивчатимуть нові покоління. І ми зробимо все, щоб пам'ять про них — як про людей — залишалася в кожному.";
+const ThirdBlock = ({ settings }: ThirdBlockProps): JSX.Element => {
+  const firstParagraph = settings?.aboutText1 || "Ми хочемо, щоб про них пам'ятали та знали, що це були не просто хоробрі воїни, а ті, хто допомагав усім, хто потребував, хто був щирим, добрим, жив на повну і ніколи не втрачав віру — у себе й у свою країну.";
+  const secondParagraph = settings?.aboutText2 || "Вони своїми вчинками переписали історію України, яку згодом вивчатимуть нові покоління. І ми зробимо все, щоб пам'ять про них — як про людей — залишалася в кожному.";
 
   return (
     <section className="third-block">
@@ -28,9 +27,9 @@ const ThirdBlock = ({ section }: ThirdBlockProps): JSX.Element => {
       </div>
       <div className="third-block-container">
         <div className="left-content">
-          <p className="section-label">{section?.subtitle || "Про алею"}</p>
+          <p className="section-label">{settings?.aboutLabel || "Про алею"}</p>
           <h2 className="main-heading">
-            {section?.title || "Тут — історії людей, які переписали історію країни"}
+            {settings?.aboutTitle || "Тут — історії людей, які переписали історію країни"}
           </h2>
           <svg className="quote-icon-bottom" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_quote_bottom)">

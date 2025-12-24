@@ -3,7 +3,7 @@
 import React from 'react';
 import './YourStoriesBanner.css';
 
-const YourStoriesBanner = () => {
+const YourStoriesBanner = ({ title = 'ВАШІ ІСТОРІЇ', subtitle = 'Ми створюємо місце, де на стінах з\'являються портрети загиблих військових.', searchPlaceholder = 'Позивний/ПІБ' }) => {
   const backgroundNames = [
     'мадяр', 'жрець', 'малиш', 'Грінка', 'мадяр', 'жрець', 'григорович', 'малиш', 'жрець', 'малиш', 'жрець', 'малиш', 'Грінка', 'Грінка',
     'фенікс', 'бтр', 'таксист', 'григорович', 'атлет', 'фенікс', 'бтр', 'таксист', 'атлет', 'Грінка', 'григорович', 'мадяр', 'жрець', 'малиш',
@@ -52,9 +52,9 @@ const YourStoriesBanner = () => {
         <svg class="quote-icon1" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_104_4577)"><path d="M13.2 5.92928H11.9363C8.56616 5.92928 7.16172 7.34116 6.88084 10.7293H13.2V24H0V13.2707C-7.89888e-07 4.23544 4.4936 2.40508e-05 11.234 0H13.2V5.92928ZM32 5.92928H30.7363C27.3662 5.92928 25.9617 7.34116 25.6808 10.7293H32V24H18.8V13.2707C18.8 4.23544 23.2936 2.40508e-05 30.034 0H32V5.92928Z" fill="#F2B202"></path></g><defs><clipPath id="clip0_104_4577"><rect width="32" height="24" fill="white"></rect></clipPath></defs></svg>
 
           <div className="text-content">
-            <h1 className="banner-title">ВАШ ІСТОРІЇ</h1>
+            <h1 className="banner-title">{title}</h1>
             <p className="banner-subtitle">
-              Ми створюємо місце, де на стінах з'являються портрети загиблих військових.
+              {subtitle}
             </p>
           </div>
 
@@ -75,7 +75,7 @@ const YourStoriesBanner = () => {
           <input 
             type="text" 
             className="search-input" 
-            placeholder="Позивний/ПІБ"
+            placeholder={searchPlaceholder}
             aria-label="Пошук за позивним або ПІБ"
           />
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './FindHeroBanner.css';
 
-const FindHeroBanner = () => {
+const FindHeroBanner = ({ title = 'Знайти героя', searchPlaceholder = 'Позивний/ПІБ', medalImageUrl = 'https://api.builder.io/api/v1/image/assets/TEMP/12daba71a01ffc2fafdfaa3af92bdeb993584487?width=560' }) => {
   const heroNames = [
     'мадяр', 'жрець', 'малиш', 'Грінка', 'мадяр', 'жрець', 'григорович', 'малиш', 
     'жрець', 'малиш', 'жрець', 'малиш', 'Грінка', 'Грінка',
@@ -24,13 +24,13 @@ const FindHeroBanner = () => {
           <div className="brace-left">{'{'}</div>
           <img 
             className="medal-image1" 
-            src="https://api.builder.io/api/v1/image/assets/TEMP/12daba71a01ffc2fafdfaa3af92bdeb993584487?width=560" 
+            src={medalImageUrl} 
             alt="Medal of Honor" 
           />
           <div className="brace-right">{'}'}</div>
         </div>
 
-        <h1 className="title">Знайти героя</h1>
+        <h1 className="title">{title}</h1>
 
         <div className="search-field">
           <svg 
@@ -56,7 +56,7 @@ const FindHeroBanner = () => {
           <input 
             type="text" 
             className="search-input" 
-            placeholder="Позивний/ПІБ" 
+            placeholder={searchPlaceholder} 
             aria-label="Search hero by call sign or name"
           />
         </div>

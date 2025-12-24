@@ -9,35 +9,77 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = 'force-dynamic';
 
-async function getPageSections() {
+async function getHomeSettings() {
   try {
-    const sections = await prisma.pageSection.findMany({
-      where: { isActive: true },
-      orderBy: { order: "asc" },
+    let settings = await prisma.homePageSettings.findFirst({
+      where: { id: 'default' },
     });
+
+    if (!settings) {
+      settings = await prisma.homePageSettings.create({
+        data: {
+          id: 'default',
+          heroTitle: 'Алея',
+          heroSubtitle: 'Друзів',
+          isActive: true,
+        },
+      });
+    }
     
-    return sections.reduce((acc, section) => {
-      acc[section.sectionKey] = section;
-      return acc;
-    }, {} as Record<string, any>);
+    return settings;
   } catch (error) {
-    console.error("Error fetching page sections:", error);
-    return {};
+    console.error("Error fetching home settings:", error);
+    return null;
+  }
+}
+
+async function getFooterSettings() {
+  try {
+    let settings = await prisma.footerSettings.findFirst({
+      where: { id: 'default' },
+    });
+
+    if (!settings) {
+      settings = await prisma.footerSettings.create({
+        data: {
+          id: 'default',
+          copyrightText: '© 2024 Алея Друзів. Всі права захищені.',
+          isActive: true,
+        },
+      });
+    }
+    
+    return settings;
+  } catch (error) {
+    console.error("Error fetching footer settings:", error);
+    return null;
   }
 }
 
 export default async function Home() {
-  const sections = await getPageSections();
+  const settings = await getHomeSettings();
+  const footerSettings = await getFooterSettings();
   
   return (
     <main>
       <Header />
-      <HeroBanner section={sections.hero} />
-      <ThirdBlock section={sections.about} />
-      <HeroesSlider />
-      <StoneBlock />
-      <SoldierGallery />
-      <Footer />
+      <HeroBanner settings={settings} />
+      <ThirdBlock settings={settings} />
+      {settings?.showHeroesSlider && <HeroesSlider settings={settings} />}
+      {settings?.showStoneBlock && <StoneBlock settings={settings} />}
+      {settings?.showGallery && <SoldierGallery settings={settings} />}
+      <Footer 
+        address={footerSettings?.address || undefined}
+        copyrightText={footerSettings?.copyrightText || undefined}
+        email={footerSettings?.email || undefined}
+        phone={footerSettings?.phone || undefined}
+        facebookUrl={footerSettings?.facebookUrl || undefined}
+        instagramUrl={footerSettings?.instagramUrl || undefined}
+        twitterUrl={footerSettings?.twitterUrl || undefined}
+        youtubeUrl={footerSettings?.youtubeUrl || undefined}
+        telegramUrl={footerSettings?.telegramUrl || undefined}
+        linkedinUrl={footerSettings?.linkedinUrl || undefined}
+      />
     </main>
   );
 }
