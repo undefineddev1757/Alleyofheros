@@ -6,26 +6,30 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { LanguageToggle, Language } from "@/components/admin/LanguageToggle"
 import { Save } from "lucide-react"
 
 export default function FooterEdit() {
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
   const [success, setSuccess] = useState(false)
+  const [currentLang, setCurrentLang] = useState<Language>('ua')
   const [formData, setFormData] = useState({
-    aboutText: '',
-    copyrightText: '',
-    email: '',
-    phone: '',
-    address: '',
+    // UA Fields
+    aboutText_ua: '',
+    copyrightText_ua: '',
+    
+    // EN Fields
+    aboutText_en: '',
+    copyrightText_en: '',
+    
+    // Common Fields
     facebookUrl: '',
     instagramUrl: '',
     twitterUrl: '',
     youtubeUrl: '',
     telegramUrl: '',
     linkedinUrl: '',
-    privacyPolicyUrl: '',
-    termsOfServiceUrl: '',
   })
 
   useEffect(() => {
@@ -35,19 +39,16 @@ export default function FooterEdit() {
         if (response.ok) {
           const data = await response.json()
           setFormData({
-            aboutText: data.aboutText || '',
-            copyrightText: data.copyrightText || '',
-            email: data.email || '',
-            phone: data.phone || '',
-            address: data.address || '',
+            aboutText_ua: data.aboutText_ua || '',
+            copyrightText_ua: data.copyrightText_ua || '',
+            aboutText_en: data.aboutText_en || '',
+            copyrightText_en: data.copyrightText_en || '',
             facebookUrl: data.facebookUrl || '',
             instagramUrl: data.instagramUrl || '',
             twitterUrl: data.twitterUrl || '',
             youtubeUrl: data.youtubeUrl || '',
             telegramUrl: data.telegramUrl || '',
             linkedinUrl: data.linkedinUrl || '',
-            privacyPolicyUrl: data.privacyPolicyUrl || '',
-            termsOfServiceUrl: data.termsOfServiceUrl || '',
           })
         }
       } catch (error) {
@@ -106,6 +107,15 @@ export default function FooterEdit() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Language Toggle */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold">Редактирование подвала</h2>
+            <p className="text-muted-foreground">Выберите язык для редактирования</p>
+          </div>
+          <LanguageToggle currentLang={currentLang} onChange={setCurrentLang} />
+        </div>
+
         {/* Main Info */}
         <Card>
           <CardHeader>
@@ -114,62 +124,26 @@ export default function FooterEdit() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="aboutText">О проекте (текст в футере)</Label>
+              <Label htmlFor="aboutText">О проекте (текст в футере) ({currentLang.toUpperCase()})</Label>
               <Textarea
                 id="aboutText"
-                value={formData.aboutText}
-                onChange={(e) => setFormData({ ...formData, aboutText: e.target.value })}
+                value={formData[`aboutText_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`aboutText_${currentLang}`]: e.target.value })}
                 rows={4}
-                placeholder="Алея Друзів - проект, присвячений..."
+                placeholder={currentLang === 'ua' 
+                  ? "Алея Друзів - проект, присвячений..." 
+                  : "Avenue of Friends - a project dedicated to..."}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="copyrightText">Копирайт</Label>
+              <Label htmlFor="copyrightText">Копирайт ({currentLang.toUpperCase()})</Label>
               <Input
                 id="copyrightText"
-                value={formData.copyrightText}
-                onChange={(e) => setFormData({ ...formData, copyrightText: e.target.value })}
-                placeholder="© 2024 Алея Друзів. Всі права захищені."
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Contact Info */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Контактная информация</CardTitle>
-            <CardDescription>Email, телефон и адрес</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="info@example.com"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="phone">Телефон</Label>
-                <Input
-                  id="phone"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="+380 XX XXX XX XX"
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="address">Адрес</Label>
-              <Input
-                id="address"
-                value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                placeholder="м. Київ, вул. Хрещатик, 1"
+                value={formData[`copyrightText_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`copyrightText_${currentLang}`]: e.target.value })}
+                placeholder={currentLang === 'ua' 
+                  ? "© 2024 Алея Друзів. Всі права захищені." 
+                  : "© 2024 Avenue of Friends. All rights reserved."}
               />
             </div>
           </CardContent>
@@ -235,36 +209,6 @@ export default function FooterEdit() {
                   value={formData.linkedinUrl}
                   onChange={(e) => setFormData({ ...formData, linkedinUrl: e.target.value })}
                   placeholder="https://linkedin.com/..."
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Legal Links */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Юридические ссылки</CardTitle>
-            <CardDescription>Политика конфиденциальности и условия</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="privacyPolicyUrl">Политика конфиденциальности</Label>
-                <Input
-                  id="privacyPolicyUrl"
-                  value={formData.privacyPolicyUrl}
-                  onChange={(e) => setFormData({ ...formData, privacyPolicyUrl: e.target.value })}
-                  placeholder="/privacy-policy"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="termsOfServiceUrl">Условия использования</Label>
-                <Input
-                  id="termsOfServiceUrl"
-                  value={formData.termsOfServiceUrl}
-                  onChange={(e) => setFormData({ ...formData, termsOfServiceUrl: e.target.value })}
-                  placeholder="/terms-of-service"
                 />
               </div>
             </div>

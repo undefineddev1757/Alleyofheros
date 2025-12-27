@@ -13,7 +13,8 @@ export async function GET() {
       settings = await prisma.footerSettings.create({
         data: {
           id: 'default',
-          copyrightText: '© 2024 Алея Друзів. Всі права захищені.',
+          copyrightText_ua: '© 2024 Алея Друзів. Всі права захищені.',
+          copyrightText_en: '© 2024 Avenue of Friends. All rights reserved.',
           isActive: true,
         },
       })
@@ -42,19 +43,16 @@ export async function PUT(request: NextRequest) {
     const settings = await prisma.footerSettings.upsert({
       where: { id: 'default' },
       update: {
-        aboutText: body.aboutText,
-        copyrightText: body.copyrightText,
-        email: body.email,
-        phone: body.phone,
-        address: body.address,
+        aboutText_ua: body.aboutText_ua,
+        copyrightText_ua: body.copyrightText_ua,
+        aboutText_en: body.aboutText_en,
+        copyrightText_en: body.copyrightText_en,
         facebookUrl: body.facebookUrl,
         instagramUrl: body.instagramUrl,
         twitterUrl: body.twitterUrl,
         youtubeUrl: body.youtubeUrl,
         telegramUrl: body.telegramUrl,
         linkedinUrl: body.linkedinUrl,
-        privacyPolicyUrl: body.privacyPolicyUrl,
-        termsOfServiceUrl: body.termsOfServiceUrl,
       },
       create: {
         id: 'default',

@@ -36,9 +36,10 @@ model Hero {
 
 model Story {
   id          String   @id @default(cuid())
-  title       String
-  content     String
-  authorName  String?
+  heroName    String   // Имя героя
+  heroStory   String   @db.Text // История героя
+  imageUrl    String?  // URL изображения героя
+  isActive    Boolean  @default(true) // Показывать/скрыть историю
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -150,14 +151,13 @@ model GallerySlide {
 model FooterSettings {
   id                String   @id @default(cuid())
   
-  // Footer Text
-  aboutText         String?  @db.Text
-  copyrightText     String?
+  // Footer Text - UA
+  aboutText_ua      String?  @db.Text
+  copyrightText_ua  String?
   
-  // Contact Info
-  email             String?
-  phone             String?
-  address           String?
+  // Footer Text - EN
+  aboutText_en      String?  @db.Text
+  copyrightText_en  String?
   
   // Social Media Links
   facebookUrl       String?
@@ -166,10 +166,6 @@ model FooterSettings {
   youtubeUrl        String?
   telegramUrl       String?
   linkedinUrl       String?
-  
-  // Additional Links
-  privacyPolicyUrl  String?
-  termsOfServiceUrl String?
   
   isActive          Boolean  @default(true)
   updatedAt         DateTime @updatedAt
@@ -182,15 +178,25 @@ model FooterSettings {
 model YourStoriesPageSettings {
   id                    String   @id @default(cuid())
   
-  // Banner Section
-  bannerTitle           String?
-  bannerSubtitle        String?  @db.Text
-  searchPlaceholder     String?
+  // Banner Section - UA
+  bannerTitle_ua        String?
+  bannerSubtitle_ua     String?  @db.Text
+  searchPlaceholder_ua  String?
   
-  // Form Block
-  formTitle             String?  @db.Text
-  formSubtitle          String?
-  formButtonText        String?
+  // Banner Section - EN
+  bannerTitle_en        String?
+  bannerSubtitle_en     String?  @db.Text
+  searchPlaceholder_en  String?
+  
+  // Form Block - UA
+  formTitle_ua          String?  @db.Text
+  formSubtitle_ua       String?
+  formButtonText_ua     String?
+  
+  // Form Block - EN
+  formTitle_en          String?  @db.Text
+  formSubtitle_en       String?
+  formButtonText_en     String?
   
   isActive              Boolean  @default(true)
   createdAt             DateTime @default(now())
@@ -203,9 +209,14 @@ model YourStoriesPageSettings {
 model FindHeroPageSettings {
   id                    String   @id @default(cuid())
   
-  // Banner Section
-  bannerTitle           String?
-  searchPlaceholder     String?
+  // Banner Section - UA
+  bannerTitle_ua        String?
+  searchPlaceholder_ua  String?
+  
+  // Banner Section - EN
+  bannerTitle_en        String?
+  searchPlaceholder_en  String?
+  
   medalImageUrl         String?
   
   isActive              Boolean  @default(true)

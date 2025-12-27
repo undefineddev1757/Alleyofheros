@@ -20,7 +20,7 @@ export function LanguageToggle({ currentLang, onChange }: LanguageToggleProps) {
         onClick={() => onChange('ua')}
         className="font-semibold"
       >
-        🇺🇦 UA
+        UA
       </Button>
       <Button
         type="button"
@@ -29,11 +29,12 @@ export function LanguageToggle({ currentLang, onChange }: LanguageToggleProps) {
         onClick={() => onChange('en')}
         className="font-semibold"
       >
-        🇬🇧 EN
+        EN
       </Button>
     </div>
   )
 }
 
 export type { Language }
+
 

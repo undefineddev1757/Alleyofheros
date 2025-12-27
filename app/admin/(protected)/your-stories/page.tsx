@@ -6,19 +6,30 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { LanguageToggle, Language } from "@/components/admin/LanguageToggle"
 import { Save } from "lucide-react"
 
 export default function YourStoriesEdit() {
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
   const [success, setSuccess] = useState(false)
+  const [currentLang, setCurrentLang] = useState<Language>('ua')
   const [formData, setFormData] = useState({
-    bannerTitle: '',
-    bannerSubtitle: '',
-    searchPlaceholder: '',
-    formTitle: '',
-    formSubtitle: '',
-    formButtonText: '',
+    // UA Fields
+    bannerTitle_ua: '',
+    bannerSubtitle_ua: '',
+    searchPlaceholder_ua: '',
+    formTitle_ua: '',
+    formSubtitle_ua: '',
+    formButtonText_ua: '',
+    
+    // EN Fields
+    bannerTitle_en: '',
+    bannerSubtitle_en: '',
+    searchPlaceholder_en: '',
+    formTitle_en: '',
+    formSubtitle_en: '',
+    formButtonText_en: '',
   })
 
   useEffect(() => {
@@ -28,12 +39,18 @@ export default function YourStoriesEdit() {
         if (response.ok) {
           const data = await response.json()
           setFormData({
-            bannerTitle: data.bannerTitle || '',
-            bannerSubtitle: data.bannerSubtitle || '',
-            searchPlaceholder: data.searchPlaceholder || '',
-            formTitle: data.formTitle || '',
-            formSubtitle: data.formSubtitle || '',
-            formButtonText: data.formButtonText || '',
+            bannerTitle_ua: data.bannerTitle_ua || '',
+            bannerSubtitle_ua: data.bannerSubtitle_ua || '',
+            searchPlaceholder_ua: data.searchPlaceholder_ua || '',
+            formTitle_ua: data.formTitle_ua || '',
+            formSubtitle_ua: data.formSubtitle_ua || '',
+            formButtonText_ua: data.formButtonText_ua || '',
+            bannerTitle_en: data.bannerTitle_en || '',
+            bannerSubtitle_en: data.bannerSubtitle_en || '',
+            searchPlaceholder_en: data.searchPlaceholder_en || '',
+            formTitle_en: data.formTitle_en || '',
+            formSubtitle_en: data.formSubtitle_en || '',
+            formButtonText_en: data.formButtonText_en || '',
           })
         }
       } catch (error) {
@@ -92,6 +109,15 @@ export default function YourStoriesEdit() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Language Toggle */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold">Редактирование страницы "Ваши истории"</h2>
+            <p className="text-muted-foreground">Выберите язык для редактирования</p>
+          </div>
+          <LanguageToggle currentLang={currentLang} onChange={setCurrentLang} />
+        </div>
+
         {/* Banner Section */}
         <Card>
           <CardHeader>
@@ -100,31 +126,33 @@ export default function YourStoriesEdit() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="bannerTitle">Заголовок</Label>
+              <Label htmlFor="bannerTitle">Заголовок ({currentLang.toUpperCase()})</Label>
               <Input
                 id="bannerTitle"
-                value={formData.bannerTitle}
-                onChange={(e) => setFormData({ ...formData, bannerTitle: e.target.value })}
-                placeholder="ВАШІ ІСТОРІЇ"
+                value={formData[`bannerTitle_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`bannerTitle_${currentLang}`]: e.target.value })}
+                placeholder={currentLang === 'ua' ? "ВАШІ ІСТОРІЇ" : "YOUR STORIES"}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="bannerSubtitle">Подзаголовок</Label>
+              <Label htmlFor="bannerSubtitle">Подзаголовок ({currentLang.toUpperCase()})</Label>
               <Textarea
                 id="bannerSubtitle"
-                value={formData.bannerSubtitle}
-                onChange={(e) => setFormData({ ...formData, bannerSubtitle: e.target.value })}
+                value={formData[`bannerSubtitle_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`bannerSubtitle_${currentLang}`]: e.target.value })}
                 rows={3}
-                placeholder="Ми створюємо місце, де на стінах з'являються портрети загиблих військових."
+                placeholder={currentLang === 'ua' 
+                  ? "Ми створюємо місце, де на стінах з'являються портрети загиблих військових."
+                  : "We create a place where portraits of fallen soldiers appear on the walls."}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="searchPlaceholder">Текст в поиске (placeholder)</Label>
+              <Label htmlFor="searchPlaceholder">Текст в поиске (placeholder) ({currentLang.toUpperCase()})</Label>
               <Input
                 id="searchPlaceholder"
-                value={formData.searchPlaceholder}
-                onChange={(e) => setFormData({ ...formData, searchPlaceholder: e.target.value })}
-                placeholder="Позивний/ПІБ"
+                value={formData[`searchPlaceholder_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`searchPlaceholder_${currentLang}`]: e.target.value })}
+                placeholder={currentLang === 'ua' ? "Позивний/ПІБ" : "Call Sign/Name"}
               />
             </div>
           </CardContent>
@@ -138,31 +166,35 @@ export default function YourStoriesEdit() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="formTitle">Заголовок</Label>
+              <Label htmlFor="formTitle">Заголовок ({currentLang.toUpperCase()})</Label>
               <Textarea
                 id="formTitle"
-                value={formData.formTitle}
-                onChange={(e) => setFormData({ ...formData, formTitle: e.target.value })}
+                value={formData[`formTitle_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`formTitle_${currentLang}`]: e.target.value })}
                 rows={2}
-                placeholder="у кожного — свій захисник, своя історія"
+                placeholder={currentLang === 'ua' 
+                  ? "у кожного — свій захисник, своя історія"
+                  : "everyone has their own protector, their own story"}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="formSubtitle">Подзаголовок</Label>
+              <Label htmlFor="formSubtitle">Подзаголовок ({currentLang.toUpperCase()})</Label>
               <Input
                 id="formSubtitle"
-                value={formData.formSubtitle}
-                onChange={(e) => setFormData({ ...formData, formSubtitle: e.target.value })}
-                placeholder="Поділись історією свого героя"
+                value={formData[`formSubtitle_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`formSubtitle_${currentLang}`]: e.target.value })}
+                placeholder={currentLang === 'ua' 
+                  ? "Поділись історією свого героя"
+                  : "Share your hero's story"}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="formButtonText">Текст кнопки</Label>
+              <Label htmlFor="formButtonText">Текст кнопки ({currentLang.toUpperCase()})</Label>
               <Input
                 id="formButtonText"
-                value={formData.formButtonText}
-                onChange={(e) => setFormData({ ...formData, formButtonText: e.target.value })}
-                placeholder="Заповнити форму"
+                value={formData[`formButtonText_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`formButtonText_${currentLang}`]: e.target.value })}
+                placeholder={currentLang === 'ua' ? "Заповнити форму" : "Fill out the form"}
               />
             </div>
           </CardContent>

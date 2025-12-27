@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
+import { Toaster } from "@/components/ui/toaster"
 
 // This layout is now only for protected admin pages
 // Login page has its own layout
@@ -17,6 +18,11 @@ export default function AdminLayout({
     }
   }, [])
 
-  return <>{children}</>
+  return (
+    <>
+      {children}
+      <Toaster />
+    </>
+  )
 }
 

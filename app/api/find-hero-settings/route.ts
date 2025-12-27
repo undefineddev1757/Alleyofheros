@@ -13,8 +13,10 @@ export async function GET() {
       settings = await prisma.findHeroPageSettings.create({
         data: {
           id: 'default',
-          bannerTitle: 'Знайти героя',
-          searchPlaceholder: 'Позивний/ПІБ',
+          bannerTitle_ua: 'Знайти героя',
+          searchPlaceholder_ua: 'Позивний/ПІБ',
+          bannerTitle_en: 'Find a Hero',
+          searchPlaceholder_en: 'Call Sign/Name',
           medalImageUrl: 'https://api.builder.io/api/v1/image/assets/TEMP/12daba71a01ffc2fafdfaa3af92bdeb993584487?width=560',
           isActive: true,
         },
@@ -44,8 +46,10 @@ export async function PUT(request: NextRequest) {
     const settings = await prisma.findHeroPageSettings.upsert({
       where: { id: 'default' },
       update: {
-        bannerTitle: body.bannerTitle,
-        searchPlaceholder: body.searchPlaceholder,
+        bannerTitle_ua: body.bannerTitle_ua,
+        searchPlaceholder_ua: body.searchPlaceholder_ua,
+        bannerTitle_en: body.bannerTitle_en,
+        searchPlaceholder_en: body.searchPlaceholder_en,
         medalImageUrl: body.medalImageUrl,
       },
       create: {

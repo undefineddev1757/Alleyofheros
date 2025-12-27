@@ -5,15 +5,24 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { LanguageToggle, Language } from "@/components/admin/LanguageToggle"
 import { Save } from "lucide-react"
 
 export default function FindHeroEdit() {
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
   const [success, setSuccess] = useState(false)
+  const [currentLang, setCurrentLang] = useState<Language>('ua')
   const [formData, setFormData] = useState({
-    bannerTitle: '',
-    searchPlaceholder: '',
+    // UA Fields
+    bannerTitle_ua: '',
+    searchPlaceholder_ua: '',
+    
+    // EN Fields
+    bannerTitle_en: '',
+    searchPlaceholder_en: '',
+    
+    // Common Fields
     medalImageUrl: '',
   })
 
@@ -24,8 +33,10 @@ export default function FindHeroEdit() {
         if (response.ok) {
           const data = await response.json()
           setFormData({
-            bannerTitle: data.bannerTitle || '',
-            searchPlaceholder: data.searchPlaceholder || '',
+            bannerTitle_ua: data.bannerTitle_ua || '',
+            searchPlaceholder_ua: data.searchPlaceholder_ua || '',
+            bannerTitle_en: data.bannerTitle_en || '',
+            searchPlaceholder_en: data.searchPlaceholder_en || '',
             medalImageUrl: data.medalImageUrl || '',
           })
         }
@@ -85,6 +96,15 @@ export default function FindHeroEdit() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Language Toggle */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold">Редактирование страницы "Найти героя"</h2>
+            <p className="text-muted-foreground">Выберите язык для редактирования</p>
+          </div>
+          <LanguageToggle currentLang={currentLang} onChange={setCurrentLang} />
+        </div>
+
         {/* Banner Section */}
         <Card>
           <CardHeader>
@@ -93,25 +113,25 @@ export default function FindHeroEdit() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="bannerTitle">Заголовок</Label>
+              <Label htmlFor="bannerTitle">Заголовок ({currentLang.toUpperCase()})</Label>
               <Input
                 id="bannerTitle"
-                value={formData.bannerTitle}
-                onChange={(e) => setFormData({ ...formData, bannerTitle: e.target.value })}
-                placeholder="Знайти героя"
+                value={formData[`bannerTitle_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`bannerTitle_${currentLang}`]: e.target.value })}
+                placeholder={currentLang === 'ua' ? "Знайти героя" : "Find a Hero"}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="searchPlaceholder">Текст в поиске (placeholder)</Label>
+              <Label htmlFor="searchPlaceholder">Текст в поиске (placeholder) ({currentLang.toUpperCase()})</Label>
               <Input
                 id="searchPlaceholder"
-                value={formData.searchPlaceholder}
-                onChange={(e) => setFormData({ ...formData, searchPlaceholder: e.target.value })}
-                placeholder="Позивний/ПІБ"
+                value={formData[`searchPlaceholder_${currentLang}` as keyof typeof formData] as string}
+                onChange={(e) => setFormData({ ...formData, [`searchPlaceholder_${currentLang}`]: e.target.value })}
+                placeholder={currentLang === 'ua' ? "Позивний/ПІБ" : "Call Sign/Name"}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="medalImageUrl">URL изображения медали</Label>
+              <Label htmlFor="medalImageUrl">URL изображения медали (общее)</Label>
               <Input
                 id="medalImageUrl"
                 value={formData.medalImageUrl}
