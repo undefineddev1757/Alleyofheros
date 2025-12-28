@@ -635,6 +635,12 @@
   margin-bottom: 20px;
 }
 
+@media (max-width: 768px) {
+  .form-field {
+    width: 100%;
+  }
+}
+
 .form-input.error,
 .form-textarea.error {
   border-color: #ef4444 !important;

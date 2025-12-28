@@ -380,10 +380,106 @@ const HeroPageFull = ({ hero, footerSettings }) => {
         />
       </div>
 
-      {/* Mobile Version - Placeholder for now */}
+      {/* Mobile Version */}
       <div className="hero-page-full-mobile">
-        {/* Mobile implementation would go here */}
-        <p style={{padding: '20px', textAlign: 'center'}}>Mobile version in development</p>
+        <Header />
+        
+        {/* Mobile Hero Section */}
+        <section className="mobile-hero-section">
+          <img 
+            src={heroData.imageUrl} 
+            alt={heroData.name}
+            className="mobile-hero-image"
+          />
+          <div className="mobile-hero-content">
+            <h1 className="mobile-hero-title">{heroData.callSign}</h1>
+            <p className="mobile-hero-subtitle">{heroData.name}</p>
+          </div>
+        </section>
+
+        {/* Mobile Content */}
+        <div className="mobile-content-wrapper">
+          {/* Section 2 */}
+          <section className="mobile-section">
+            <svg className="mobile-quote-icon" width="32" height="24" viewBox="0 0 32 24" fill="none">
+              <path d="M18.8 18.0707L20.0637 18.0707C23.4338 18.0707 24.8383 16.6588 25.1192 13.2707L18.8 13.2707L18.8 7.96353e-07L32 -3.57628e-07L32 10.7293C32 19.7646 27.5064 24 20.766 24L18.8 24L18.8 18.0707ZM1.10295e-06 18.0707L1.26368 18.0707C4.63384 18.0707 6.03828 16.6588 6.31916 13.2707L6.83325e-07 13.2707L-4.76838e-07 2.4399e-06L13.2 1.28592e-06L13.2 10.7293C13.2 19.7646 8.7064 24 1.966 24L1.62131e-06 24L1.10295e-06 18.0707Z" fill="#F2B202"/>
+            </svg>
+            <h2 className="mobile-section-title">Ким він був для нас</h2>
+            <p className="mobile-text">Володимир Плетньов народився 19 лютого 1999 року в Харкові. Навчався у школі №37, а потім закінчив історичний факультет Харківського національного педагогічного університету імені Григорія Сковороди. Його викладачі та друзі згадують активного, світлого юнака, який вдихав кожну мить життя на повні груди. Він був самостійним ще з підліткового віку — сам підготувався до вступу на бюджет, почав підробляти, щоб не залежати від батьків.</p>
+            <p className="mobile-text">Володимир завжди знав, чого хоче, і йшов до своєї мети. Для всіх, хто його знав, він був справжнім Жрецем — тому що це насправді відображало його суть. Він з дитинства серйозно вивчав слов'янську віру, скандинавську міфологію, давні обряди. Міг годинами розповідати про ритуали, про те, як жреці були провідниками вищих сил на Землі. Для нього це не було простим захопленням — це була частина того, ким він є.</p>
+            <img className="mobile-image" src="https://api.builder.io/api/v1/image/assets/TEMP/d2a2cabf67b080c3b8796e7be44004622865c008?width=1200" alt="Фото" />
+          </section>
+
+          {/* Section 3 - Творчість */}
+          <section className="mobile-section">
+            <h2 className="mobile-section-title-left">Творчість та природа</h2>
+            <svg className="mobile-quote-icon-small" width="32" height="24" viewBox="0 0 32 24">
+              <path d="M13.2 5.92928H11.9363C8.56616 5.92928 7.16172 7.34116 6.88084 10.7293H13.2V24H0V13.2707C-7.89888e-07 4.23544 4.4936 2.40508e-05 11.234 0H13.2V5.92928ZM32 5.92928H30.7363C27.3662 5.92928 25.9617 7.34116 25.6808 10.7293H32V24H18.8V13.2707C18.8 4.23544 23.2936 2.40508e-05 30.034 0H32V5.92928Z" fill="#F2B202"/>
+            </svg>
+            <h3 className="mobile-subtitle">Володимир мав велике серце — чисте й водночас справедливе.</h3>
+            <p className="mobile-text">Він міг пройти десятки кілометрів по лісу сам, щоб побути наодинці з природою. Обожнював тварин — рятував безпритульних котів і собак, захищав їх, як міг. Друзі жартували, що він міг би зупинити ведмедя однією рукою, а другою — погладити кошеня.</p>
+            
+            <div className="mobile-divider"></div>
+            
+            <svg className="mobile-quote-icon-small" width="32" height="24" viewBox="0 0 32 24">
+              <path d="M13.2 5.92928H11.9363C8.56616 5.92928 7.16172 7.34116 6.88084 10.7293H13.2V24H0V13.2707C-7.89888e-07 4.23544 4.4936 2.40508e-05 11.234 0H13.2V5.92928ZM32 5.92928H30.7363C27.3662 5.92928 25.9617 7.34116 25.6808 10.7293H32V24H18.8V13.2707C18.8 4.23544 23.2936 2.40508e-05 30.034 0H32V5.92928Z" fill="#F2B202"/>
+            </svg>
+            <h3 className="mobile-subtitle">Але найбільше Жреця розкривала творчість.</h3>
+            <p className="mobile-text">Він малював, ліпив з глини фігурки, писав вірші та есе. Все, що він створював, родина зберігає досі як найдорожчу пам'ять.</p>
+            <img className="mobile-image" src="https://api.builder.io/api/v1/image/assets/TEMP/c0bdb4172858337dfa951ee5af172758a904860f?width=1200" alt="Творчість" />
+          </section>
+
+          {/* Section 4 - 24 лютого */}
+          <section className="mobile-section mobile-dark-section">
+            <img className="mobile-dark-bg" src="https://api.builder.io/api/v1/image/assets/TEMP/cf66e49b6667a1dc4bc3b2f4c3cb04e3e13a3fd5?width=2400" alt="24 лютого" />
+            <div className="mobile-dark-content">
+              <h2 className="mobile-dark-title">24 лютого 2022</h2>
+              <p className="mobile-dark-text">У лютому 2022-го Володимир перебував у Маріуполі як боєць полку «Азов». Він обороняв місто від перших днів повномасштабного вторгнення.</p>
+              <svg className="mobile-quote-icon-small" width="32" height="24" viewBox="0 0 32 24">
+                <path d="M13.2 5.92928H11.9363C8.56616 5.92928 7.16172 7.34116 6.88084 10.7293H13.2V24H0V13.2707C-7.89888e-07 4.23544 4.4936 2.40508e-05 11.234 0H13.2V5.92928ZM32 5.92928H30.7363C27.3662 5.92928 25.9617 7.34116 25.6808 10.7293H32V24H18.8V13.2707C18.8 4.23544 23.2936 2.40508e-05 30.034 0H32V5.92928Z" fill="#F2B202"/>
+              </svg>
+              <p className="mobile-dark-text">«24 лютого його підрозділ отримав наказ їхати до Маріуполя, бо почалася повномасштабна війна. Вова взяв свій автомат, рюкзак і автівку, щоб відвезти побратимів, які не мали власного транспорту. Сказав: "Мамо, я їду на війну".</p>
+            </div>
+          </section>
+
+          {/* Section 5 - Пам'ять */}
+          <section className="mobile-section">
+            <h2 className="mobile-section-title-left">Пам'ять</h2>
+            <img className="mobile-image" src="https://api.builder.io/api/v1/image/assets/TEMP/69c16ec65583c88afd8dd83b21dc54dc1428dcce?width=600" alt="Пам'ять" />
+            <svg className="mobile-quote-icon-small" width="32" height="24" viewBox="0 0 32 24">
+              <path d="M13.2 5.92928H11.9363C8.56616 5.92928 7.16172 7.34116 6.88084 10.7293H13.2V24H0V13.2707C-7.89888e-07 4.23544 4.4936 2.40508e-05 11.234 0H13.2V5.92928ZM32 5.92928H30.7363C27.3662 5.92928 25.9617 7.34116 25.6808 10.7293H32V24H18.8V13.2707C18.8 4.23544 23.2936 2.40508e-05 30.034 0H32V5.92928Z" fill="#F2B202"/>
+            </svg>
+            <p className="mobile-text">«Володя мріяв про сім'ю, дітей, свою справу. Про власний будинок біля моря і лісу. Мав наречену. Любив тварин і природу. У нього було велике серце — ніжне, сильне й справедливе».</p>
+            
+            <div className="mobile-divider"></div>
+            
+            <svg className="mobile-quote-icon-small" width="32" height="24" viewBox="0 0 32 24">
+              <path d="M13.2 5.92928H11.9363C8.56616 5.92928 7.16172 7.34116 6.88084 10.7293H13.2V24H0V13.2707C-7.89888e-07 4.23544 4.4936 2.40508e-05 11.234 0H13.2V5.92928ZM32 5.92928H30.7363C27.3662 5.92928 25.9617 7.34116 25.6808 10.7293H32V24H18.8V13.2707C18.8 4.23544 23.2936 2.40508e-05 30.034 0H32V5.92928Z" fill="#F2B202"/>
+            </svg>
+            <p className="mobile-text">23 серпня 2023 року на будівлі школи №37 у Харкові, де навчався Володимир, відкрили меморіальну дошку.</p>
+            <h3 className="mobile-subtitle">— як символ шляху і сили духу.</h3>
+            
+            <img className="mobile-image" src="https://api.builder.io/api/v1/image/assets/TEMP/bb41df5d54cb56e890f9bf426d5f5c90c236b778?width=600" alt="Пам'ять 2" />
+            
+            <div className="mobile-divider"></div>
+            
+            <svg className="mobile-quote-icon-small" width="32" height="24" viewBox="0 0 32 24">
+              <path d="M13.2 5.92928H11.9363C8.56616 5.92928 7.16172 7.34116 6.88084 10.7293H13.2V24H0V13.2707C-7.89888e-07 4.23544 4.4936 2.40508e-05 11.234 0H13.2V5.92928ZM32 5.92928H30.7363C27.3662 5.92928 25.9617 7.34116 25.6808 10.7293H32V24H18.8V13.2707C18.8 4.23544 23.2936 2.40508e-05 30.034 0H32V5.92928Z" fill="#F2B202"/>
+            </svg>
+            <h3 className="mobile-subtitle">Пам'ять про нього продовжує жити в кожному, хто про нього розповідає.</h3>
+          </section>
+        </div>
+
+        <Footer
+          address="Дніпровська Набережна,\nм. Київ, Україна"
+          copyrightText={footerSettings?.copyrightText_ua || '© 2025'}
+          facebookUrl={footerSettings?.facebookUrl}
+          instagramUrl={footerSettings?.instagramUrl}
+          twitterUrl={footerSettings?.twitterUrl}
+          youtubeUrl={footerSettings?.youtubeUrl}
+          telegramUrl={footerSettings?.telegramUrl}
+          linkedinUrl={footerSettings?.linkedinUrl}
+        />
       </div>
     </>
   );

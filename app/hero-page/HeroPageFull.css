@@ -217,7 +217,7 @@ object-fit: cover;
 
 .background-logo {
   position: absolute;
-  right: 100px;
+  right: -120px;
   bottom: 50px;
   opacity: 1;
   z-index: 0;
@@ -249,7 +249,7 @@ object-fit: cover;
 .multi-column-layout {
   display: flex;
   gap: 30px;
-  align-items: flex-start;
+  align-items: stretch;
   width: 100%;
   position: relative;
   overflow-x: auto;
@@ -264,33 +264,6 @@ object-fit: cover;
   transition: scrollbar-color 0.3s;
 }
 
-.multi-column-layout:hover {
-  scrollbar-color: #17120E rgba(23, 18, 14, 0.1);
-}
-
-.multi-column-layout::-webkit-scrollbar {
-  height: 8px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.multi-column-layout:hover::-webkit-scrollbar {
-  opacity: 1;
-}
-
-.multi-column-layout::-webkit-scrollbar-track {
-  background: rgba(23, 18, 14, 0.1);
-  border-radius: 4px;
-}
-
-.multi-column-layout::-webkit-scrollbar-thumb {
-  background: #17120E;
-  border-radius: 4px;
-}
-
-.multi-column-layout::-webkit-scrollbar-thumb:hover {
-  background: #2a2218;
-}
 
 .column {
   display: flex;
@@ -398,7 +371,7 @@ object-fit: cover;
 .memory-grid {
   display: flex;
   gap: 30px;
-  align-items: flex-start;
+  align-items: stretch;
   width: 100%;
   position: relative;
   overflow-x: auto;
@@ -413,33 +386,7 @@ object-fit: cover;
   transition: scrollbar-color 0.3s;
 }
 
-.memory-grid:hover {
-  scrollbar-color: #17120E rgba(23, 18, 14, 0.1);
-}
 
-.memory-grid::-webkit-scrollbar {
-  height: 8px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.memory-grid:hover::-webkit-scrollbar {
-  opacity: 1;
-}
-
-.memory-grid::-webkit-scrollbar-track {
-  background: rgba(23, 18, 14, 0.1);
-  border-radius: 4px;
-}
-
-.memory-grid::-webkit-scrollbar-thumb {
-  background: #17120E;
-  border-radius: 4px;
-}
-
-.memory-grid::-webkit-scrollbar-thumb:hover {
-  background: #2a2218;
-}
 
 .memory-item {
   display: flex;
@@ -617,6 +564,179 @@ object-fit: cover;
 /* Mobile Version */
 .hero-page-full-mobile {
   display: none;
+  width: 100%;
+  background: #F6F3E8;
+}
+
+/* Mobile Hero Section */
+.mobile-hero-section {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mobile-hero-content {
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+  right: 20px;
+}
+
+.mobile-hero-title {
+  color: #FFF;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 100%;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-hero-subtitle {
+  color: #FFF;
+  font-family: var(--font-eukraine), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 120%;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile Content */
+.mobile-content-wrapper {
+  width: 100%;
+  padding: 0;
+}
+
+.mobile-section {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mobile-quote-icon {
+  width: 32px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.mobile-quote-icon-small {
+  width: 32px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.mobile-section-title {
+  color: #17120E;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 110%;
+  margin: 0;
+}
+
+.mobile-section-title-left {
+  color: #17120E;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 110%;
+  margin: 0;
+  text-align: left;
+}
+
+.mobile-subtitle {
+  color: #17120E;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 120%;
+  margin: 0;
+}
+
+.mobile-text {
+  color: #17120E;
+  font-family: var(--font-eukraine), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 140%;
+  margin: 0;
+}
+
+.mobile-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.mobile-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(23, 18, 14, 0.25);
+  margin: 10px 0;
+}
+
+/* Mobile Dark Section */
+.mobile-dark-section {
+  position: relative;
+  min-height: 500px;
+  padding: 60px 20px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.mobile-dark-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.7);
+}
+
+.mobile-dark-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mobile-dark-title {
+  color: #FFF;
+  font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 110%;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.mobile-dark-text {
+  color: #FFF;
+  font-family: var(--font-eukraine), -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 140%;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.mobile-dark-section .mobile-quote-icon-small path {
+  fill: #F2B202;
 }
 
 /* Responsive */
@@ -643,6 +763,55 @@ object-fit: cover;
   .hero-page-full-mobile {
     display: flex;
     flex-direction: column;
+  }
+}
+
+/* Smaller mobile devices */
+@media (max-width: 480px) {
+  .mobile-hero-section {
+    height: 350px;
+  }
+
+  .mobile-hero-title {
+    font-size: 28px;
+  }
+
+  .mobile-hero-subtitle {
+    font-size: 14px;
+  }
+
+  .mobile-section {
+    padding: 30px 16px;
+    gap: 16px;
+  }
+
+  .mobile-section-title,
+  .mobile-section-title-left {
+    font-size: 24px;
+  }
+
+  .mobile-subtitle {
+    font-size: 16px;
+  }
+
+  .mobile-text,
+  .mobile-dark-text {
+    font-size: 14px;
+  }
+
+  .mobile-dark-section {
+    min-height: 450px;
+    padding: 40px 16px;
+  }
+
+  .mobile-dark-title {
+    font-size: 28px;
+  }
+
+  .mobile-quote-icon,
+  .mobile-quote-icon-small {
+    width: 28px;
+    height: 20px;
   }
 }
 

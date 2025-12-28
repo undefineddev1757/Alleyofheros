@@ -50,6 +50,16 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  const handleOurHeroesClick = () => {
+    router.push("/fined-heroe");
+    setIsMenuOpen(false);
+  };
+
+  const handleYourStoriesClick = () => {
+    router.push("/your-stories");
+    setIsMenuOpen(false);
+  };
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -61,6 +71,7 @@ const Header = () => {
   const changeLang = (lang: 'ua' | 'en') => {
     setLanguage(lang);
     setIsLangMenuOpen(false);
+    setIsMenuOpen(false); // Закрываем мобильное меню при смене языка
   };
 
   return (
@@ -96,21 +107,31 @@ const Header = () => {
       <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
         <div className={styles.menuContent}>
           <div className={styles.menuSection}>
-            <h3 className={styles.sectionTitle} suppressHydrationWarning>
+            <button 
+              className={styles.sectionTitle} 
+              onClick={handleOurHeroesClick}
+              type="button"
+              suppressHydrationWarning
+            >
               {t.ourHeroes}
               <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
                 <path d="M1 1L6 6L11 1" stroke="#17120E" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-            </h3>
+            </button>
           </div>
 
           <div className={styles.menuSection}>
-            <h3 className={styles.sectionTitle} suppressHydrationWarning>
+            <button 
+              className={styles.sectionTitle}
+              onClick={handleYourStoriesClick}
+              type="button" 
+              suppressHydrationWarning
+            >
               {t.yourStories}
               <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
                 <path d="M1 1L6 6L11 1" stroke="#17120E" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-            </h3>
+            </button>
           </div>
 
           <button className={styles.menuAction} onClick={handleAddClick} type="button" suppressHydrationWarning>
@@ -132,6 +153,21 @@ const Header = () => {
             </svg>
             {t.findHero}
           </button>
+
+          <div className={styles.mobileLangSelector}>
+            <div className={styles.mobileLangButtons}>
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  className={`${styles.mobileLangButton} ${language === lang.code ? styles.mobileLangButtonActive : ''}`}
+                  onClick={() => changeLang(lang.code)}
+                  type="button"
+                >
+                  {lang.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className={styles.menuFooter}>

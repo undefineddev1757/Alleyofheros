@@ -165,6 +165,10 @@
   .menuButton {
     display: none !important;
   }
+
+  .mobileLangSelector {
+    display: none !important;
+  }
 }
 
 /* Планшет (768px - 1024px) */
@@ -181,6 +185,13 @@
   .actions {
     margin-right: 60px;
     gap: 40px;
+  }
+}
+
+/* Мобільний телефон та планшет (до 1024px) */
+@media (max-width: 1024px) {
+  .langSelector {
+    display: none !important;
   }
 }
 
@@ -240,6 +251,9 @@
 
   .sectionTitle {
     margin: 0;
+    width: 100%;
+    background: none;
+    border: none;
     color: #17120E;
     font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
     font-size: 18px;
@@ -249,6 +263,13 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    text-align: left;
+    padding: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .sectionTitle:hover {
+    opacity: 0.7;
   }
 
   .menuAction {
@@ -343,6 +364,41 @@
   .langButton {
     font-size: 16px;
     font-weight: 300;
+  }
+
+  .mobileLangSelector {
+    display: block;
+    padding: 24px 0;
+    border-top: 1px solid #17120E;
+  }
+
+  .mobileLangButtons {
+    display: flex;
+    gap: 12px;
+  }
+
+  .mobileLangButton {
+    flex: 1;
+    background: none;
+    border: 1px solid #17120E;
+    padding: 12px 20px;
+    cursor: pointer;
+    color: #17120E;
+    font-family: var(--font-eukraine-head), -apple-system, Roboto, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .mobileLangButton:hover {
+    background-color: #F2B202;
+  }
+
+  .mobileLangButtonActive {
+    background-color: #F2B202;
+    border-color: #F2B202;
+    font-weight: 500;
   }
 }
 

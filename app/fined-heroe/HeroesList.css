@@ -124,7 +124,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  width: 219px;
+  width: fit-content;
   height: 15px;
 }
 
