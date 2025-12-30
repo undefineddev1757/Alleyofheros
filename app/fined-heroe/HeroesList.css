@@ -229,3 +229,38 @@
     width: 40px;
   }
 }
+
+/* Курсор с фото героя */
+.hero-cursor-image {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease;
+  opacity: 1;
+  animation: fadeIn 0.3s ease;
+}
+
+.hero-cursor-image img {
+  width: 140px;
+  height: 180px;
+  object-fit: cover;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* На мобильных отключаем курсор с фото */
+@media (max-width: 768px) {
+  .hero-cursor-image {
+    display: none;
+  }
+}

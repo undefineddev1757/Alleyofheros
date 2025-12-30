@@ -43,6 +43,7 @@ export async function PUT(request: NextRequest) {
     const settings = await prisma.footerSettings.upsert({
       where: { id: 'default' },
       update: {
+        address: body.address,
         aboutText_ua: body.aboutText_ua,
         copyrightText_ua: body.copyrightText_ua,
         aboutText_en: body.aboutText_en,

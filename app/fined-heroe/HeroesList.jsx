@@ -9,6 +9,8 @@ const HeroesList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [hoveredHero, setHoveredHero] = useState(null);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     fetchHeroes(currentPage);
@@ -35,23 +37,21 @@ const HeroesList = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const defaultHeroes = [
-    { id: 1, callSign: 'Сокіл', name: 'Іванов Олександр' },
-    { id: 2, callSign: 'Вовк', name: 'Петренко Андрій' },
-    { id: 3, callSign: 'Орел', name: 'Сидоренко Максим' },
-    { id: 4, callSign: 'Лев', name: 'Коваленко Дмитро' },
-    { id: 5, callSign: 'Тигр', name: 'Мельник Сергій' },
-    { id: 6, callSign: 'Беркут', name: 'Бондаренко Віталій' },
-    { id: 7, callSign: 'Ворон', name: 'Ткаченко Ігор' },
-    { id: 8, callSign: 'Пантера', name: 'Шевченко Олег' },
-    { id: 9, callSign: 'Кобра', name: 'Кравченко Роман' },
-    { id: 10, callSign: 'Яструб', name: 'Кравчук Артем' },
-  
-  ];
+  const handleMouseEnter = (hero) => {
+    if (hero.imageUrl) {
+      setHoveredHero(hero);
+    }
+  };
 
-  const heroList = heroes.length > 0 ? heroes : (!loading ? defaultHeroes : []);
+  const handleMouseLeave = () => {
+    setHoveredHero(null);
+  };
 
-  if (loading && heroes.length === 0) {
+  const handleMouseMove = (e) => {
+    setCursorPosition({ x: e.clientX, y: e.clientY });
+  };
+
+  if (loading) {
     return (
       <div className="heroes-section">
         <div className="heroes-list" style={{ textAlign: 'center', padding: '40px' }}>
@@ -61,13 +61,28 @@ const HeroesList = () => {
     );
   }
 
+  if (heroes.length === 0) {
+    return (
+      <div className="heroes-section">
+        <div className="heroes-list" style={{ textAlign: 'center', padding: '40px' }}>
+          <div>Героїв поки немає</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="heroes-section">
       <div className="heroes-list">
-        {heroList.map((hero, index) => (
+        {heroes.map((hero, index) => (
             <React.Fragment key={hero.id || index}>
               <Link href={`/hero/${hero.id}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
-                <div className="hero-item">
+                <div 
+                  className="hero-item"
+                  onMouseEnter={() => handleMouseEnter(hero)}
+                  onMouseLeave={handleMouseLeave}
+                  onMouseMove={handleMouseMove}
+                >
                   <div className="hero-info">
                     <div className="hero-callsign2">{hero.callSign}</div>
                     <div className="hero-name1">{hero.name}</div>
@@ -97,21 +112,21 @@ const HeroesList = () => {
                 </svg>
               </div>
               </Link>
-              {index < heroList.length - 1 && <div className="hero-separator"></div>}
+              {index < heroes.length - 1 && <div className="hero-separator"></div>}
             </React.Fragment>
           ))}
       </div>
 
-      {(totalPages > 1 || (heroes.length === 0 && !loading)) && (
+      {totalPages > 1 && (
         <div className="pagination">
-          {[...Array(heroes.length > 0 ? totalPages : 1)].map((_, i) => {
+          {[...Array(totalPages)].map((_, i) => {
             const pageNum = i + 1;
             return (
               <React.Fragment key={pageNum}>
                 <button
                   className={`pagination-item ${pageNum === currentPage ? 'active' : ''}`}
                   onClick={() => handlePageChange(pageNum)}
-                  disabled={loading || heroes.length === 0}
+                  disabled={loading}
                 >
                   {pageNum}
                 </button>
@@ -119,6 +134,19 @@ const HeroesList = () => {
               </React.Fragment>
             );
           })}
+        </div>
+      )}
+
+      {/* Курсор с фото героя */}
+      {hoveredHero && hoveredHero.imageUrl && (
+        <div 
+          className="hero-cursor-image"
+          style={{
+            left: `${cursorPosition.x}px`,
+            top: `${cursorPosition.y}px`,
+          }}
+        >
+          <img src={hoveredHero.imageUrl} alt={hoveredHero.name} />
         </div>
       )}
     </div>

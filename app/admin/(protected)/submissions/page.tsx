@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/table"
 import Link from "next/link"
 import { Eye, CheckCircle, XCircle, Clock, Search, Trash2 } from "lucide-react"
-import { useToast } from "@/components/ui/toast"
+import { useToast } from "@/hooks/use-toast"
 
 export default function SubmissionsManagement() {
   const [submissions, setSubmissions] = useState<any[]>([])
@@ -22,7 +22,7 @@ export default function SubmissionsManagement() {
   const [loading, setLoading] = useState(true)
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [deleting, setDeleting] = useState(false)
-  const { showToast } = useToast()
+  const { toast } = useToast()
 
   const fetchSubmissions = () => {
     fetch("/api/submissions")
@@ -101,13 +101,24 @@ export default function SubmissionsManagement() {
       })
 
       if (response.ok) {
-        showToast("success", "Заявка успешно удалена")
+        toast({
+          title: "Успешно",
+          description: "Заявка успешно удалена",
+        })
         fetchSubmissions()
       } else {
-        showToast("error", "Ошибка при удалении заявки")
+        toast({
+          title: "Ошибка",
+          description: "Ошибка при удалении заявки",
+          variant: "destructive",
+        })
       }
     } catch (error) {
-      showToast("error", "Ошибка сети")
+      toast({
+        title: "Ошибка",
+        description: "Ошибка сети",
+        variant: "destructive",
+      })
     }
   }
 
@@ -122,11 +133,18 @@ export default function SubmissionsManagement() {
       )
       
       await Promise.all(promises)
-      showToast("success", `Удалено заявок: ${selectedIds.length}`)
+      toast({
+        title: "Успешно",
+        description: `Удалено заявок: ${selectedIds.length}`,
+      })
       setSelectedIds([])
       fetchSubmissions()
     } catch (error) {
-      showToast("error", "Ошибка при удалении заявок")
+      toast({
+        title: "Ошибка",
+        description: "Ошибка при удалении заявок",
+        variant: "destructive",
+      })
     } finally {
       setDeleting(false)
     }

@@ -18,6 +18,9 @@ build
 *.log
 *.lock
 
+# uploads
+/public/uploads
+
 # env
 .env
 .env.local

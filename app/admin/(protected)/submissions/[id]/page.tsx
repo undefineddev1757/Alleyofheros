@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft, CheckCircle, XCircle, Trash2 } from "lucide-react"
 import Link from "next/link"
-import { useToast } from "@/components/ui/toast"
+import { useToast } from "@/hooks/use-toast"
 
 interface Submission {
   id: string
@@ -32,7 +32,7 @@ export default function SubmissionDetail({ params }: { params: { id: string } })
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
   const [submission, setSubmission] = useState<Submission | null>(null)
-  const { showToast } = useToast()
+  const { toast } = useToast()
 
   useEffect(() => {
     const fetchSubmission = async () => {
@@ -96,11 +96,18 @@ export default function SubmissionDetail({ params }: { params: { id: string } })
       if (response.ok) {
         const updated = await response.json()
         setSubmission(updated)
-        showToast("success", "Статус успешно обновлен")
+        toast({
+          title: "Успешно",
+          description: "Статус успешно обновлен",
+        })
       }
     } catch (error) {
       console.error("Error updating submission:", error)
-      showToast("error", "Ошибка при обновлении статуса")
+      toast({
+        title: "Ошибка",
+        description: "Ошибка при обновлении статуса",
+        variant: "destructive",
+      })
     } finally {
       setLoading(false)
     }
@@ -116,14 +123,25 @@ export default function SubmissionDetail({ params }: { params: { id: string } })
       })
 
       if (response.ok) {
-        showToast("success", "Заявка успешно удалена")
+        toast({
+          title: "Успешно",
+          description: "Заявка успешно удалена",
+        })
         router.push("/admin/submissions")
       } else {
-        showToast("error", "Ошибка при удалении заявки")
+        toast({
+          title: "Ошибка",
+          description: "Ошибка при удалении заявки",
+          variant: "destructive",
+        })
       }
     } catch (error) {
       console.error("Error deleting submission:", error)
-      showToast("error", "Ошибка сети")
+      toast({
+        title: "Ошибка",
+        description: "Ошибка сети",
+        variant: "destructive",
+      })
     } finally {
       setLoading(false)
     }

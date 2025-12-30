@@ -28,7 +28,9 @@ model Hero {
   callSign    String   // Позывний
   name        String   // Прізвище Ім'я
   description String?  @db.Text
-  imageUrl    String?
+  imageUrl    String?  // Фото (как паспорт)
+  bannerUrl   String?  // Баннер 1440x800
+  content     Json?    // Контент страницы (блоки)
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -150,6 +152,9 @@ model GallerySlide {
 // Footer Settings
 model FooterSettings {
   id                String   @id @default(cuid())
+  
+  // Address
+  address           String?  @db.Text
   
   // Footer Text - UA
   aboutText_ua      String?  @db.Text

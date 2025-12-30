@@ -140,12 +140,12 @@ export default function StoriesPage() {
               Удалить выбранные ({selectedStories.size})
             </Button>
           )}
-          <Link href="/admin/stories/new">
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Добавить историю
-            </Button>
-          </Link>
+        <Link href="/admin/stories/new">
+          <Button>
+            <Plus className="mr-2 h-4 w-4" />
+            Добавить историю
+          </Button>
+        </Link>
         </div>
       </div>
 
@@ -227,9 +227,9 @@ export default function StoriesPage() {
                           onToggled={fetchStories}
                         />
                         <Link href={`/admin/stories/${story.id}`}>
-                          <Button variant="ghost" size="icon">
-                            <Edit className="h-4 w-4" />
-                          </Button>
+                        <Button variant="ghost" size="icon">
+                          <Edit className="h-4 w-4" />
+                        </Button>
                         </Link>
                         <DeleteStoryButton 
                           id={story.id} 

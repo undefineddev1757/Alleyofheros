@@ -24,6 +24,7 @@ export default function FooterEdit() {
     copyrightText_en: '',
     
     // Common Fields
+    address: '',
     facebookUrl: '',
     instagramUrl: '',
     twitterUrl: '',
@@ -43,6 +44,7 @@ export default function FooterEdit() {
             copyrightText_ua: data.copyrightText_ua || '',
             aboutText_en: data.aboutText_en || '',
             copyrightText_en: data.copyrightText_en || '',
+            address: data.address || '',
             facebookUrl: data.facebookUrl || '',
             instagramUrl: data.instagramUrl || '',
             twitterUrl: data.twitterUrl || '',
@@ -145,6 +147,29 @@ export default function FooterEdit() {
                   ? "© 2024 Алея Друзів. Всі права захищені." 
                   : "© 2024 Avenue of Friends. All rights reserved."}
               />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Address */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Адрес</CardTitle>
+            <CardDescription>Физический адрес организации (используйте \n для переноса строки)</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="address">Адрес</Label>
+              <Textarea
+                id="address"
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                rows={3}
+                placeholder="Дніпровська Набережна,&#10;м. Київ, Україна"
+              />
+              <p className="text-sm text-muted-foreground">
+                Совет: используйте символ переноса строки \n для многострочного адреса
+              </p>
             </div>
           </CardContent>
         </Card>

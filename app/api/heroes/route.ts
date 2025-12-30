@@ -58,6 +58,8 @@ export async function POST(request: NextRequest) {
         name: body.name,
         description: body.description,
         imageUrl: body.imageUrl,
+        bannerUrl: body.bannerUrl,
+        content: body.content || null,
         isActive: body.isActive ?? true,
       },
     })
@@ -71,5 +73,6 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
 
 

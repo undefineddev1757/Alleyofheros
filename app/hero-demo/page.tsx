@@ -34,7 +34,7 @@ export default async function HeroDemoPage() {
   const demoHero = {
     callSign: 'Жрець',
     name: 'Володимир Плетньов',
-    imageUrl: 'https://api.builder.io/api/v1/image/assets/TEMP/f62a753ba21a06c9e2fc1cc53021b7f63a2ea755?width=2880'
+    bannerUrl: 'https://api.builder.io/api/v1/image/assets/TEMP/f62a753ba21a06c9e2fc1cc53021b7f63a2ea755?width=2880'
   }
 
   return <HeroPageFull hero={demoHero} footerSettings={footerSettings} />

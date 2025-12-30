@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { useToast } from "@/components/ui/toast"
+import { useToast } from "@/hooks/use-toast"
 import { Upload, Search, Trash2, Copy, Check, Image as ImageIcon, File, Video } from "lucide-react"
 
 interface MediaFile {
@@ -19,7 +19,7 @@ interface MediaFile {
 }
 
 export default function MediaPage() {
-  const { addToast } = useToast()
+  const { toast } = useToast()
   const [files, setFiles] = useState<MediaFile[]>([])
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
@@ -58,11 +58,10 @@ export default function MediaPage() {
       f => f.size > 100 * 1024 * 1024
     )
     if (oversizedFiles.length > 0) {
-      addToast({
-        variant: "error",
+      toast({
+        variant: "destructive",
         title: "Файлы слишком большие",
         description: `Следующие файлы превышают лимит 100МБ:\n${oversizedFiles.map(f => f.name).join(', ')}`,
-        duration: 7000,
       })
       return
     }
@@ -106,15 +105,13 @@ export default function MediaPage() {
 
     // Показываем результаты
     if (failedFiles.length > 0) {
-      addToast({
-        variant: "warning",
+      toast({
+        variant: "destructive",
         title: `Загружено: ${uploadedFiles.length} из ${selectedFiles.length}`,
         description: `Ошибки: ${failedFiles.slice(0, 3).join(', ')}${failedFiles.length > 3 ? ` и еще ${failedFiles.length - 3}...` : ''}`,
-        duration: 7000,
       })
     } else {
-      addToast({
-        variant: "success",
+      toast({
         title: "Загрузка завершена",
         description: `Успешно загружено ${uploadedFiles.length} файлов`,
       })
@@ -134,22 +131,21 @@ export default function MediaPage() {
 
       if (response.ok) {
         setFiles(files.filter(f => f.id !== id))
-        addToast({
-          variant: "success",
+        toast({
           title: "Файл удален",
           description: filename,
         })
       } else {
-        addToast({
-          variant: "error",
+        toast({
+          variant: "destructive",
           title: "Ошибка удаления",
           description: "Не удалось удалить файл",
         })
       }
     } catch (error) {
       console.error('Error deleting file:', error)
-      addToast({
-        variant: "error",
+      toast({
+        variant: "destructive",
         title: "Ошибка",
         description: "Произошла ошибка при удалении файла",
       })
@@ -161,11 +157,9 @@ export default function MediaPage() {
     navigator.clipboard.writeText(fullUrl)
     setCopiedId(id)
     setTimeout(() => setCopiedId(null), 2000)
-    addToast({
-      variant: "success",
+    toast({
       title: "Скопировано",
       description: "URL файла скопирован в буфер обмена",
-      duration: 2000,
     })
   }
 
@@ -192,11 +186,10 @@ export default function MediaPage() {
       f => f.size > 100 * 1024 * 1024
     )
     if (oversizedFiles.length > 0) {
-      addToast({
-        variant: "error",
+      toast({
+        variant: "destructive",
         title: "Файлы слишком большие",
         description: `Следующие файлы превышают лимит 100МБ:\n${oversizedFiles.map(f => f.name).join(', ')}`,
-        duration: 7000,
       })
       return
     }
@@ -240,15 +233,13 @@ export default function MediaPage() {
 
     // Показываем результаты
     if (failedFiles.length > 0) {
-      addToast({
-        variant: "warning",
+      toast({
+        variant: "destructive",
         title: `Загружено: ${uploadedFiles.length} из ${droppedFiles.length}`,
         description: `Ошибки: ${failedFiles.slice(0, 3).join(', ')}${failedFiles.length > 3 ? ` и еще ${failedFiles.length - 3}...` : ''}`,
-        duration: 7000,
       })
     } else {
-      addToast({
-        variant: "success",
+      toast({
         title: "Загрузка завершена",
         description: `Успешно загружено ${uploadedFiles.length} файлов`,
       })
