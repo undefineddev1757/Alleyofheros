@@ -4,6 +4,9 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 
+# Install OpenSSL and other dependencies for Prisma
+RUN apk add --no-cache openssl libc6-compat
+
 # Install dependencies based on the package manager
 COPY package.json package-lock.json* ./
 RUN npm ci && npm cache clean --force
@@ -11,6 +14,9 @@ RUN npm ci && npm cache clean --force
 # Stage 2: Builder
 FROM node:20-alpine AS builder
 WORKDIR /app
+
+# Install OpenSSL for Prisma
+RUN apk add --no-cache openssl libc6-compat
 
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
@@ -28,6 +34,9 @@ RUN npm run build
 # Stage 3: Runner
 FROM node:20-alpine AS runner
 WORKDIR /app
+
+# Install OpenSSL for Prisma
+RUN apk add --no-cache openssl libc6-compat
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
