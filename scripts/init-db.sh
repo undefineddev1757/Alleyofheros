@@ -3,8 +3,18 @@
 # Script to initialize the database and create admin user
 set -e
 
+# Detect docker-compose command
+if command -v docker-compose &> /dev/null; then
+  DOCKER_COMPOSE="docker-compose"
+elif docker compose version &> /dev/null; then
+  DOCKER_COMPOSE="docker compose"
+else
+  echo "❌ Error: Neither 'docker-compose' nor 'docker compose' found!"
+  exit 1
+fi
+
 echo "🔄 Waiting for PostgreSQL to be ready..."
-until docker-compose exec -T postgres pg_isready -U ${POSTGRES_USER:-alley_user} > /dev/null 2>&1; do
+until $DOCKER_COMPOSE exec -T postgres pg_isready -U ${POSTGRES_USER:-alley_user} > /dev/null 2>&1; do
   echo "   Waiting for database connection..."
   sleep 2
 done
@@ -12,13 +22,13 @@ done
 echo "✅ PostgreSQL is ready!"
 
 echo "🔄 Running Prisma migrations..."
-docker-compose exec -T app npx prisma migrate deploy
+$DOCKER_COMPOSE exec -T app npx prisma migrate deploy
 
 echo "🔄 Generating Prisma Client..."
-docker-compose exec -T app npx prisma generate
+$DOCKER_COMPOSE exec -T app npx prisma generate
 
 echo "🔄 Creating initial admin user..."
-docker-compose exec -T app node -e "
+$DOCKER_COMPOSE exec -T app node -e "
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 
