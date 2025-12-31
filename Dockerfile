@@ -53,6 +53,7 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/bcryptjs ./node_modules/bcryptjs
 
 # Create uploads directory
 RUN mkdir -p /app/public/uploads && chown -R nextjs:nodejs /app/public/uploads
