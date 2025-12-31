@@ -22,10 +22,10 @@ done
 echo "✅ PostgreSQL is ready!"
 
 echo "🔄 Running Prisma migrations..."
-$DOCKER_COMPOSE exec -T app npx prisma migrate deploy
+$DOCKER_COMPOSE exec -T app node_modules/.bin/prisma migrate deploy
 
 echo "🔄 Generating Prisma Client..."
-$DOCKER_COMPOSE exec -T app npx prisma generate
+$DOCKER_COMPOSE exec -T app node_modules/.bin/prisma generate
 
 echo "🔄 Creating initial admin user..."
 $DOCKER_COMPOSE exec -T app node -e "
