@@ -10,11 +10,6 @@ const CustomCursor = (): JSX.Element | null => {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
 
-  // Don't show custom cursor in admin panel
-  if (pathname?.startsWith('/admin')) {
-    return null;
-  }
-
   useEffect(() => {
     // Check if device is desktop
     const checkDevice = () => {
@@ -57,8 +52,10 @@ const CustomCursor = (): JSX.Element | null => {
     };
   }, []);
 
-  // Don't render on mobile/tablet
-  if (isMobile) return null;
+  // Don't show custom cursor in admin panel or on mobile/tablet
+  if (pathname?.startsWith('/admin') || isMobile) {
+    return null;
+  }
 
   return (
     <div

@@ -17,12 +17,12 @@ async function getYourStoriesSettings() {
       settings = await prisma.yourStoriesPageSettings.create({
         data: {
           id: 'default',
-          bannerTitle: 'ВАШІ ІСТОРІЇ',
-          bannerSubtitle: 'Ми створюємо місце, де на стінах з\'являються портрети загиблих військових.',
-          searchPlaceholder: 'Позивний/ПІБ',
-          formTitle: 'у кожного — свій захисник, своя історія',
-          formSubtitle: 'Поділись історією свого героя',
-          formButtonText: 'Заповнити форму',
+          bannerTitle_ua: 'ВАШІ ІСТОРІЇ',
+          bannerSubtitle_ua: 'Ми створюємо місце, де на стінах з\'являються портрети загиблих військових.',
+          searchPlaceholder_ua: 'Позивний/ПІБ',
+          formTitle_ua: 'у кожного — свій захисник, своя історія',
+          formSubtitle_ua: 'Поділись історією свого героя',
+          formButtonText_ua: 'Заповнити форму',
           isActive: true,
         },
       });
@@ -45,7 +45,7 @@ async function getFooterSettings() {
       settings = await prisma.footerSettings.create({
         data: {
           id: 'default',
-          copyrightText: '© 2024 Алея Друзів. Всі права захищені.',
+          copyrightText_ua: '© 2024 Алея Друзів. Всі права захищені.',
           isActive: true,
         },
       });
@@ -67,24 +67,22 @@ export default async function YourStoriesPage() {
       <Header />
       
       <YourStoriesBanner 
-        title={settings?.bannerTitle || 'ВАШІ ІСТОРІЇ'}
-        subtitle={settings?.bannerSubtitle || 'Ми створюємо місце, де на стінах з\'являються портрети загиблих військових.'}
-        searchPlaceholder={settings?.searchPlaceholder || 'Позивний/ПІБ'}
+        title={settings?.bannerTitle_ua || 'ВАШІ ІСТОРІЇ'}
+        subtitle={settings?.bannerSubtitle_ua || 'Ми створюємо місце, де на стінах з\'являються портрети загиблих військових.'}
+        searchPlaceholder={settings?.searchPlaceholder_ua || 'Позивний/ПІБ'}
       />
       
       <StoriesExample />
       
       <FormStoryBlock 
-        title={settings?.formTitle || 'у кожного — свій захисник, своя історія'}
-        subtitle={settings?.formSubtitle || 'Поділись історією свого героя'}
-        buttonText={settings?.formButtonText || 'Заповнити форму'}
+        title={settings?.formTitle_ua || 'у кожного — свій захисник, своя історія'}
+        subtitle={settings?.formSubtitle_ua || 'Поділись історією свого героя'}
+        buttonText={settings?.formButtonText_ua || 'Заповнити форму'}
       />
       
       <Footer 
         address={footerSettings?.address || undefined}
-        copyrightText={footerSettings?.copyrightText || undefined}
-        email={footerSettings?.email || undefined}
-        phone={footerSettings?.phone || undefined}
+        copyrightText={footerSettings?.copyrightText_ua || undefined}
         facebookUrl={footerSettings?.facebookUrl || undefined}
         instagramUrl={footerSettings?.instagramUrl || undefined}
         twitterUrl={footerSettings?.twitterUrl || undefined}

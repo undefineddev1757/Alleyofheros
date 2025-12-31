@@ -16,8 +16,8 @@ async function getFindHeroSettings() {
       settings = await prisma.findHeroPageSettings.create({
         data: {
           id: 'default',
-          bannerTitle: 'Знайти героя',
-          searchPlaceholder: 'Позивний/ПІБ',
+          bannerTitle_ua: 'Знайти героя',
+          searchPlaceholder_ua: 'Позивний/ПІБ',
           medalImageUrl: 'https://api.builder.io/api/v1/image/assets/TEMP/12daba71a01ffc2fafdfaa3af92bdeb993584487?width=560',
           isActive: true,
         },
@@ -41,7 +41,7 @@ async function getFooterSettings() {
       settings = await prisma.footerSettings.create({
         data: {
           id: 'default',
-          copyrightText: '© 2024 Алея Друзів. Всі права захищені.',
+          copyrightText_ua: '© 2024 Алея Друзів. Всі права захищені.',
           isActive: true,
         },
       });
@@ -62,16 +62,14 @@ export default async function FindedHeroePage() {
     <main>
       <Header />
       <FindHeroBanner 
-        title={settings?.bannerTitle || 'Знайти героя'}
-        searchPlaceholder={settings?.searchPlaceholder || 'Позивний/ПІБ'}
+        title={settings?.bannerTitle_ua || 'Знайти героя'}
+        searchPlaceholder={settings?.searchPlaceholder_ua || 'Позивний/ПІБ'}
         medalImageUrl={settings?.medalImageUrl || 'https://api.builder.io/api/v1/image/assets/TEMP/12daba71a01ffc2fafdfaa3af92bdeb993584487?width=560'}
       />
       <HeroesList />
       <Footer 
         address={footerSettings?.address || undefined}
-        copyrightText={footerSettings?.copyrightText || undefined}
-        email={footerSettings?.email || undefined}
-        phone={footerSettings?.phone || undefined}
+        copyrightText={footerSettings?.copyrightText_ua || undefined}
         facebookUrl={footerSettings?.facebookUrl || undefined}
         instagramUrl={footerSettings?.instagramUrl || undefined}
         twitterUrl={footerSettings?.twitterUrl || undefined}

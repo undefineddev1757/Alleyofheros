@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth"
-import { authOptions } from "../auth/[...nextauth]/route"
+import { authOptions } from "@/lib/auth"
 
 export async function GET() {
   try {
@@ -14,9 +14,9 @@ export async function GET() {
       settings = await prisma.homePageSettings.create({
         data: {
           id: 'default',
-          heroTitle: 'Алея',
-          heroSubtitle: 'Друзів',
-          heroDescription: 'Тут ми пам\'ятаємо не лише подвиги, а й людину за ними',
+          heroTitle_ua: 'Алея',
+          heroSubtitle_ua: 'Друзів',
+          heroDescription_ua: 'Тут ми пам\'ятаємо не лише подвиги, а й людину за ними',
           isActive: true,
         },
       })
@@ -44,26 +44,7 @@ export async function PUT(request: NextRequest) {
     
     const settings = await prisma.homePageSettings.upsert({
       where: { id: 'default' },
-      update: {
-        heroTitle: body.heroTitle,
-        heroSubtitle: body.heroSubtitle,
-        heroDescription: body.heroDescription,
-        heroVideoUrl: body.heroVideoUrl,
-        aboutLabel: body.aboutLabel,
-        aboutTitle: body.aboutTitle,
-        aboutText1: body.aboutText1,
-        aboutText2: body.aboutText2,
-        heroesTitle: body.heroesTitle,
-        heroesSubtitle: body.heroesSubtitle,
-        showHeroesSlider: body.showHeroesSlider,
-        stoneTitle: body.stoneTitle,
-        stoneQuote: body.stoneQuote,
-        stoneImageUrl: body.stoneImageUrl,
-        showStoneBlock: body.showStoneBlock,
-        galleryTitle: body.galleryTitle,
-        gallerySubtitle: body.gallerySubtitle,
-        showGallery: body.showGallery,
-      },
+      update: body,
       create: {
         id: 'default',
         ...body,
@@ -80,6 +61,7 @@ export async function PUT(request: NextRequest) {
     )
   }
 }
+
 
 
 

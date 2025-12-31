@@ -4,15 +4,10 @@ import { existsSync } from "fs"
 import path from "path"
 import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth"
-import { authOptions } from "../../auth/[...nextauth]/route"
+import { authOptions } from "@/lib/auth"
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '100mb',
-    },
-  },
-}
+// Set max duration for Vercel serverless function (optional)
+export const maxDuration = 60
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -74,6 +69,7 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
 
 
 

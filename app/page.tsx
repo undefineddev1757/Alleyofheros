@@ -19,8 +19,8 @@ async function getHomeSettings() {
       settings = await prisma.homePageSettings.create({
         data: {
           id: 'default',
-          heroTitle: 'Алея',
-          heroSubtitle: 'Друзів',
+          heroTitle_ua: 'Алея',
+          heroSubtitle_ua: 'Друзів',
           isActive: true,
         },
       });
@@ -43,7 +43,7 @@ async function getFooterSettings() {
       settings = await prisma.footerSettings.create({
         data: {
           id: 'default',
-          copyrightText: '© 2024 Алея Друзів. Всі права захищені.',
+          copyrightText_ua: '© 2024 Алея Друзів. Всі права захищені.',
           isActive: true,
         },
       });
@@ -70,9 +70,7 @@ export default async function Home() {
       {settings?.showGallery && <SoldierGallery settings={settings} />}
       <Footer 
         address={footerSettings?.address || undefined}
-        copyrightText={footerSettings?.copyrightText || undefined}
-        email={footerSettings?.email || undefined}
-        phone={footerSettings?.phone || undefined}
+        copyrightText={footerSettings?.copyrightText_ua || undefined}
         facebookUrl={footerSettings?.facebookUrl || undefined}
         instagramUrl={footerSettings?.instagramUrl || undefined}
         twitterUrl={footerSettings?.twitterUrl || undefined}
